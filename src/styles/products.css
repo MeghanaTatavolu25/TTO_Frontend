@@ -1,0 +1,115 @@
+.link:hover {
+  color: #1369CB;
+  font-weight: 600;
+}
+
+.app{
+    display: flex;
+    margin:0.7vw 0 0;
+}
+
+.sidebar {
+  letter-spacing: -0.02em;
+  width: 27.5%;
+  color: #2C2C2C;
+}
+.sidebar-heading{
+    font-weight: 400;
+    font-size: 1.7vw;
+    line-height :2vw; 
+}
+
+.product.active {
+  color: #1369CB;
+}
+
+.content {
+  width: 72.5%;
+  margin-left: 4vw;
+}
+
+
+.faculty-name,
+.keywords {
+    font-weight: 300;
+    font-size: 1.1vw;
+    line-height :0.2vw;
+    margin:1.7vw 0 1.7vw;
+    color: #1A1A1A;
+}
+
+.nav-bar {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.nav_link {
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin: 0.6vw 0 0.6vw;
+    font-weight: 400;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    letter-spacing: -0.02em;
+    color: #515151;
+}
+
+.nav_link.active {
+  color:#1A1A1A;
+  font-weight: 500;
+  border-width: 0.3vw;
+  border-color: #535353;
+}
+
+.section {
+    margin: 2vw 0 2vw;
+    width: 92%;
+    text-align: left;
+}
+
+.section h3 {
+    font-weight: 400;
+    font-size: 1.4vw;
+    line-height: 2vw;
+    letter-spacing: -0.02em;
+    color: #1A1A1A;
+}
+.section p{
+    font-weight: 300;
+    font-size: 1vw;
+    line-height:1.5vw;
+    letter-spacing: -0.03em;
+    color: #2C2C2C;
+}
+.section:not(.active) {
+    display: none;
+  }
+
+.underline-on-hover:hover {
+    text-decoration: underline;
+  }
+
+  .product-list {
+    height: 22vh;
+    overflow-y: auto;
+  }
+  
+  .product-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .product-list::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  .product-list::-webkit-scrollbar-thumb {
+    background-color: #09A5AF;
+    border-radius: 5px;
+  }
+  
+  .product-list::-webkit-scrollbar-thumb:hover {
+    background-color: #09A5AF;
+  }
+  
+
+
