@@ -5,37 +5,51 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 
 const Products = () => {
-  const { LabName, ProductName} = useParams();
-  const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState([]); // Set initial value to null
-  const [selectedSection, setSelectedSection] = useState('overview');
+    const { LabName, ProductName } = useParams();
+    const [products, setProducts] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState([]);
+    const [selectedSection, setSelectedSection] = useState('overview');
+    const [showDescription, setShowDescription] = useState(false); // State variable for toggling description
+    const [labDescription, setLabDescription] = useState("");
 
-  useEffect(() => {
-    fetch('http://localhost:3002/api/products')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.log(error));
-  }, []);
+    useEffect(() => {
+        fetch('http://localhost:3002/api/researchlabs')
+          .then(response => response.json())
+          .then(data => {
+            const lab = data.find(researchLab => researchLab.Research_Lab === LabName);
+            if (lab) {
+              setLabDescription(lab.Description);
+            }
+          })
+          .catch(error => console.log(error));
+      }, [LabName]);
 
-  useEffect(() => {
-    // Find the product that matches the ProductName
-    const defaultProduct = products.find(product => product.NameOfProduct === ProductName);
-    if (defaultProduct) {
-      setSelectedProduct(defaultProduct);
-    }
-  }, [products, ProductName]);
-
+    useEffect(() => {
+      fetch('http://localhost:3002/api/products')
+        .then(response => response.json())
+        .then(data => setProducts(data))
+        .catch(error => console.log(error));
+    }, []);
+  
+    useEffect(() => {
+      const defaultProduct = products.find(product => product.NameOfProduct === ProductName);
+      if (defaultProduct) {
+        setSelectedProduct(defaultProduct);
+      }
+    }, [products, ProductName]);
+  
   const handleProductClick = (product) => {
     setSelectedProduct(product);
+    setShowDescription(false);
   };
-
-  const handleNavLinkClick = (section) => {
-    setSelectedSection(section);
+  const handleDescriptionClick = () => {
+    setSelectedProduct([]); // Set selectedProduct to null when clicking on the description
+    setShowDescription(!showDescription);
   };
-
-
-  // Filter the products based on the LabCode
-  // const filteredProducts = products.filter(product => product.CenterName === LabCode);
+  
+    const handleNavLinkClick = (section) => {
+      setSelectedSection(section);
+    };
 
   return (
     <>
@@ -90,23 +104,35 @@ const Products = () => {
             <div className="app">
             <div className="sidebar">
               <div className="sidebar-heading">{LabName}</div>
+              <div
+                className={`description-heading ${showDescription ? 'active' : ''}`}
+                onClick={handleDescriptionClick}
+                >
+                Description
+              </div>
               <div className="line" style={{ background: "#535353", height: "0.1vw", width: "25vw", textAlign: "left", margin: "1.2vw 0 1.2vw" }}></div>
-              <div className="product-list">
+              <div className="products-list">
                 {products.filter(product => product.CentreName === LabName).map(product => (
                     <div key={product._id}>
-                    <div
-                        key={product._id}
-                        className={`product ${selectedProduct === product ? 'active' : ''}`}
-                        onClick={() => handleProductClick(product)}
-                    >
-                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "1.1vw 0 1.1vw" }}>{product.NameOfProduct}</h3>
-                    </div>
-                    </div>
+                        <div
+                            key={product._id}
+                            className={`product ${selectedProduct === product ? 'active' : ''}`}
+                            onClick={() => handleProductClick(product)}
+                        >
+                            <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "1.1vw 0 1.1vw" }}>{product.NameOfProduct}</h3>
+                        </div>
+                     </div>
                 ))}
               </div>
             </div>
                 <div className="content">
-                {selectedProduct && (
+                {showDescription && (
+              <>
+                <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>Description</h2>
+                <p className="lab-description">{labDescription}</p>
+              </>
+            )}
+              {!showDescription && selectedProduct && (
                     <>
                   <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfProduct}</h2>
                   <div className="video">

@@ -26,7 +26,7 @@ const ResponsiveNavbar = () => {
           style={navLinkStyle}
           activeStyle={activeNavLinkStyle}
         >
-          Research Labs
+          Technology Catalogue
         </NavLink>
         <NavLink
           to="/patents"
@@ -67,7 +67,7 @@ const ResponsiveNavbar = () => {
           R&amp;D Showcase
         </a>
         <NavLink
-          to="/team"
+          to="/Team"
           style={navLinkStyle}
           activeStyle={activeNavLinkStyle}
         >

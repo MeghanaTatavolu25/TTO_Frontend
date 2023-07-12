@@ -46,7 +46,7 @@ const ResearchLabs = () => {
 
   return (
     <>
-      <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: " 10vw 3vw 0" }}>
+      <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: " 8vw 3vw 0" }}>
         <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
           onMouseEnter={(e) => {
             e.target.style.color = '#1369CB';
@@ -58,11 +58,11 @@ const ResearchLabs = () => {
           }}>
           <span>Home </span>/
         </a>
-        <span style={{ color: '#1F669F', fontWeight: 500 }}> Research Labs</span>
+        <span style={{ color: '#1F669F', fontWeight: 500 }}> Technology Catalogue</span>
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing: "0em" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ color: "#343434", fontSize: "2.5vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "80%" }}>Research Labs</div>
+          <div style={{ color: "#343434", fontSize: "2.5vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "80%" }}>Technology Catalogue</div>
           <div style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0 0 0.5vw", letterSpacing: "-0.04em", width: "20%" }}>
             <Paper
               elevation={0}

@@ -2,8 +2,6 @@ import React from "react";
 import call_img from './call.png'
 import mail_img from './mail.png'
 import { Grid, Paper, Button, Divider } from '@material-ui/core';
-import ResponsiveImage from "../components/ResponsiveImage"
-
 const Footbar = () => {
   return (
 
@@ -16,13 +14,13 @@ const Footbar = () => {
         <Grid item xs={4} sm={4} md={4} style={{ paddingTop: "5.5vw", paddingLeft:'4vw',paddingBottom:'2vw' }}>
           <div style={{ paddingBottom: "2vw" }}>
 
-            <ResponsiveImage src={call_img} alt="icon" maxWidth={400} maxHeight={300} />
+            <img src={call_img} alt="icon" style={{width:'3vw', height:'3vw'}} />
 
             <span style={{ paddingLeft: "1.1vw", fontSize: "1.32vw", color: "#FFFFFF" }}> 91-0990897689</span>
 
           </div>
           <div style={{ paddingBottom: "1vw" }}>
-            <ResponsiveImage src={mail_img} alt="icon" maxWidth={400} maxHeight={300} />
+            <img src={mail_img} alt="icon" style={{width:'3vw', height:'6vh'}} />
 
             <span style={{ paddingLeft: "1.1vw", fontSize: "1.32vw", color: "#FFFFFF" }}> www.tto.iiit.ac.in</span>
 

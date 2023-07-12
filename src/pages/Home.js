@@ -42,7 +42,7 @@ const items = [
         icon: icon1,
         image: img2,
         text: "Innovator looking to build Deep-tech Startup",
-        description: "Lorem ipsum dolor sit amet, consectetur ",
+        description: "We are incubator. We love building great brands & digital experiences.",
     },
     {
         id: 2,
@@ -66,13 +66,13 @@ const Item = ({ heading, icon, image, description, text }) => (
     <>
         <div
             style={{
-                borderRadius: '2.27vw',
-                background: 'linear-gradient(134deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.09) 100%)',
-                boxShadow: '0px 0px 50px -25px rgba(0, 0, 0, 0.50)',
-                backdropFilter: 'blur(50px)',
-                height: "23.5vw",
-                width:'19vw',
+                background:
+                    "linear-gradient(108.22deg, rgba(255, 255, 255, 0.45) 2.34%, rgba(255, 255, 255, 0.09) 100%)",
+                boxShadow: "0px 0px 50px -25px rgba(0, 0, 0, 0.5)",
+                backdropFilter: "blur(2.27vw)",
+                height: "24vw",
                 padding: "1vw 1.5vw",
+                borderRadius: "2.27vw",
                 transition: "transform 0.3s, box-shadow 0.3s", // Add transition for smooth animation
                 transformOrigin: "center", // Set the transform origin to the center
                 transform: "scale(1)", // Initial scale value
@@ -194,15 +194,15 @@ function Home() {
 
 
     useEffect(() => {
-        fetch('http://localhost:3002/api/patents')
+        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:4000/patents/patents')
             .then(response => response.json())
             .then(data => {
                 // Filter out centers with valid Est_Year values
-                const validCenters = data.filter(center => center.YearofGrant);
+                const validCenters = data.filter(center => center.Published_Date);
 
                 if (validCenters.length > 0) {
                     // Sort the valid centers array based on the Est_Year field in descending order
-                    const sortedCenters = validCenters.sort((a, b) => b.YearofGrant - a.YearofGrant);
+                    const sortedCenters = validCenters.sort((a, b) => b.Published_Date - a.Published_Date);
                     // Get the top 10 centers from the sorted array or all centers if there are fewer than 10
                     const top10Centers = sortedCenters.slice(0, Math.min(sortedCenters.length, 10));
                     // Select a random center from the top 10
@@ -210,7 +210,7 @@ function Home() {
                     const randomCenter = top10Centers[randomIndex];
                     // Update the state with the selected center
                     setpatent(randomCenter);
-                    const monthsDifference = calculateMonthsDifference(randomCenter.YearofGrant, new Date());
+                    const monthsDifference = calculateMonthsDifference(randomCenter.Published_Date, new Date());
                     let ageText;
                     if (monthsDifference < 12) {
                         ageText = `${monthsDifference} Months Old`;
@@ -289,20 +289,20 @@ function Home() {
             <div className="home" style={{ height: "auto", fontFamily: "Prompt", margin:'7.6% 0 0' }} >
                 <Chatbot />
                 <Container style={{
-                    maxWidth: "90%",
-                    height: "38.8vw",
-                    padding: "1.5vw 0 5vw 0",
-                    backgroundImage: `linear-gradient(180deg, rgba(73, 103, 128, 0.85) 5.49%, rgba(37, 67, 90, 0) 100%), url(${landing})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                   maxWidth: "90%",
+                   height: "45vw",
+                   padding: "1.5vw 0 5vw 0",
+                   backgroundImage: `linear-gradient(180deg, rgba(73, 103, 128, 0.85) 5.49%, rgba(37, 67, 90, 0) 100%), url(${landing})`,
+                   backgroundSize: "cover",
+                   backgroundPosition: "center",
                 }}>
 
                     <p className="text-center" style={{ fontFamily: 'Prompt', fontWeight: "600", fontSize: "3vw", color: "#FCFCFC", letterSpacing:'0.02em' }}>Technology Transfer Office</p>
-                    <Grid container spacing={2} justify="space-between" style={{ padding: "6vw 2.5vw 0", width: "100%" }}>
+                    <Grid container spacing={2} justify="space-between" style={{ padding: "9.5vw 2.5vw 0", width: "100%" }}>
                         <Grid item xs={3} sm={3} md={3} style={{ marginLeft: "6vw" }}>
-                            <Link to="/" style={{ textDecoration: 'none' }}>
+                            <a href="https://cie.iiit.ac.in/" target="_blank" style={{ textDecoration: 'none' }}>
                                 <Item {...items[0]} />
-                            </Link>
+                            </a>
                         </Grid>
                         <Grid item xs={3} sm={3} md={3}>
                             <Link to="./Technologylicensing" style={{ textDecoration: 'none' }}>
@@ -333,11 +333,13 @@ function Home() {
                         </Grid>
                         <Grid item xs={1} sm={1} md={1}></Grid>
                             <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
+                            <a href={`/ResearchLab/${centers.Research_Lab}/${centers.ResearchLabCode}`} style={{ textDecoration: 'none' }}>
                                 <p style={{ color: "#434343", fontWeight: 600, fontSize: "1.77vw" }}>{centers.Research_Lab}</p>
                                 <p style={{ color: "#989898", fontWeight: 500, fontSize: "1.32vw" }}>{monthsAgo1}</p>
                                 <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.32vw", paddingBottom: "1em" }} >
                                 {centers.Description}   
                                 </p>
+                            </a>
                                 <Link to="./ResearchLabs" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                                 <Button variant="contained" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.54vw", backgroundColor: '#09A5AF', color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 2.2vw", height: '2.5em' }}>
                                     Explore all Labs
@@ -356,14 +358,11 @@ function Home() {
 
 
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
-                            <p style={{ color: "#434343", fontWeight: 600, fontSize: "1.77vw" }}>
-                                {startup.StartUp_Name}
-                            </p>
+                        <a href={startup.Website} style={{ textDecoration: 'none' }} target="_blank">
+                            <p style={{ color: "#434343", fontWeight: 600, fontSize: "1.77vw" }}>{startup.StartUp_Name}</p>
                             <p style={{ color: "#989898", fontWeight: 500, fontSize: "1.32vw" }}>{monthsAgo2}</p>
-
-                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.32vw", paddingBottom: "1em" }} >
-                                {startup.Idea_Description}
-                                </p>
+                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.32vw", paddingBottom: "1em" }} >{startup.Idea_Description}</p>
+                        </a>
                             <Link to="./Startups" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                             <Button variant="contained" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.54vw", backgroundColor: '#09A5AF', color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 2.2vw", height: '2.5em' }}>
                                 Explore all startups
@@ -380,16 +379,13 @@ function Home() {
                             />
                         </Grid>
                     </Grid>
-
                     <Grid container spacing={0} style={{ paddingBottom: "7vw" }}>
                         <Grid item xs={6} sm={6} md={6}>
                             <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Patents</p>
                         </Grid>
                         <Grid item xs={6} sm={6} md={6} container justify="flex-end">
-
                         </Grid>
                         <Grid item xs={12} style={{ borderBottom: '0.27vw solid #535353', margin: '0.27vw 0' }}></Grid>
-
                         <Grid item xs={4} sm={4} md={4} style={{ paddingTop: "4em" }}>
                             <img
                                 src={t3}
@@ -398,7 +394,6 @@ function Home() {
                             />
                         </Grid>
                         <Grid item xs={1} sm={1} md={1}></Grid>
-
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
                             <p style={{ color: "#434343", fontWeight: 600, fontSize: "1.77vw", paddingBottom: "0em" }}>{patent.Title}</p>
                             <p style={{ color: "#989898", fontWeight: 500, fontSize: "1.32vw" }}>{monthsAgo3}</p>
@@ -413,23 +408,17 @@ function Home() {
                             </Link>
                         </Grid>
                     </Grid>
-
                     <Grid container spacing={0} style={{ paddingBottom: "7vw" }}>
                         <Grid item xs={6} sm={6} md={6}>
                             <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Products</p>
                         </Grid>
-
                         <Grid item xs={12} style={{ borderBottom: '0.27vw solid #535353', margin: '0.27vw 0' }}></Grid>
-
-
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
-                            <p style={{ color: "#434343", fontWeight: 600, fontSize: "1.77vw", paddingBottom: "0em" }}>
-                                {product.NameOfProduct}
-                            </p>
+                        <a href={`/Products/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none' }}>
+                            <p style={{ color: "#434343", fontWeight: 600, fontSize: "1.77vw", paddingBottom: "0em" }}>{product.NameOfProduct}</p>
                             <p style={{ color: "#989898", fontWeight: 500, fontSize: "1.32vw" }}>{monthsAgo4}</p>
-                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.32vw", paddingBottom: "1em" }} >
-                                {product.Description}
-                                </p>
+                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.32vw", paddingBottom: "1em" }} >{product.Description}</p>
+                        </a>
                             <Link to="./ProductLab_Products" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                               <Button variant="contained" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.54vw", backgroundColor: '#09A5AF', color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 2.2vw", height: '2.5em' }}>
                                 Explore all products
@@ -444,25 +433,19 @@ function Home() {
                                 style={{ width: '100%', height: 'auto' }}
                             />
                         </Grid>
-
                     </Grid>
-
                     <Grid container spacing={0} style={{ paddingBottom: "4vw" }}>
                         <Grid item xs={6} sm={6} md={6}>
-                            <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Quick Links</p>
+                            <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Contact us</p>
                         </Grid>
                         <Grid item xs={12} style={{ borderBottom: '0.27vw solid #535353', margin: '0.21vw 0' }}></Grid>
                     </Grid>
                 </Container>
-
                 <Container style={{ maxWidth: "80%", fontFamily: 'Prompt', padding: "0 0 7em 0" }}>
                     <ImageSlider />
                 </Container>
-
             </div >
-
         </>
-
     );
 }
 export default Home;

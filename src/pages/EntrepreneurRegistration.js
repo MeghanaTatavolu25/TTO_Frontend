@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import upArrow from  '../Img/uploadArrow.png'
 import axios from 'axios';
 
+
 const EnterpreneurRegistration = () => {
   const [startupName, setStartupName] = useState('');
   const [ideaDescription, setIdeaDescription] = useState('');
@@ -18,31 +19,39 @@ const EnterpreneurRegistration = () => {
   const [confirmation, setConfirmation] = useState(false);
 
   const handleSubmit = async (e) => {
-    try{
     e.preventDefault();
-      const newEntrepreneur ={
+    console.log('Form submitted!');
+    console.log('Startup Name:', startupName);
+    console.log('Idea Description:', ideaDescription);
+    // Rest of the code
+    
+    try {
+      const newEntrepreneur = {
         StartUp_Name: startupName,
-        Idea_Description:ideaDescription, 
-        Founder_Name:founderName,   
-        Co_Founder_Name:coFounderName,
-        Email_Id:email,        
-        Stage:stage,           
-        Contact:contact       
-
+        Idea_Description: ideaDescription,
+        Founder_Name: founderName,
+        Co_Founder_Name: coFounderName,
+        Email_Id: email,
+        Stage: stage,
+        Contact: contact
       };
-      axios.post('http://localhost:3002/admin/api/resources/Entrepreneur/actions/new', newEntrepreneur)
-      .then(function (res) {
-          window.location = "/EntrepreneurRegistration"
-      });
+  
+      await axios.post(
+        'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new',
+        newEntrepreneur);
+  
+      console.log('Form data submitted successfully!');
+      // Add any additional logic or notifications here
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+      // Handle any error cases here
     }
-    catch(e){
-      alert(e);
-    }
-  }
+  };
+  
 
   return (
     <>
-    <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding:" 10vw 3vw 0" }}>
+    <p style={{ fontFamily: "prompt", fontSize: "1.1vw", margin: "0", padding:"8vw 3vw 0" }}>
         <a  href="/" 
             style={{ textDecoration: 'none', color: '#9D9D9D'}} 
             onMouseEnter={(e) => {

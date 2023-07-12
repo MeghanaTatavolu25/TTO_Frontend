@@ -49,7 +49,7 @@ const JobSeekerRegistration = () => {
 
   return (
     <>
-    <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding:" 9vw 3vw 0" }}>
+    <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding:"8vw 3vw 0" }}>
         <a  href="/" 
             style={{ textDecoration: 'none', color: '#9D9D9D'}} 
             onMouseEnter={(e) => {
@@ -237,7 +237,7 @@ const JobSeekerRegistration = () => {
                     accept=".pdf,.ppt,.pptx,.doc,.docx"
                     onChange={(e) => setResume(e.target.files[0])}
                     autoComplete="off"
-                    required
+                    
                   />
                 </div>
               </div>

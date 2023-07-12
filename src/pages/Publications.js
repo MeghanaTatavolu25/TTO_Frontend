@@ -142,7 +142,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus , activeLab 
                     <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0', }}></Grid>
 
                 </p>
-                <div className="product-list" >
+                <div className="center-name" >
                 {patents.map(patent => (
                     <a href="#" key={patent.Center_Name}>
                     <p style={{ color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C", lineHeight: '1.6vw' }} onClick={() => setactiveLab(patent.Center_Name)}>
@@ -159,7 +159,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus , activeLab 
                     <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0', }}></Grid>
 
                 </p>
-                <div className="product-list" >
+                <div className="center-name" >
                 {patents.map(patent => (
                     <a href="#" key={patent.Center_Name}>
                     <p style={{ color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C", lineHeight: '1.6vw' }} onClick={() => setactiveLab(patent.Center_Name)}>
@@ -213,46 +213,6 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus , activeLab 
         </>
     )
 }
-
-
-import { FiChevronDown } from 'react-icons/fi';
-import { act } from "react-dom/test-utils"
-
-const DropdownMenu = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleToggle = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const handleOptionClick = (option) => {
-        // Handle the click event for each option
-        console.log('Clicked option:', option);
-    };
-
-    return (
-        <div className="dropdown-menu">
-            <div className="dropdown-toggle" onClick={handleToggle}>
-                Sort By <FiChevronDown />
-            </div>
-            {isOpen && (
-                <div className="dropdown-options">
-                    <div className="option" onClick={() => handleOptionClick('oldest')}>
-                        Oldest
-                    </div>
-                    <div className="option" onClick={() => handleOptionClick('newest')}>
-                        Newest
-                    </div>
-                    <div className="option" onClick={() => handleOptionClick('current')}>
-                        Current
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-
 
 
 function Component2(searchQuery) {

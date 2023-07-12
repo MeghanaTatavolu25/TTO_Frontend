@@ -16,8 +16,68 @@
 .sidebar-heading{
     font-weight: 400;
     font-size: 1.7vw;
-    line-height :2vw; 
+    line-height :2.2vw; 
 }
+.description-heading{
+color: #2C2C2C;
+font-size: 1.4vw;
+margin:0.5vw 0.2vw 0;
+font-family: Prompt;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+letter-spacing: -0.96px;
+cursor: pointer;
+}
+.description-heading:hover{
+  text-decoration: underline;
+}
+.description-heading.active {
+  color: #1369CB;
+}
+.projects-heading{
+color: #A6A6A6;
+margin:1.4vw 0.2vw 0;
+font-size: 1.2vw;
+font-family: Prompt;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.88px;
+}
+.line{
+  background: #535353;
+  height: 0.1vw;
+  width: 25vw;
+  text-align: left;
+  margin: 0.1vw 0.2vw 1.2vw;
+}
+.underline-on-hover:hover{
+  text-decoration: underline;
+}
+
+.products-list {
+  height: 50vh;
+  overflow-y: auto;
+}
+
+.products-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.products-list::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.products-list::-webkit-scrollbar-thumb {
+  background-color: #09A5AF;
+  border-radius: 5px;
+}
+
+.products-list::-webkit-scrollbar-thumb:hover {
+  background-color: #09A5AF;
+}
+
 
 .product.active {
   color: #1369CB;
@@ -25,10 +85,16 @@
 
 .content {
   width: 72.5%;
-  margin-left: 4vw;
+  margin:0.3vw 4vw 0;
 }
 
-
+.lab-description{
+  font-weight: 300;
+  font-size: 1vw;
+  line-height:1.5vw;
+  letter-spacing: -0.03em;
+  color: #2C2C2C;
+}
 .faculty-name,
 .keywords {
     font-weight: 300;
@@ -84,32 +150,4 @@
 .section:not(.active) {
     display: none;
   }
-
-.underline-on-hover:hover {
-    text-decoration: underline;
-  }
-
-  .product-list {
-    height: 22vh;
-    overflow-y: auto;
-  }
-  
-  .product-list::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .product-list::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-  
-  .product-list::-webkit-scrollbar-thumb {
-    background-color: #09A5AF;
-    border-radius: 5px;
-  }
-  
-  .product-list::-webkit-scrollbar-thumb:hover {
-    background-color: #09A5AF;
-  }
-  
-
 

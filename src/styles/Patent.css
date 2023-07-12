@@ -50,30 +50,30 @@
     margin-bottom: 20px;
   }
 }
-.product-list{
+.center-name{
 font-size:1.28vw;
 font-weight: 300;
 padding-top:0.2vw
 }
-.product-list {
+.center-name {
   height: 23vh;
   overflow-y: auto;
 }
 
-.product-list::-webkit-scrollbar {
+.center-name::-webkit-scrollbar {
   width: 8px;
 }
 
-.product-list::-webkit-scrollbar-track {
+.center-name::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-.product-list::-webkit-scrollbar-thumb {
+.center-name::-webkit-scrollbar-thumb {
   background-color: #09A5AF;
   border-radius: 5px;
 }
 
-.product-list::-webkit-scrollbar-thumb:hover {
+.center-name::-webkit-scrollbar-thumb:hover {
   background-color: #09A5AF;
 }
 

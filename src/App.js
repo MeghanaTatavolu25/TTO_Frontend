@@ -6,6 +6,7 @@ import ResearchLab from "./pages/ResearchLab"
 import Technologylicensing from "./pages/Technologylicensing"
 import Productize from "./pages/Productize"
 import Startups from "./pages/Startups"
+import Team from "./pages/Team"
 import ResearchLabs from "./pages/ResearchLabs"
 import ProductLab_Products from "./pages/ProductLab_Products"
 import Catalogue from "./pages/Catalogue"
@@ -52,6 +53,7 @@ function App() {
                     <Route path="/ResearchLabs" component={ResearchLabs} />
                     <Route path="/Products/:LabName/:ProductName" component={Products} />
                     <Route path="/ResearchLab/:LabName/:LabCode" component={ResearchLab} />
+                    <Route path="/Team" component={Team} />
                     <Route path="/JobSeekerRegistration"component={JobSeekerRegistration} />
                     <Route path="/IndustryRegistration"component={IndustryRegistration} />
                     <Route path="/EntrepreneurRegistration"component={EntrepreneurRegistration} />
