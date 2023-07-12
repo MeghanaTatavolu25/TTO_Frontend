@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import "../styles/products.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
+import icon from '../Img/icon.png'
 
 const ResearchLab = () => {
   const { LabName, LabCode } = useParams();
@@ -28,6 +29,16 @@ const ResearchLab = () => {
       })
       .catch(error => console.log(error));
   }, [LabName]);
+
+  const getMediaURL = (product) => {
+    if (product.ProductVideo?.key) {
+      return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductVideo.key}`;
+    } else if (product.ProductImage?.key) {
+      return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductImage.key}`;
+    } else {
+      return icon; // Return the default icon if both video and image are not available
+    }
+  };
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -120,7 +131,7 @@ const ResearchLab = () => {
                         className={`product ${selectedProduct === product ? 'active' : ''}`}
                         onClick={() => handleProductClick(product)}
                     >
-                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "1.1vw 0 1.1vw" }}>{product.NameOfProduct}</h3>
+                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}>{product.NameOfProduct}</h3>
                     </div>
                   </div>
             ))}
@@ -136,11 +147,15 @@ const ResearchLab = () => {
               {!showDescription && selectedProduct && (
                 <>
               <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfProduct}</h2>
-              <div className="video">
-                  <video controls style={{width:"63vw", height:"15.4vw", borderRadius: "8px",margin:"0vw 0 0.3vw"}}>
-                      <source src={selectedProduct.videoUrl} type="video/mp4" />
+                  <div className="video">
+                  {selectedProduct.ProductVideo?.key ? (
+                    <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>
+                      <source src={getMediaURL(selectedProduct)} type="video/mp4" />
                       Your browser does not support the video tag.
-                  </video>
+                    </video>
+                  ) : (
+                    <img src={getMediaURL(selectedProduct)} alt="Product" style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }} />
+                  )}
                   </div>
                   <div className="faculty-name">
                   Faculty Name: &nbsp;&nbsp;{selectedProduct.FacultyName}

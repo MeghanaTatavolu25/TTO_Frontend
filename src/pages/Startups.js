@@ -3,8 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../styles/Pagination.css"
 import Container from 'react-bootstrap/Container'
 import { Button, Row, Col } from 'react-bootstrap';
-import icon from '../Img/icon.png'
 import Select from 'react-select';
+
+import icon from '../Img/icon.png'; // Import the default icon image
 
 const Startups = () => {
   const [startups, setStartups] = useState([]);
@@ -24,6 +25,18 @@ const Startups = () => {
       });
   }, []);
 
+  const getStartupImageURL = (startup) => {
+    const baseS3URL = 'https://tto-asset.s3.ap-south-1.amazonaws.com/'; // Replace with your S3 base URL
+    const imageURL = `${baseS3URL}${startup.StartUpLogo?.key}`;
+  
+    if (imageURL.includes('DummyImage/')) {
+      return icon; // Return the default icon if imageURL contains 'DummyImage/'
+    }
+  
+    return imageURL; // Return the imageURL if it doesn't contain 'DummyImage/'
+  };
+
+
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -37,10 +50,10 @@ const Startups = () => {
     const sortedItems = [...startups];
     switch (sortOption) {
       case "newest":
-        sortedItems.sort((a, b) => b.DateCreated - a.DateCreated);
+        sortedItems.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         break;
       case "oldest":
-        sortedItems.sort((a, b) => a.DateCreated - b.DateCreated);
+        sortedItems.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
         break;
       case "az":
         sortedItems.sort((a, b) => a.StartUp_Name.localeCompare(b.StartUp_Name));
@@ -63,6 +76,7 @@ const Startups = () => {
     { value: "az", label: "A-Z" },
     { value: "za", label: "Z-A" },
   ];
+
 
   const customStyles = {
     control: (provided) => ({
@@ -138,12 +152,12 @@ const Startups = () => {
         {getPageItems().map(startup => (
           <Col key={startup._id} lg={4}>
             <a href={startup.Website} style={{ textDecoration: 'none' }} target="_blank">
-                <div style={{letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.5vw 1.5vw 1vw'}}>
+                <div style={{letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 1.5vw 2.8vw'}}>
                   <div className="content-container" style={{display: "flex", alignItems: "flex-start", margin:'0', width:'100%'}}>
-                    <div style={{width:'20%',height:'4.5vw'}}><img src={icon} alt="/" style={{width:'100%',height:'100%'}} /></div>
-                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin:'1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
+                    <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw'}}>
+                      <img src={getStartupImageURL(startup)} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>
+                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin:'0.5vw 0 1vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
                   </div>
-                  
                   <p style={{lineHeight: '1.2vw', marginLeft:'1.1vw',color: "#757575", fontSize: "1vw", fontWeight: 300,display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{startup.Idea_Description}</p>
                   <div style={{ marginTop:'20px',marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight:'0.6vw'}}>
                   <p>Founder - {startup.Founder_Name}</p>

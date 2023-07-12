@@ -4,12 +4,16 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome C
 import "../styles/Team.css"
 import Container from 'react-bootstrap/Container';
 import Prakash from '../TeamProfiles/Prakash.png'
-import meghana from '../TeamProfiles/meghana.jpg'
+import Ramesh_Loganathan from '../TeamProfiles/Ramesh_Loganathan.jpg'
+import Khoushik from '../TeamProfiles/Khoushik.png'
 import akanksha from '../TeamProfiles/akanksha.jpg'
-import pravince from '../TeamProfiles/pravince.jpg'
-import shashank from '../TeamProfiles/shashank.jpg'
 import anuradha from '../TeamProfiles/anuradha.jpg'
+import meghana from '../TeamProfiles/meghana.jpg'
+import Shuchi from '../TeamProfiles/Shuchi.jpg'
+import pravince from '../TeamProfiles/pravince.jpg'
 import aditya from '../TeamProfiles/aditya.jpg'
+import shashank from '../TeamProfiles/shashank.jpg'
+import Sairam from '../TeamProfiles/Sairam.jpg'
 import linkedin from '../Img/linkedin.png'
 import email from '../Img/email.png'
 import iiitfacultylink from '../Img/iiitfacultylink.png'
@@ -28,7 +32,24 @@ const Team = () => {
       facultyPage: "https://www.iiit.ac.in/people/faculty/Prakashyalla/"
     },
     {
-        id: 2,
+      id: 2,
+      name: "Ramesh Loganathan",
+      designation: "Professor of Practice, Co-innovations",
+      photo: Ramesh_Loganathan,
+      linkedin: "https://www.linkedin.com/in/rameshl/",
+      email: "ramesh.loganathan@iiit.ac.in",
+      facultyPage: "https://www.iiit.ac.in/people/faculty/ramesh.loganathan/"
+    },
+    {
+      id: 3,
+      name: "Khoushik Ananth",
+      designation: "Lead Technical Architect ",
+      photo: Khoushik,
+      linkedin: "https://www.linkedin.com/in/khoushik-reddy-ananth-41a3b0103",
+      email: "khoushik.a@research.iiit.ac.in",
+    },
+    {
+        id: 4,
         name: "Akanksha Srivastava",
         designation: "Product Manager",
         photo: akanksha,
@@ -37,7 +58,7 @@ const Team = () => {
         
       },
       {
-        id: 3,
+        id: 5,
         name: "Anuradha Mahapatra",
         designation: "UIUX Designer",
         photo:anuradha,
@@ -46,7 +67,7 @@ const Team = () => {
         
       },
       {
-        id: 4,
+        id: 6,
         name: "N D Meghana",
         designation: "Research Translation Engineer",
         photo:meghana,
@@ -55,7 +76,7 @@ const Team = () => {
         
       },
       {
-        id: 5,
+        id: 7,
         name: "Pravince Kumar",
         designation: "Technical Product Manager",
         photo: pravince,
@@ -64,7 +85,7 @@ const Team = () => {
         facultyPage: '#'
       },
       {
-        id: 6,
+        id: 8,
         name: "Aditya Thirani",
         designation: "Technical Product Manager",
         photo: aditya,
@@ -74,13 +95,20 @@ const Team = () => {
       },
       
       {
-        id: 7,
+        id: 9,
         name: "Shashank Nagumantri",
         designation: "Software Development Engineer",
         photo: shashank,
         linkedin: "https://www.linkedin.com/in/shashank-nagumantri",
         email: "shashankn7261@gmail.com",
-        
+      },
+      {
+        id: 10,
+        name: "Etikala sairam",
+        designation: "Product Engineer",
+        photo: Sairam,
+        linkedin: "https://www.linkedin.com/in/sairam-etikala-1b94b01b8",
+        email: "sairam.etikala.75@gmail.com",
       },
   ];
 
@@ -131,7 +159,7 @@ const Team = () => {
             <div className="profile" key={profile.id}>
               <div className="profile-photo" ><img src={profile.photo} alt="Profile" /></div>
               <p className="profile-name">{profile.name}</p>
-              <p className="profile-designation">{profile.designation}, IIIT Hyderbad</p>
+              <p className="profile-designation">{profile.designation}, IIIT Hyderabad</p>
               <div className="profile-icons">
                 <a href={profile.linkedin} className="profile-icon" target="_blank" rel="noopener noreferrer">
                   <img src={linkedin} />
