@@ -4,6 +4,7 @@ import "../styles/products.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import icon from '../Img/icon.png'
+import Chatbot from "../chatbot/Chatbot"
 
 const ResearchLab = () => {
   const { LabName, LabCode } = useParams();
@@ -29,7 +30,6 @@ const ResearchLab = () => {
       })
       .catch(error => console.log(error));
   }, [LabName]);
-
   const getMediaURL = (product) => {
     if (product.ProductVideo?.key) {
       return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductVideo.key}`;
@@ -39,7 +39,6 @@ const ResearchLab = () => {
       return icon; // Return the default icon if both video and image are not available
     }
   };
-
   const handleProductClick = (product) => {
     setSelectedProduct(product);
     setShowDescription(false);
@@ -57,6 +56,7 @@ const ResearchLab = () => {
 
   return (
     <>
+    <Chatbot />
       <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: "8vw 3vw 0" }}>
         <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
           onMouseEnter={(e) => {

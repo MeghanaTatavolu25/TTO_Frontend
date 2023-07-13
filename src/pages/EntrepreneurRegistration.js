@@ -5,6 +5,7 @@ import { Grid, Button, Divider } from '@material-ui/core';
 import Container from 'react-bootstrap/Container';
 import upArrow from  '../Img/uploadArrow.png'
 import axios from 'axios';
+import Chatbot from '../chatbot/Chatbot';
 
 
 const EnterpreneurRegistration = () => {
@@ -51,6 +52,7 @@ const EnterpreneurRegistration = () => {
 
   return (
     <>
+    <Chatbot />
     <p style={{ fontFamily: "prompt", fontSize: "1.1vw", margin: "0", padding:"8vw 3vw 0" }}>
         <a  href="/" 
             style={{ textDecoration: 'none', color: '#9D9D9D'}} 

@@ -5,7 +5,7 @@ import { Container, Button, Row, Col } from 'react-bootstrap';
 import { Paper, IconButton, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import icon from '../Img/icon.png';
-
+import Chatbot from "../chatbot/Chatbot"
 
 const ResearchLabs = () => {
   const [researchLabs, setResearchLabs] = useState([]);
@@ -46,6 +46,7 @@ const ResearchLabs = () => {
 
   return (
     <>
+    <Chatbot />
       <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: " 8vw 3vw 0" }}>
         <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
           onMouseEnter={(e) => {
@@ -106,15 +107,20 @@ const ResearchLabs = () => {
             getPageItems().map(research_lab => (
               <Col key={research_lab._id} lg={4}>
                 <a href={`/ResearchLab/${research_lab.Research_Lab}/${research_lab.ResearchLabCode}`} style={{ textDecoration: 'none' }}>
-                  <div className="content-container" style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.9vw 1.5vw 0.5vw' }}>
-                    <div style={{ display: "flex", width: '100%' }}>
-                      <div style={{ width: '20%', height: '4.5vw' }}>
-                        <img src={icon} alt="/" style={{ width: '100%', height: '100%' }} />
-                      </div>
-                      <h2  className="underline-on-hover"  style={{ width: '80%', color: "#353535", fontSize: "1.3vw", fontWeight: 300, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
+                  {/* <div className="content-container" style={{display: "flex", alignItems: "flex-start",letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.9vw 0 0.5vw'}}>
+                    <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw', marginTop:'0.5vw'}}>
+                      <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${research_lab.ResearchLogo.key}`} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>
+                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.3vw", fontWeight: 300, margin: '0.8vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{research_lab.Research_Lab}</h2>
+                  </div> */}
+                  <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.5vw 1.5vw 1.6vw' }}>
+                  <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0 1.2vw', width: '100%' }}>
+                    <div style={{ width: '20%', height: '4vw', margin:'0.8vw 0 0' }}>
+                    <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${research_lab.ResearchLogo.key}`} alt="/" style={{ width: '80%', height: '80%' }} />
                     </div>
-                    <p style={{ lineHeight: '1.2vw', fontWeight: 300, marginLeft: '1.1vw', color: "#757575", fontSize: "0.93vw", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Description}</p>
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
                   </div>
+                    <p style={{ lineHeight: '1.2vw', fontWeight: 300, marginLeft: '1.1vw', color: "#757575", fontSize: "0.93vw", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Description}</p>
+                </div>
                 </a>
               </Col>
             ))

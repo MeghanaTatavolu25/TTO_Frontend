@@ -4,7 +4,7 @@ import "../styles/Pagination.css"
 import Container from 'react-bootstrap/Container'
 import { Button, Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
-
+import Chatbot from "../chatbot/Chatbot"
 import icon from '../Img/icon.png'; // Import the default icon image
 
 const Startups = () => {
@@ -112,6 +112,7 @@ const Startups = () => {
 
   return (
     <>
+    <Chatbot />
       <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding:" 8vw 3vw 0" }}>
         <a  href="/" 
           style={{ textDecoration: 'none', color: '#9D9D9D'}} 

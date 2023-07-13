@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import calendarIcon from "../Img/calendar.png";
 import 'react-calendar/dist/Calendar.css';
 import SearchIcon from '@material-ui/icons/Search';
+import Chatbot from '../chatbot/Chatbot';
 
 
 const SearchBar = ({ setSearchQuery }) => {
@@ -324,6 +325,7 @@ function Patent() {
 
   return (
       <>
+      <Chatbot />
           <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "8vw 3vw 0"}}>
             <a href="/"
               style={{ textDecoration: 'none', color: '#9D9D9D'}} 

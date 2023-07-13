@@ -27,6 +27,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import upload from '../Img/upload.png'
 import axios from 'axios';
+import Chatbot from "../chatbot/Chatbot"
 
 // Modal.setAppElement('#yourAppElement');
 
@@ -115,6 +116,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus , activeLab 
 
     return (
         <>
+        <Chatbot />
             <div>
                 <SearchBar setSearchQuery={setSearchQuery} />
                 <Grid container spacing={1} style={{ paddingTop: "0.5vw" }}>

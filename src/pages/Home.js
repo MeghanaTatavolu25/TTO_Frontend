@@ -70,7 +70,8 @@ const Item = ({ heading, icon, image, description, text }) => (
                     "linear-gradient(108.22deg, rgba(255, 255, 255, 0.45) 2.34%, rgba(255, 255, 255, 0.09) 100%)",
                 boxShadow: "0px 0px 50px -25px rgba(0, 0, 0, 0.5)",
                 backdropFilter: "blur(2.27vw)",
-                height: "24vw",
+                height: "23.5vw",
+                width:'20vw',
                 padding: "1vw 1.5vw",
                 borderRadius: "2.27vw",
                 transition: "transform 0.3s, box-shadow 0.3s", // Add transition for smooth animation
@@ -290,15 +291,15 @@ function Home() {
                 <Chatbot />
                 <Container style={{
                    maxWidth: "90%",
-                   height: "45vw",
-                   padding: "1.5vw 0 5vw 0",
+                   height: "38vw",
+                   padding: "0.7vw 0 5vw 0",
                    backgroundImage: `linear-gradient(180deg, rgba(73, 103, 128, 0.85) 5.49%, rgba(37, 67, 90, 0) 100%), url(${landing})`,
                    backgroundSize: "cover",
                    backgroundPosition: "center",
                 }}>
 
-                    <p className="text-center" style={{ fontFamily: 'Prompt', fontWeight: "600", fontSize: "3vw", color: "#FCFCFC", letterSpacing:'0.02em' }}>Technology Transfer Office</p>
-                    <Grid container spacing={2} justify="space-between" style={{ padding: "9.5vw 2.5vw 0", width: "100%" }}>
+                    <p className="text-center" style={{ fontFamily: 'Prompt', fontWeight: "600", fontSize: "2.8vw", color: "#FCFCFC", letterSpacing:'0.02em' }}>Technology Transfer Office</p>
+                    <Grid container spacing={2} justify="space-between" style={{ padding: "6vw 2.5vw 0", width: "100%" }}>
                         <Grid item xs={3} sm={3} md={3} style={{ marginLeft: "6vw" }}>
                             <a href="https://cie.iiit.ac.in/" target="_blank" style={{ textDecoration: 'none' }}>
                                 <Item {...items[0]} />
@@ -317,10 +318,10 @@ function Home() {
                     </Grid>
                 </Container>
 
-                <Container style={{ maxWidth: "80%", fontFamily: 'Prompt', paddingTop: "1em" }}>
+                <Container style={{ maxWidth: "80%", fontFamily: 'Prompt', paddingTop: "2em" }}>
                     <Grid container spacing={0} style={{ paddingBottom: "7vw" }}>
                         <Grid item xs={6} sm={6} md={6}>
-                            <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Research Labs</p>
+                            <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Technology Catalogue</p>
                         </Grid>
                         <Grid item xs={12} style={{ borderBottom: '0.27vw solid #535353' }}></Grid>
                         <Grid item xs={4} sm={4} md={4} style={{ paddingTop: "4em" }}>
@@ -352,10 +353,8 @@ function Home() {
                             <p style={{ color: "#2C2C2C", fontSize: "2.87vw", fontWeight: 600 }}>Startups</p>
                         </Grid>
                         <Grid item xs={6} sm={6} md={6} container justify="flex-end">
-
                         </Grid>
                         <Grid item xs={12} style={{ borderBottom: '0.27vw solid #535353', margin: '0.27vw 0' }}></Grid>
-
 
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
                         <a href={startup.Website} style={{ textDecoration: 'none' }} target="_blank">

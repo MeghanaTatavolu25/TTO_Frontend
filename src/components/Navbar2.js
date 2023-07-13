@@ -56,7 +56,7 @@ const ResponsiveNavbar = () => {
           activeStyle={activeNavLinkStyle}
           target="_blank"
         >
-          API's
+          APIs
         </a>
         <a
           href="https://portal2022-rndshowcase.iiit.ac.in/expo-hall/"

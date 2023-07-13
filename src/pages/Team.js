@@ -1,136 +1,39 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome CSS
 import "../styles/Team.css"
 import Container from 'react-bootstrap/Container';
-import Prakash from '../TeamProfiles/Prakash.png'
-import Ramesh_Loganathan from '../TeamProfiles/Ramesh_Loganathan.jpg'
-import Khoushik from '../TeamProfiles/Khoushik.png'
-import akanksha from '../TeamProfiles/akanksha.jpg'
-import anuradha from '../TeamProfiles/anuradha.jpg'
-import meghana from '../TeamProfiles/meghana.jpg'
-import Shuchi from '../TeamProfiles/Shuchi.jpg'
-import pravince from '../TeamProfiles/pravince.jpg'
-import aditya from '../TeamProfiles/aditya.jpg'
-import shashank from '../TeamProfiles/shashank.jpg'
-import Sairam from '../TeamProfiles/Sairam.jpg'
+import axios from 'axios';
 import linkedin from '../Img/linkedin.png'
 import email from '../Img/email.png'
 import iiitfacultylink from '../Img/iiitfacultylink.png'
 import 'typeface-poppins';
+import Chatbot from "../chatbot/Chatbot"
 
 const Team = () => {
-  // Sample profile data
-  const profiles = [
-    {
-      id: 1,
-      name: "Prakash Yalla",
-      designation: "Professor",
-      photo: Prakash,
-      linkedin: "https://www.linkedin.com/in/veera-prakash-y-388b311/",
-      email: "prakash.yalla@iiit.ac.in",
-      facultyPage: "https://www.iiit.ac.in/people/faculty/Prakashyalla/"
-    },
-    {
-      id: 2,
-      name: "Ramesh Loganathan",
-      designation: "Professor of Practice, Co-innovations",
-      photo: Ramesh_Loganathan,
-      linkedin: "https://www.linkedin.com/in/rameshl/",
-      email: "ramesh.loganathan@iiit.ac.in",
-      facultyPage: "https://www.iiit.ac.in/people/faculty/ramesh.loganathan/"
-    },
-    {
-      id: 3,
-      name: "Khoushik Ananth",
-      designation: "Lead Technical Architect ",
-      photo: Khoushik,
-      linkedin: "https://www.linkedin.com/in/khoushik-reddy-ananth-41a3b0103",
-      email: "khoushik.a@research.iiit.ac.in",
-    },
-    {
-        id: 4,
-        name: "Akanksha Srivastava",
-        designation: "Product Manager",
-        photo: akanksha,
-        linkedin: "https://linkedin.com/in/akankshasrivastava",
-        email: "akankshasrivastava@research.iiit.ac.in",
-        
-      },
-      {
-        id: 5,
-        name: "Anuradha Mahapatra",
-        designation: "UIUX Designer",
-        photo:anuradha,
-        linkedin: "https://www.linkedin.com/in/anuradha-mahapatra-736466118/",
-        email: "Anuradha.mahapatra@research.iiit.ac.in",
-        
-      },
-      {
-        id: 6,
-        name: "N D Meghana",
-        designation: "Research Translation Engineer",
-        photo:meghana,
-        linkedin: "https://linkedin.com/in/meghana-tatavolu",
-        email: "meghana.tatavolu@research.iiit.ac.in",
-        
-      },
-      {
-        id: 7,
-        name: "Pravince Kumar",
-        designation: "Technical Product Manager",
-        photo: pravince,
-        linkedin: "https://www.linkedin.com/in/pravincesingh/",
-        email: "pravince.kumar@students.iiit.ac.in",
-        facultyPage: '#'
-      },
-      {
-        id: 8,
-        name: "Aditya Thirani",
-        designation: "Technical Product Manager",
-        photo: aditya,
-        linkedin: "https://www.linkedin.com/in/adityathirani/",
-        email: "aditya.thirani@students.iiit.ac.in",
-        
-      },
-      
-      {
-        id: 9,
-        name: "Shashank Nagumantri",
-        designation: "Software Development Engineer",
-        photo: shashank,
-        linkedin: "https://www.linkedin.com/in/shashank-nagumantri",
-        email: "shashankn7261@gmail.com",
-      },
-      {
-        id: 10,
-        name: "Etikala sairam",
-        designation: "Product Engineer",
-        photo: Sairam,
-        linkedin: "https://www.linkedin.com/in/sairam-etikala-1b94b01b8",
-        email: "sairam.etikala.75@gmail.com",
-      },
-  ];
+  const [teams, setTeams] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const profilesPerPage = 12;
 
-    // team-Pagination settings
-    const profilesPerPage = 12;
-    const [currentPage, setCurrentPage] = useState(1);
-  
-    // Calculate the index of the first and last profile for the current page
-    const indexOfLastProfile = currentPage * profilesPerPage;
-    const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
-    const currentProfiles = profiles.slice(indexOfFirstProfile, indexOfLastProfile);
-  
-    // Handle team-pagination button clicks
-    const handlePageClick = (pageNumber) => {
-      setCurrentPage(pageNumber);
-    };
-  
-    // Calculate total number of pages
-    const totalPages = Math.ceil(profiles.length / profilesPerPage);
+  useEffect(() => {
+    fetch('http://localhost:3002/api/teams')
+      .then(response => response.json())
+      .then(data => setTeams(data));
+  }, []);
+
+  const indexOfLastProfile = currentPage * profilesPerPage;
+  const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
+  const currentProfiles = teams.slice(indexOfFirstProfile, indexOfLastProfile);
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(teams.length / profilesPerPage);
 
   return (
     <>
+    <Chatbot />
       <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: "8vw 3vw 0" }}>
         <a  href="/" 
           style={{ textDecoration: 'none', color: '#9D9D9D'}} 
@@ -155,21 +58,25 @@ const Team = () => {
         <div style={{ background: "#343434", height:"0.4vh"}}></div>
 
         <div className="profile-container">
-            {currentProfiles.map((profile) => (
-            <div className="profile" key={profile.id}>
-              <div className="profile-photo" ><img src={profile.photo} alt="Profile" /></div>
-              <p className="profile-name">{profile.name}</p>
-              <p className="profile-designation">{profile.designation}, IIIT Hyderabad</p>
+          {currentProfiles.map((profile) => (
+            <div className="profile" key={profile._id}>
+              <div className="profile-photo">
+                <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${profile.ProfilePhoto.key}`} alt="Profile" />
+              </div>
+              <p className="profile-name">{profile.Name}</p>
+              <p className="profile-designation">{profile.Designation}, IIIT Hyderabad</p>
               <div className="profile-icons">
-                <a href={profile.linkedin} className="profile-icon" target="_blank" rel="noopener noreferrer">
-                  <img src={linkedin} />
+                <a href={profile.LinkedinId} className="profile-icon" target="_blank" rel="noopener noreferrer">
+                  <img src={linkedin} alt="LinkedIn" />
                 </a>
-                <a href={`mailto:${profile.email}`} className="profile-icon">
-                  <img src={email} />
+                <a href={`mailto:${profile.EmailId}`} className="profile-icon">
+                  <img src={email} alt="Email" />
                 </a>
-                <a href={profile.facultyPage} className="profile-icon" target="_blank" rel="noopener noreferrer">
-                  <img src={iiitfacultylink} />
-                </a>
+                {profile.FacultyUrl && (
+                  <a href={profile.FacultyUrl} className="profile-icon" target="_blank" rel="noopener noreferrer">
+                    <img src={iiitfacultylink} alt="Faculty Page" />
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -221,3 +128,4 @@ const Team = () => {
 }
 
 export default Team;
+
