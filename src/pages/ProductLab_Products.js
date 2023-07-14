@@ -101,12 +101,12 @@ const ProductLab_Products = () => {
         </div>
         <div style={{ background: "#343434", height: "0.2vw" }}></div>
       </Container>
-      <Container style={{ maxWidth: "82%", marginBottom: '2vw' }}>
+      <Container style={{ maxWidth: "82%", marginBottom: '1vw' }}>
         <Row>
           {getPageItems().map(product => (
             <Col key={product._id} lg={4}>
               <a href={`/Products/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none' }}>
-                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.5vw 1.5vw 2.5vw' }}>
+                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 1.5vw 3.5vw' }}>
                   <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0', width: '100%' }}>
                     <div style={{ width: '20%', height: '4vw' }}>
                     <img src={getProductImageURL(product)} alt="/" style={{ width: '100%', height: '100%' }} />

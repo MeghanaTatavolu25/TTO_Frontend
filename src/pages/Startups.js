@@ -148,12 +148,12 @@ const Startups = () => {
           <div style={{ background: "#343434", height:"0.2vw"}}></div>
         </Container>
 
-        <Container style={{ maxWidth: "82%", marginBottom:'2vw' }}>
+        <Container style={{ maxWidth: "82%", marginBottom:'1vw' }}>
         <Row>
         {getPageItems().map(startup => (
           <Col key={startup._id} lg={4}>
             <a href={startup.Website} style={{ textDecoration: 'none' }} target="_blank">
-                <div style={{letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 1.5vw 2.8vw'}}>
+                <div style={{letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.5vw 1.5vw 2.8vw'}}>
                   <div className="content-container" style={{display: "flex", alignItems: "flex-start", margin:'0', width:'100%'}}>
                     <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw'}}>
                       <img src={getStartupImageURL(startup)} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>

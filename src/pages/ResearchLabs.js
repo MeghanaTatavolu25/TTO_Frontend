@@ -101,7 +101,7 @@ const ResearchLabs = () => {
         <div style={{ background: "#343434", height: "0.2vw" }}></div>
       </Container>
 
-      <Container style={{ maxWidth: "82%", marginBottom: '2vw' }}>
+      <Container style={{ maxWidth: "82%", marginBottom: '1vw' }}>
         <Row>
           {getPageItems().length > 0 ? (
             getPageItems().map(research_lab => (
