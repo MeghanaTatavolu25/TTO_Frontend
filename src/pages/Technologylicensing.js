@@ -29,13 +29,13 @@ const Technologylicensing = () => {
             <Container style={{ maxWidth: "80%", fontFamily: 'Prompt', paddingTop: "1.2vw", letterSpacing:"0em"}}>
               <Grid container spacing={0} >
                     <Grid item xs={6} sm={6} md={6}>
-                        <p style={{color: "#343434", fontSize: "2.87vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Technology Licensing</p>
+                        <p style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Technology Licensing</p>
                     </Grid>
                     <Grid>
                       <div style={{ fontWeight: 400, fontFamily: 'Prompt', color: "#434343", fontSize: "0.98vw"}}>
                         <div style={{ background: "#343434", height:"0.2vw"}}></div>
-                        <h2 style={{ fontSize: "1.87vw", fontWeight: 400, margin:"1.2vw 0 0", color: "#2C2C2C"}}>Summary</h2>
-                        <p style={{ lineHeight:"1.2vw",margin:"0.2vw"}}>
+                        <h2 style={{ fontSize: "1.66vw", fontWeight: 400, margin:"1.2vw 0 0", color: "#2C2C2C"}}>Summary</h2>
+                        <p style={{ lineHeight:"1.1vw",margin:"0.2vw"}}>
                           IIIT-H emphasizes the importance of innovations and assists in transiting them into products, processes and services for both commercial benefits and the widest public good. Technology transfer and outreach at IIIT-H is facilitated by the Technology Transfer Office (TTO).TTO manages the transfer process of Intellectual Property (IP) produced in IIIT-H to appropriate bodies including industry, entrepreneurs, etc. and makes all attempts to commercialize the IP. It provides a platform where IP meets potential users and financiers. This in a way contributes towards IIIT-H's primary responsibility of fostering, stimulating and encouraging create activities in science and technology in the widest sense.TTO also manages Product Labs that develops market relevant product prototypes from research output of the Labs at our Institute. Product labs work with industry partners to develop relevant prototypes
                         </p>
                         <p style={{margin:"1vw 0.2vw 0"}}>IIIT-H technology can be leveraged through the following licensing models:</p>
@@ -48,7 +48,7 @@ const Technologylicensing = () => {
                             <span style={{ fontWeight: 500 }}>Non-exclusive license - </span>This grants to the licensee the right to use the IPRs, but on a non-exclusive basis. Sublicensing is not preferred.
                           </li>
                         </ul>
-                        <h2 style={{ fontSize: "1.87vw", fontWeight: 400, margin:"1.2vw 0 0 0", color: "#2C2C2C" }}>Conditions</h2>
+                        <h2 style={{ fontSize: "1.66vw", fontWeight: 400, margin:"1.2vw 0 0 0", color: "#2C2C2C" }}>Conditions</h2>
                         <ul style={{margin:"0.3vw -0.7vw 0", lineHeight:"1.6vw"}}>
                           <li>One time purchase</li>
                           <li>Revenue share (royalty)</li>

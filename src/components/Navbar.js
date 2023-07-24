@@ -14,13 +14,13 @@ const Navbar1 = () => {
       className="fixed-top"
     >
       {/* Navbar Brand (Image) */}
-      <Navbar.Brand href="/" style={{ width:'8.5vw',height:'5vw' }}>
+      <Navbar.Brand href="/" style={{ width:'7.5vw',height:'5vw' }}>
       {/* <ResponsiveImage src={Logo} alt="icon" maxWidth={159} maxHeight={80} /> */}
 
         <img
           src={Logo} // Update the image source as needed
           alt="Navbar Brand"
-          style={{ width:'100%',height:'4vw' }} // Adjust image styles as desired
+          style={{ width:'100%',height:'3.6vw' }} // Adjust image styles as desired
         />
       </Navbar.Brand>
 

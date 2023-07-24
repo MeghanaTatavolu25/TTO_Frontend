@@ -74,7 +74,7 @@ const JobSeeker = () => {
     <Container style={{ maxWidth: "76%", fontFamily: 'Prompt', paddingTop: "1.2vw", letterSpacing:"0em"}}>
       <Grid container spacing={0} >
         <Grid item xs={6} sm={6} md={6}>
-            <p style={{color: "#343434", fontSize: "2.4vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
+            <p style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
             
         </Grid>
         <div className="form-container">

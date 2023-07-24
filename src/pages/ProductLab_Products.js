@@ -88,10 +88,11 @@ const ProductLab_Products = () => {
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing: "0em" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ color: "#343434", fontSize: "2.5vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
+          <div style={{ color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
           <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
             <label htmlFor="sort-select" style={{ color: "#343434", fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
             <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{ color: "#1369CB", border: "none", outline: 0 }}>
+              <option >None</option>
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
               <option value="az">A-Z</option>
@@ -111,7 +112,7 @@ const ProductLab_Products = () => {
                     <div style={{ width: '20%', height: '4vw' }}>
                     <img src={getProductImageURL(product)} alt="/" style={{ width: '100%', height: '100%' }} />
                     </div>
-                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.1417vw", fontWeight: 400, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
                   </div>
                   <p style={{ lineHeight: '1.2vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1vw", fontWeight: 300, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
                   <div style={{ marginTop: '20px', marginLeft: '1.1vw', color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight: '0.6vw' }}>

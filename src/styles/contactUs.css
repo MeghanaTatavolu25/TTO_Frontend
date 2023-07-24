@@ -132,14 +132,14 @@
     justify-content: left;
     width: 3vw;
     height: 1vw;
-    border: 4px solid #818181;
+    border: 4px  #818181;
     margin: 0;
-    color: #09A5AF;
+    color: linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
   }
   /* Add the following styles for the checked state */
 .checkbox:checked {
-  background-color: #09A5AF;
-  border: 4px solid #09A5AF;
+  background-color:linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
+  border: 4px linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
 }
   
 
@@ -152,7 +152,7 @@
     text-align: center;
     width: 15vw;
     height:3vw;
-    background: #09A5AF;
+    background:linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
     border-radius: 30px;
     color: #fff;
     border: none;

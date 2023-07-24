@@ -38,7 +38,7 @@ export default function ImageSlider() {
                 <Paper
                   style={{
                     width: "23vw",
-                    height: "8vw",
+                    height: "9vw",
                     boxShadow: "0px 4px 10px 5px rgba(209, 209, 209, 0.63)",
                     margin: "0 0.8vw",
                     textDecoration:'none'
@@ -54,9 +54,9 @@ export default function ImageSlider() {
                     <div style={{ flex: 1,margin: "2vw 0.3vw 0" }}>
                       <img src={link.image} alt="lorem" style={{ width: "80%" }} />
                     </div>
-                    <div style={{ flex: 2 }}>
+                    <div style={{ flex: 3 }}>
                       <p style={{ fontSize: "1.6vw", color: "#434343", fontWeight: 600, margin:'1.5vw 0 0' }}>{link.title} </p>
-                      <p style={{ fontSize: "1vw", fontWeight: 400, color: "#434343", lineHeight:'1.5vw' }}>{link.content}</p>
+                      <p style={{ fontSize: "1.0417vw", fontWeight: 400, color: "#434343", lineHeight:'1.5vw' }}>{link.content}</p>
                     </div>
                   </div>
                 </Paper>

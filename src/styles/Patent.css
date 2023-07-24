@@ -182,7 +182,7 @@ padding-top:0.2vw
 }
 
 .patent-pagination-button.current {
-  background-color: #02858d;
+  background: linear-gradient(136deg, #21328F 3.00%, #3084BE 64.43%, #7D4ABC 100%);
   color: white;
   border: none;
 }

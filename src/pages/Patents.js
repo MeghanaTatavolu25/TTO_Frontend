@@ -61,7 +61,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
   const [patents, setPatents] = useState([]);
 
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:4000/patents/patents')
+    fetch('http://localhost:3002/api/patents')
       .then(response => response.json())
       .then(data => {
         const uniqueNames = Array.from(new Set(data.map(patent => patent.Center_Name)));
@@ -347,10 +347,11 @@ function Patent() {
           <Container style={{ maxWidth: "78%", margin:'auto', fontFamily: 'Prompt', padding: "1vw 0 0", letterSpacing:"0em"}}>
 
               <div style={{display: "flex"}}>
-              <div style={{color: "#343434", fontSize: "2.5vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Patents</div>
+              <div style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Patents</div>
               <div className='dropdown' style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
               <label htmlFor="sort" style={{ color: "#343434",fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
               <select value={sortOption} onChange={handleOptionClick} style={{ flex: '1', maxWidth: '300px', color: "#1369CB", border: "none", outline: 0 }}>
+                <option >None</option>
                 <option value="Newest">Newest</option>
                 <option value="Oldest">Oldest</option>
                 <option value="A-Z">A-Z</option>

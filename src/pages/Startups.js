@@ -71,6 +71,7 @@ const Startups = () => {
   };
 
   const sortOptions = [
+    {value:"none", label:"None"},
     { value: "newest", label: "Newest" },
     { value: "oldest", label: "Oldest" },
     { value: "az", label: "A-Z" },
@@ -131,7 +132,7 @@ const Startups = () => {
       </p>
         <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing:"0em"}}>
           <div style={{display: "flex"}}>
-            <div style={{color: "#343434", fontSize: "2.5vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Startups</div>
+            <div style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Startups</div>
             <div className='dropdown' style={{ display:'flex',fontSize: "1.4vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width:'23%'}}>
               <label htmlFor="sort" style={{ color: "#343434",fontSize: "1.4vw", flexBasis:'50%', textAlign:'right' }}>Sort By :&nbsp;</label>
               <Select
@@ -157,14 +158,14 @@ const Startups = () => {
                   <div className="content-container" style={{display: "flex", alignItems: "flex-start", margin:'0', width:'100%'}}>
                     <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw'}}>
                       <img src={getStartupImageURL(startup)} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>
-                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin:'0.5vw 0 1vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
+                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.1417vw", fontWeight: 400, margin:'0.5vw 0 1vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
                   </div>
                   <p style={{lineHeight: '1.2vw', marginLeft:'1.1vw',color: "#757575", fontSize: "1vw", fontWeight: 300,display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{startup.Idea_Description}</p>
                   <div style={{ marginTop:'20px',marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight:'0.6vw',textDecoration: 'none' }}>
                     <p>Founder - {startup.Founder_Name}</p>
                     <p>Professor - {startup.Professor_Name}</p>
                     <a href={`/ResearchLab/${startup.Centre_Name}/${startup.Centre_Code}`} >
-                    <p style={{lineHeight:'1.2vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span>{startup.Centre_Name}</span></p>
+                    <p style={{lineHeight:'1vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span>{startup.Centre_Name}</span></p>
                     </a>
                   </div>
                 </div>

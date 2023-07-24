@@ -11,7 +11,7 @@ const ResponsiveNavbar = () => {
     >
       <Nav
         className="mx-auto d-flex justify-content-center"
-        style={{ gap: '5.5vw', fontSize: '1.5vw' }}
+        style={{ gap: '5.5vw' }}
       >
         <NavLink
           exact
@@ -29,19 +29,26 @@ const ResponsiveNavbar = () => {
           Technology Catalogue
         </NavLink>
         <NavLink
+          to="/Startups"
+          style={navLinkStyle}
+          activeStyle={activeNavLinkStyle}
+        >
+          Startups
+        </NavLink>
+        <NavLink
           to="/patents"
           style={navLinkStyle}
           activeStyle={activeNavLinkStyle}
         >
           Patent
         </NavLink>
-        {/* <NavLink
-          to="/publications"
+        <NavLink
+          to="/ProductLab_Products"
           style={navLinkStyle}
           activeStyle={activeNavLinkStyle}
         >
-          Publications
-        </NavLink> */}
+          Products
+        </NavLink>
         <a
           href="https://canvas.iiithcanvas.com/"
           style={navLinkStyle}
@@ -79,17 +86,17 @@ const ResponsiveNavbar = () => {
 };
 
 const navbarStyle = {
-  background: 'linear-gradient(90deg, #09A5AF 16.15%, #546B81 85.67%)',
+  background: 'linear-gradient(90deg, #21328F 0%, #3085BF 73.54%, #7D4ABC 100%)',
   height: '2.5vw',
   position: 'fixed',
-  marginTop: '4.5%',
+  marginTop: '4.3%',
   right: '0',
   left: '0',
   
 };
 
 const navLinkStyle = {
-  fontSize: '1.2vw',
+  fontSize: '1vw',
   fontFamily: 'Prompt',
   letterSpacing:'0.01em',
   color: '#FFFFFF',

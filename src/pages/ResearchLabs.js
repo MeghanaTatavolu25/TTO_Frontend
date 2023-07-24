@@ -63,7 +63,7 @@ const ResearchLabs = () => {
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing: "0em" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ color: "#343434", fontSize: "2.5vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "80%" }}>Technology Catalogue</div>
+          <div style={{ color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "80%" }}>Technology Catalogue</div>
           <div style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0 0 0.5vw", letterSpacing: "-0.04em", width: "20%" }}>
             <Paper
               elevation={0}
@@ -107,17 +107,12 @@ const ResearchLabs = () => {
             getPageItems().map(research_lab => (
               <Col key={research_lab._id} lg={4}>
                 <a href={`/ResearchLab/${research_lab.Research_Lab}/${research_lab.ResearchLabCode}`} style={{ textDecoration: 'none' }}>
-                  {/* <div className="content-container" style={{display: "flex", alignItems: "flex-start",letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.9vw 0 0.5vw'}}>
-                    <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw', marginTop:'0.5vw'}}>
-                      <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${research_lab.ResearchLogo.key}`} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>
-                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.3vw", fontWeight: 300, margin: '0.8vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{research_lab.Research_Lab}</h2>
-                  </div> */}
                   <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.5vw 1.5vw 1.6vw' }}>
                   <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0 1.2vw', width: '100%' }}>
                     <div style={{ width: '20%', height: '4vw', margin:'0.8vw 0 0' }}>
                     <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${research_lab.ResearchLogo.key}`} alt="/" style={{ width: '80%', height: '80%' }} />
                     </div>
-                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.15vw", fontWeight: 400, margin: '1.3vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
                   </div>
                     <p style={{ lineHeight: '1.2vw', fontWeight: 300, marginLeft: '1.1vw', color: "#757575", fontSize: "0.93vw", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Description}</p>
                 </div>
