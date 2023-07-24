@@ -27,7 +27,7 @@ const Products = () => {
       }, [LabName]);
 
     useEffect(() => {
-      fetch('http://localhost:3002/api/products')
+      fetch('http://localhost:3002/api/productlab')
         .then(response => response.json())
         .then(data => setProducts(data))
         .catch(error => console.log(error));
@@ -52,6 +52,7 @@ const Products = () => {
     };
   const handleProductClick = (product) => {
     setSelectedProduct(product);
+    setSelectedSection('overview');
     setShowDescription(false);
   };
   const handleDescriptionClick = () => {
@@ -209,30 +210,22 @@ const Products = () => {
                       </div>
                       </div>
                       <div className={`section ${selectedSection === 'overview' ? 'active' : ''}`} id="overview">
-                      <h3>Summary</h3>
-                      <p>{selectedProduct.Description}</p>
+                        <p>{selectedProduct.Description}</p>
                       </div>
                       <div className={`section ${selectedSection === 'technology' ? 'active' : ''}`} id="technology">
-                      <h3>Type of work</h3>
-                      <p>{selectedProduct.TypeOfWork}</p>
+                        <p>{selectedProduct.TypeOfWork}</p>
                       </div>
                       <div className={`section ${selectedSection === 'market-use-case' ? 'active' : ''}`} id="market-use-case">
-                      <h3>State of work</h3>
-                      <p>{selectedProduct.CurrentStateOfWork}</p>
+                        <p>{selectedProduct.CurrentStateOfWork}</p>
                       </div>
                       <div className={`section ${selectedSection === 'current-traction' ? 'active' : ''}`} id="current-traction">
-                      <h3>Potential Application</h3>
-                      <p>{selectedProduct.PotentialApplication}</p>
+                        <p>{selectedProduct.PotentialApplication}</p>
                       </div>
                       <div className={`section ${selectedSection === 'linked-patent' ? 'active' : ''}`} id="linked-patent">
-                      <h3>Related Publications</h3>
-                      <p>{selectedProduct.RelatedPublication}</p>
+                        <p>{selectedProduct.RelatedPublication}</p>
                       </div>
                       <div className={`section ${selectedSection === 'demo-link' ? 'active' : ''}`} id="demo-link">
-                      <h3>Demo Link</h3>
-                      <p>
-                          <a href={selectedProduct.DemoLink}>{selectedProduct.demoLink}</a>
-                      </p>
+                        <p><a href={selectedProduct.DemoLink}>{selectedProduct.demoLink}</a></p>
                       </div>
                     </>
                   )}

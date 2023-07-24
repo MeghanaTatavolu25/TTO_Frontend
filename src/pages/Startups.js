@@ -160,10 +160,12 @@ const Startups = () => {
                     <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.3vw", fontWeight: 400, margin:'0.5vw 0 1vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
                   </div>
                   <p style={{lineHeight: '1.2vw', marginLeft:'1.1vw',color: "#757575", fontSize: "1vw", fontWeight: 300,display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{startup.Idea_Description}</p>
-                  <div style={{ marginTop:'20px',marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight:'0.6vw'}}>
-                  <p>Founder - {startup.Founder_Name}</p>
-                  <p>Professor - {startup.Professor_Name}</p>
-                  <p>Center - {startup.Centre_Name}</p>
+                  <div style={{ marginTop:'20px',marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight:'0.6vw',textDecoration: 'none' }}>
+                    <p>Founder - {startup.Founder_Name}</p>
+                    <p>Professor - {startup.Professor_Name}</p>
+                    <a href={`/ResearchLab/${startup.Centre_Name}/${startup.Centre_Code}`} >
+                    <p style={{lineHeight:'1.2vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span>{startup.Centre_Name}</span></p>
+                    </a>
                   </div>
                 </div>
               </a>

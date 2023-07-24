@@ -90,9 +90,10 @@ const navbarStyle = {
 
 const navLinkStyle = {
   fontSize: '1.2vw',
-  fontFamily: 'Hahmlet',
+  fontFamily: 'Prompt',
+  letterSpacing:'0.01em',
   color: '#FFFFFF',
-  fontWeight: 500,
+  fontWeight: 400,
 };
 
 const activeNavLinkStyle = {

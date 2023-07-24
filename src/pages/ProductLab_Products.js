@@ -15,7 +15,7 @@ const ProductLab_Products = () => {
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/products')
+    fetch('http://localhost:3002/api/productlab')
       .then(response => response.json())
       .then(data => {
         setProducts(data);

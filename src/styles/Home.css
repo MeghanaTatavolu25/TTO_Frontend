@@ -55,23 +55,21 @@
 
 .myheading {
   font-weight: 500;
-  font-size: 1.6vw;
+  font-size: 1.4vw;
   color:#FFFFFF;
-  padding:2vw 0.5vw 0;
-  letter-spacing: -0.9px;
+  margin:2.5vw 0.5vw 0;
+  letter-spacing: -0.01em;
 }
 
 .mydescription {
-  font-size: 1.07vw;
+  font-size: 1vw;
   color: #FDFDFD;
   margin: 2.3vw 0.5vw 0;
-  font-family: Prompt;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.8px;
+  line-height: 1.3vw;
+  letter-spacing: -0.01em;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-Overflow: ellipsis;

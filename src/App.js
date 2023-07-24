@@ -21,9 +21,9 @@ import Publications from "./pages/Publications"
 import Randomtry from "./pages/use"
 import Footbar from "./Footer/Footbar"
 import AdminCatalogue from "./pages/AdminCatalogue"
-import JobSeekerRegistration from "./pages/JobSeekerRegistration"
-import EntrepreneurRegistration from "./pages/EntrepreneurRegistration"
-import IndustryRegistration from "./pages/IndustryRegistration"
+import JobSeeker from "./pages/JobSeeker"
+import Entrepreneur from "./pages/Entrepreneur"
+import Industry from "./pages/Industry"
 
 
 
@@ -54,9 +54,9 @@ function App() {
                     <Route path="/Products/:LabName/:ProductName" component={Products} />
                     <Route path="/ResearchLab/:LabName/:LabCode" component={ResearchLab} />
                     <Route path="/Team" component={Team} />
-                    <Route path="/JobSeekerRegistration"component={JobSeekerRegistration} />
-                    <Route path="/IndustryRegistration"component={IndustryRegistration} />
-                    <Route path="/EntrepreneurRegistration"component={EntrepreneurRegistration} />
+                    <Route path="/JobSeeker"component={JobSeeker} />
+                    <Route path="/Industry"component={Industry} />
+                    <Route path="/Entrepreneur"component={Entrepreneur} />
                     <Route path="/admin" component={AdminJS} />
                    
                     {/* <Route path="/chat" exact component={LoginPage} /> */}

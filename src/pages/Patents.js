@@ -82,33 +82,33 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         <SearchBar setSearchQuery={setSearchQuery} />
         <Grid container spacing={1} style={{ paddingTop: "0.5vw" }}>
           <Grid item xs={12} sm={12} md={12}>
-            <a href=""><p onClick={() => { setactiveLab(""); setactiveStatus(""); setSelectedStartDate(null); setSelectedEndDate(null); }} style={{ width: '100%', color: "#A0A0A0", fontSize: "1.3vw", fontWeight: 300 }}>Reset Filters</p></a>
+            <a href=""><p onClick={() => { setactiveLab(""); setactiveStatus(""); setSelectedStartDate(null); setSelectedEndDate(null); }} style={{ width: '100%', color: "#A0A0A0", fontSize: "1.2vw", fontWeight: 300 }}>Reset Filters</p></a>
           </Grid>
         </Grid>
-        <p style={{ color: '#2C2C2C', fontSize: "1.65vw", fontWeight: '400', paddingTop: "0.2vw" }}>
+        <p style={{ color: '#2C2C2C', fontSize: "1.55vw", fontWeight: '400', paddingTop: "0.2vw" }}>
           Patent Status
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
-        <div style={{ fontSize: "1.28vw", fontWeight: 300, lineHeight: '1.6vw' }}>
+        <div style={{ fontSize: "1.18vw", fontWeight: 300, lineHeight: '1.6vw' }}>
           <a href="#">
-            <p style={{ color: activeStatus === "filed" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "filed" ? "" : "filed")}>
+            <p style={{ color: activeStatus === "Filed" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Filed" ? "" : "Filed")}>
               Filed
             </p>
           </a>
           <a href="#">
-            <p style={{ color: activeStatus === "published" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "published" ? "" : "published")}>
+            <p style={{ color: activeStatus === "Published" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Published" ? "" : "Published")}>
               Published
             </p>
           </a>
           <a href="#">
-            <p style={{ color: activeStatus === "granted" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "granted" ? "" : "granted")}>
+            <p style={{ color: activeStatus === "Granted" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Granted" ? "" : "Granted")}>
               Granted
             </p>
           </a>
         </div>
       </div>
       <div>
-        <p style={{ color: '#2C2C2C', fontSize: "1.65vw", fontWeight: '400', paddingTop: "0.2vw" }}>
+        <p style={{ color: '#2C2C2C', fontSize: "1.55vw", fontWeight: '400', paddingTop: "0.2vw" }}>
           Research Lab
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0', }}></Grid>
         </p>
@@ -123,7 +123,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         </div>
       </div>
       <div>
-        <p style={{ color: '#2C2C2C', fontSize: "1.65vw", fontWeight: '400', paddingTop: "1vw" }}>
+        <p style={{ color: '#2C2C2C', fontSize: "1.55vw", fontWeight: '400', paddingTop: "1.5vw" }}>
           Search By Date
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
@@ -208,7 +208,7 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
 
   if (activeStatus) {
     filterPatents = filterPatents.filter(
-      patent => patent.PatentStatusComment.toLowerCase() === activeStatus
+      patent => patent.Status === activeStatus
     );
   }
 
@@ -247,16 +247,18 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
       <div>
         {currentPatents.map(result => (
           <Grid item xs={10} sm={10} md={10} style={{ paddingBottom: '2.6vw' }} key={result.id}>
-            <p style={{ fontWeight: '300', fontSize: '1.4vw' }}>
-              {result.PatentStatusComment} |{' '}
-              <span style={{ color: '#1191A3' }}>{result.Center_Name}</span> |{' '}
-              <span style={{ color: '#08C089' }}>{new Date(result.Published_Year).getFullYear()}</span>
+            <p style={{ fontWeight: '300', fontSize: '1.1vw' }}>
+              {result.Status} |{' '}
+              <span style={{ color: '#2C2C2C' }}>{result.Center_Name}</span> |{' '}
+              {isNaN(result.Published_Year) ? null : (
+                <span style={{ color: '#2C2C2C' }}>{new Date(result.Published_Year).getFullYear()}</span>
+              )}
             </p>
-            <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.63vw' }}>{result.Title}</p>
-            <p style={{ fontWeight: '300', color: '#525252', fontSize: '1.42vw' }}>
+            <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.33vw' }}>{result.Title}</p>
+            <p style={{ fontWeight: '300', color: '#525252', fontSize: '1.12vw' }}>
               Application/Patent No - {result.Patent_Number}, Application - {result.Application_Number}
             </p>
-            <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '1.22vw' }}>
+            <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '0.92vw' }}>
               {result.Faculty.map(result2 => (
                 <p>{result2}</p>
               ))}
@@ -349,7 +351,6 @@ function Patent() {
               <div className='dropdown' style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
               <label htmlFor="sort" style={{ color: "#343434",fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
               <select value={sortOption} onChange={handleOptionClick} style={{ flex: '1', maxWidth: '300px', color: "#1369CB", border: "none", outline: 0 }}>
-                <option disabled value="None">None</option>
                 <option value="Newest">Newest</option>
                 <option value="Oldest">Oldest</option>
                 <option value="A-Z">A-Z</option>

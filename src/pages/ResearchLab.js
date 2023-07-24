@@ -15,7 +15,7 @@ const ResearchLab = () => {
   const [labDescription, setLabDescription] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/products')
+    fetch('http://localhost:3002/api/technologies')
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.log(error));
@@ -41,6 +41,7 @@ const ResearchLab = () => {
   };
   const handleProductClick = (product) => {
     setSelectedProduct(product);
+    setSelectedSection('overview'); // Set selectedSection to 'overview' when clicking on a product
     setShowDescription(false);
   };
   const handleDescriptionClick = () => {
@@ -50,9 +51,6 @@ const ResearchLab = () => {
   const handleNavLinkClick = (section) => {
     setSelectedSection(section);
   };
-
-  // Filter the products based on the LabCode
-  // const filteredProducts = products.filter(product => product.CenterName === LabCode);
 
   return (
     <>
@@ -121,7 +119,7 @@ const ResearchLab = () => {
             >
             Description
           </div>
-          <div className="projects-heading"> Projects: </div>
+          <div className="projects-heading"> Technologies : </div>
           <div className="line"></div>
           <div className="products-list">
             {products.filter(product => product.CentreName === LabCode).map(product => (
@@ -207,30 +205,22 @@ const ResearchLab = () => {
                   </div>
                   </div>
                   <div className={`section ${selectedSection === 'overview' ? 'active' : ''}`} id="overview">
-                  <h3>Summary</h3>
-                  <p>{selectedProduct.Description}</p>
+                    <p>{selectedProduct.Description}</p>
                   </div>
                   <div className={`section ${selectedSection === 'technology' ? 'active' : ''}`} id="technology">
-                  <h3>Type of work</h3>
-                  <p>{selectedProduct.TypeOfWork}</p>
+                    <p>{selectedProduct.TypeOfWork}</p>
                   </div>
                   <div className={`section ${selectedSection === 'market-use-case' ? 'active' : ''}`} id="market-use-case">
-                  <h3>State of work</h3>
-                  <p>{selectedProduct.CurrentStateOfWork}</p>
+                    <p>{selectedProduct.CurrentStateOfWork}</p>
                   </div>
                   <div className={`section ${selectedSection === 'current-traction' ? 'active' : ''}`} id="current-traction">
-                  <h3>Potential Application</h3>
-                  <p>{selectedProduct.PotentialApplication}</p>
+                    <p>{selectedProduct.PotentialApplication}</p>
                   </div>
                   <div className={`section ${selectedSection === 'linked-patent' ? 'active' : ''}`} id="linked-patent">
-                  <h3>Related Publications</h3>
-                  <p>{selectedProduct.RelatedPublication}</p>
+                    <p>{selectedProduct.RelatedPublication}</p>
                   </div>
                   <div className={`section ${selectedSection === 'demo-link' ? 'active' : ''}`} id="demo-link">
-                  <h3>Demo Link</h3>
-                  <p>
-                      <a href={selectedProduct.DemoLink}>{selectedProduct.demoLink}</a>
-                  </p>
+                    <p><a href={selectedProduct.DemoLink}>{selectedProduct.demoLink}</a></p>
                   </div>
                 </>
               )}

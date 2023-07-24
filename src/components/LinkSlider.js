@@ -10,9 +10,9 @@ import t5 from '../Img/Icon1.png';
 import t6 from '../Img/icon2.png';
 
 const links = [
-  { id: 1, title: "Entrepreneur", content: "Want to build your startup? Need assistance? Contact us", image: t4, path: "/EntrepreneurRegistration" },
-  { id: 2, title: "Industry", content: "For technology licensing, contact us", image: t2, path: "/IndustryRegistration" },
-  { id: 3, title: "Job Seeker", content: "Find your next job at Product Labs. Contact us", image: t3, path: "/JobSeekerRegistration" }
+  { id: 1, title: "Entrepreneur", content: "Want to build your startup? Need assistance? Contact us", image: t4, path: "/Entrepreneur" },
+  { id: 2, title: "Industry", content: "For technology licensing, contact us", image: t2, path: "/Industry" },
+  { id: 3, title: "Job Seeker", content: "Find your next job at Product Labs. Contact us", image: t3, path: "/JobSeeker" }
 ];
 
 export default function ImageSlider() {
