@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import upArrow from  '../Img/uploadArrow.png'
 import axios from 'axios';
 import Chatbot from '../chatbot/Chatbot';
+import { useLocation } from 'react-router-dom'; 
 
 
 const Enterpreneur = () => {
@@ -17,12 +18,15 @@ const Enterpreneur = () => {
   const [helpNeed, setHelpNeed] = useState('');
   const [confirmation, setConfirmation] = useState(false);
 
+  const location = useLocation();
+  const authCookie = document.cookie.replace(/(?:(?:^|.*;\s*)adminjs\s*=\s*([^;]*).*$)|^.*$/, '$1');
+  const adminJsAuthQueryParam = `adminjs=${authCookie}`;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted!');
     console.log('Startup Name:', startupName);
     console.log('Problem Statement:', problemStatement);
-    // Rest of the code
     
     try {
       const newEntrepreneur = {
@@ -34,14 +38,17 @@ const Enterpreneur = () => {
         WhatHelpYouNeedFromiiit: helpNeed,
       };
       console.log(newEntrepreneur);
-  
-      await axios.post(
-        'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new',
-        newEntrepreneur);
-  
-      console.log('Form data submitted successfully!');
-      // Add any additional logic or notifications here
-    } catch (error) {
+   // Append the authentication cookie as a query parameter to the URL
+   const adminJsURL = 'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new';
+   const urlWithAuth = `${adminJsURL}?${adminJsAuthQueryParam}`;
+
+   await axios.post(urlWithAuth, newEntrepreneur).then(function (res) {
+     window.location = "/Entrepreneur";
+   });
+
+   console.log('Form data submitted successfully!');
+   // Add any additional logic or notifications here
+ } catch (error) {
       console.error('Error submitting form data:', error);
       // Handle any error cases here
     }

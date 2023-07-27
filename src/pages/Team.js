@@ -61,7 +61,9 @@ const Team = () => {
           {currentProfiles.map((profile) => (
             <div className="profile" key={profile._id}>
               <div className="profile-photo">
+              {profile.ProfilePhoto && profile.ProfilePhoto.key && (
                 <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${profile.ProfilePhoto.key}`} alt="Profile" />
+              )}
               </div>
               <p className="profile-name">{profile.Name}</p>
               <p className="profile-designation">{profile.Designation}, IIIT Hyderabad</p>
@@ -72,7 +74,8 @@ const Team = () => {
                 <a href={`mailto:${profile.EmailId}`} className="profile-icon">
                   <img src={email} alt="Email" />
                 </a>
-                {profile.FacultyUrl && (
+                {/* Add a conditional check before rendering the faculty URL icon */}
+                {(profile.FacultyUrl && typeof profile.FacultyUrl === 'string' && profile.FacultyUrl.startsWith('https')) && (
                   <a href={profile.FacultyUrl} className="profile-icon" target="_blank" rel="noopener noreferrer">
                     <img src={iiitfacultylink} alt="Faculty Page" />
                   </a>

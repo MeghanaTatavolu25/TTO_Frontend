@@ -20,37 +20,43 @@ const JobSeeker = () => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('file', resume); // Append the resume file to the form data
+      formData.append('file', resume);
+
+      // Upload resume to the file storage service (e.g., Amazon S3 or Google Cloud Storage)
+      const uploadResponse = await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set the correct content type for file uploads
+        },
+      });
+  
+      const { fileUrl, key, bucket, mimeType } = uploadResponse.data;
   
       const newJobSeeker = {
         Name: name,
         Position: position,
         Email_id: email,
-        Phone_Number: phoneNumber, // Correct the field name
+        Phone_Number: phoneNumber,
         Skills: skills,
         UploadResume: {
-          file: resume ? resume.name : '', // Set the file field with the resume file name
-          key: '',
-          bucket: '',
-          mimeType: resume ? resume.type : '', // Set the mimeType field with the resume file type
+          fileUrl: fileUrl,
+          key: key,
+          bucket: bucket,
+          mimeType: mimeType,
         },
       };
   
-      // Append the rest of the fields to the form data
-      for (const [key, value] of Object.entries(newJobSeeker)) {
-        if (key !== 'UploadResume') {
-          formData.append(key, value);
-        }
-      }
-  
-      await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', formData)
-        .then(function (res) {
-          console.log('success');
-        });
-    } catch (e) {
-      alert(e);
+      await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', newJobSeeker);
+      setConfirmation(false)
+      .then(function (res) {
+        window.location = "/JobSeeker"
+       });
+      
+      // ...
+    } catch (error) {
+      alert('An error occurred while uploading the resume.');
+      console.error(error);
     }
-  }
+  };
 
   return (
     <>
@@ -74,7 +80,7 @@ const JobSeeker = () => {
     <Container style={{ maxWidth: "76%", fontFamily: 'Prompt', paddingTop: "1.2vw", letterSpacing:"0em"}}>
       <Grid container spacing={0} >
         <Grid item xs={6} sm={6} md={6}>
-            <p style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
+            <p style={{color: "#343434", fontSize: "2.4vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
             
         </Grid>
         <div className="form-container">
