@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../styles/contactUs.css"
 import { Grid, Button, Divider } from '@material-ui/core';
@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import upArrow from  '../Img/uploadArrow.png'
 import axios from 'axios';
 import Chatbot from '../chatbot/Chatbot';
-import { useLocation } from 'react-router-dom'; 
 
 
 const Enterpreneur = () => {
@@ -18,16 +17,12 @@ const Enterpreneur = () => {
   const [helpNeed, setHelpNeed] = useState('');
   const [confirmation, setConfirmation] = useState(false);
 
-  const location = useLocation();
-  const authCookie = document.cookie.replace(/(?:(?:^|.*;\s*)adminjs\s*=\s*([^;]*).*$)|^.*$/, '$1');
-  const adminJsAuthQueryParam = `adminjs=${authCookie}`;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted!');
     console.log('Startup Name:', startupName);
     console.log('Problem Statement:', problemStatement);
-    
+
     try {
       const newEntrepreneur = {
         StartUp_Name: startupName,
@@ -38,23 +33,34 @@ const Enterpreneur = () => {
         WhatHelpYouNeedFromiiit: helpNeed,
       };
       console.log(newEntrepreneur);
-   // Append the authentication cookie as a query parameter to the URL
-   const adminJsURL = 'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new';
-   const urlWithAuth = `${adminJsURL}?${adminJsAuthQueryParam}`;
 
-   await axios.post(urlWithAuth, newEntrepreneur).then(function (res) {
-     window.location = "/Entrepreneur";
-   });
+      // Retrieve the authentication cookie from local storage
+      const authCookie = localStorage.getItem('authCookie');
 
-   console.log('Form data submitted successfully!');
-   // Add any additional logic or notifications here
- } catch (error) {
+      // Include the cookie in the request headers
+      const headers = {
+        'Content-Type': 'application/json',
+        Cookie: authCookie,
+      };
+
+      // Make the POST request using Axios
+      const response = await axios.post(
+        'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new',
+        newEntrepreneur,
+        { headers }
+      );
+
+      // Optionally, you can handle the response data
+      console.log('Form data submitted successfully!');
+      console.log(response.data);
+
+      // Redirect to the desired page or perform other actions after successful submission
+      window.location = "/Entrepreneur";
+    } catch (error) {
       console.error('Error submitting form data:', error);
       // Handle any error cases here
     }
   };
-  
-
   return (
     <>
     <Chatbot />
