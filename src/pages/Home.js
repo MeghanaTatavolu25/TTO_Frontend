@@ -106,7 +106,7 @@ function Home() {
     const [product,setproduct]=useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3002/api/researchlabs')
+        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
             .then(response => response.json())
             .then(data => {
                 // Filter out centers with valid Est_Year values
@@ -146,7 +146,7 @@ function Home() {
 
 
     useEffect(() => {
-        fetch('http://localhost:3002/api/startups')
+        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/startups')
             .then(response => response.json())
             .then(data => {
                 // Filter out centers with valid Est_Year values
@@ -228,7 +228,7 @@ function Home() {
 
 
     useEffect(() => {
-        fetch('http://localhost:3002/api/productlab')
+        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
             .then(response => response.json())
             .then(data => {
                 // Filter out centers with valid Est_Year values

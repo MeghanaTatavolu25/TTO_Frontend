@@ -20,7 +20,7 @@ const Footbar = () => {
 
           </div>
           <div style={{ paddingBottom: "1vw" }}>
-            <img src={mail_img} alt="icon" style={{width:'3vw', height:'6vh'}} />
+            <img src={mail_img} alt="icon" style={{width:'3vw', height:'3vw'}} />
 
             <span style={{ paddingLeft: "1.1vw", fontSize: "1.0417vw", color: "#FFFFFF" }}> www.tto.iiit.ac.in</span>
 

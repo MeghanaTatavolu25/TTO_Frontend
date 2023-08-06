@@ -15,12 +15,12 @@ const ResearchLab = () => {
   const [labDescription, setLabDescription] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/technologies')
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/technologies')
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.log(error));
 
-      fetch('http://localhost:3002/api/researchlabs')
+      fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
       .then(response => response.json())
       .then(data => {
         const matchingLab = data.find(lab => lab.Research_Lab === LabName);
@@ -96,14 +96,14 @@ const ResearchLab = () => {
             {!showDescription && (
               <>
                 <span style={{ color: '#9D9D9D' }}> / </span>
-                <span style={{ color: '#1F669F', fontWeight: 500 }}>{selectedProduct.NameOfProduct}</span>
+                <span style={{ color: '#1F669F', fontWeight: 500 }}>{selectedProduct.NameOfTechnology}</span>
               </>
             )}
           </>
         )}
         <script>
           function log() {
-            console.log("ss", products.NameOfProduct)
+            console.log("ss", products.NameOfTechnology)
           }
         </script>
       </p>
@@ -129,7 +129,7 @@ const ResearchLab = () => {
                         className={`product ${selectedProduct === product ? 'active' : ''}`}
                         onClick={() => handleProductClick(product)}
                     >
-                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}>{product.NameOfProduct}</h3>
+                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}>{product.NameOfTechnology}</h3>
                     </div>
                   </div>
             ))}
@@ -144,7 +144,7 @@ const ResearchLab = () => {
             )}
               {!showDescription && selectedProduct && (
                 <>
-              <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfProduct}</h2>
+              <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfTechnology}</h2>
                   <div className="video">
                   {selectedProduct.ProductVideo?.key ? (
                     <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>

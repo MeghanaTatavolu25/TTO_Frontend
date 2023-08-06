@@ -15,7 +15,7 @@ const Products = () => {
     const [labDescription, setLabDescription] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:3002/api/researchlabs')
+        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
           .then(response => response.json())
           .then(data => {
             const lab = data.find(researchLab => researchLab.Research_Lab === LabName);
@@ -27,7 +27,7 @@ const Products = () => {
       }, [LabName]);
 
     useEffect(() => {
-      fetch('http://localhost:3002/api/productlab')
+      fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
         .then(response => response.json())
         .then(data => setProducts(data))
         .catch(error => console.log(error));

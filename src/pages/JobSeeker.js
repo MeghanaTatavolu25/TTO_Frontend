@@ -13,50 +13,44 @@ const JobSeeker = () => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [skills, setSkills] = useState([]);
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState('');
   const [confirmation, setConfirmation] = useState(false);
+  const authToken = localStorage.getItem('authToken');
+
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('file', resume);
-
-      // Upload resume to the file storage service (e.g., Amazon S3 or Google Cloud Storage)
-      const uploadResponse = await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Set the correct content type for file uploads
-        },
-      });
+      e.preventDefault();
   
-      const { fileUrl, key, bucket, mimeType } = uploadResponse.data;
-  
+      // Create a simple JSON object with the form data
       const newJobSeeker = {
         Name: name,
         Position: position,
         Email_id: email,
         Phone_Number: phoneNumber,
-        Skills: skills,
-        UploadResume: {
-          fileUrl: fileUrl,
-          key: key,
-          bucket: bucket,
-          mimeType: mimeType,
-        },
+        Skills: skills.split(',').map((skill) => skill.trim()),
+       
       };
-  
-      await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', newJobSeeker);
-      setConfirmation(false)
-      .then(function (res) {
-        window.location = "/JobSeeker"
-       });
-      
-      // ...
-    } catch (error) {
-      alert('An error occurred while uploading the resume.');
-      console.error(error);
+      if (resume) {
+        newJobSeeker.UploadResume = {
+          file: resume.name, // Store the file name here
+          // Add other properties from the resume object if needed (e.g., key, bucket, mimeType)
+        };
+      }
+      // Make the POST request using Axios
+      await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', newJobSeeker, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        withCredentials: true,
+      });
+
+      // window.location = '/JobSeeker';
+    } catch (e) {
+      alert(e);
     }
   };
+  
 
   return (
     <>
@@ -80,7 +74,7 @@ const JobSeeker = () => {
     <Container style={{ maxWidth: "76%", fontFamily: 'Prompt', paddingTop: "1.2vw", letterSpacing:"0em"}}>
       <Grid container spacing={0} >
         <Grid item xs={6} sm={6} md={6}>
-            <p style={{color: "#343434", fontSize: "2.4vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
+            <p style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
             
         </Grid>
         <div className="form-container">
@@ -165,11 +159,11 @@ const JobSeeker = () => {
                 </label>
                 <input
                 className='input'
-                  type="text"
-                  id="skills"
-                  placeholder="Enter your skills"
-                  value={skills.join(",")}
-                  onChange={(e) => setSkills(e.target.value.split(","))}
+                type="text"
+                id="skills"
+                placeholder="Enter your skills (comma-separated)"
+                value={skills}
+                onChange={(e) => setSkills(e.target.value)}
                   autoComplete="off"
                   required
                 />

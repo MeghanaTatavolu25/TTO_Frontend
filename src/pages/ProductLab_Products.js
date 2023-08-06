@@ -15,7 +15,7 @@ const ProductLab_Products = () => {
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/productlab')
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
       .then(response => response.json())
       .then(data => {
         setProducts(data);
@@ -88,7 +88,7 @@ const ProductLab_Products = () => {
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing: "0em" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
+          <div style={{ color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
           <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
             <label htmlFor="sort-select" style={{ color: "#343434", fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
             <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{ color: "#1369CB", border: "none", outline: 0 }}>
@@ -107,14 +107,14 @@ const ProductLab_Products = () => {
           {getPageItems().map(product => (
             <Col key={product._id} lg={4}>
               <a href={`/Products/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none' }}>
-                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 1.5vw 3.5vw' }}>
+                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.1vw 1.5vw 2.2vw' }}>
                   <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0', width: '100%' }}>
                     <div style={{ width: '20%', height: '4vw' }}>
                     <img src={getProductImageURL(product)} alt="/" style={{ width: '100%', height: '100%' }} />
                     </div>
-                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.1417vw", fontWeight: 400, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.4vw", fontWeight: 600, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
                   </div>
-                  <p style={{ lineHeight: '1.2vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1vw", fontWeight: 300, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
+                  <p style={{ lineHeight: '1.2vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1.0417vw", fontWeight: 400, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
                   <div style={{ marginTop: '20px', marginLeft: '1.1vw', color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight: '0.6vw' }}>
                     <p>Professor - {product.Faculty_Name}</p>
                     <p>Center - {product.CentreName}</p>

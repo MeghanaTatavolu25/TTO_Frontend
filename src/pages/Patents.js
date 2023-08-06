@@ -61,7 +61,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
   const [patents, setPatents] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/patents')
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
       .then(response => response.json())
       .then(data => {
         const uniqueNames = Array.from(new Set(data.map(patent => patent.Center_Name)));
@@ -82,14 +82,14 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         <SearchBar setSearchQuery={setSearchQuery} />
         <Grid container spacing={1} style={{ paddingTop: "0.5vw" }}>
           <Grid item xs={12} sm={12} md={12}>
-            <a href=""><p onClick={() => { setactiveLab(""); setactiveStatus(""); setSelectedStartDate(null); setSelectedEndDate(null); }} style={{ width: '100%', color: "#A0A0A0", fontSize: "1.2vw", fontWeight: 300 }}>Reset Filters</p></a>
+            <a href=""><p onClick={() => { setactiveLab(""); setactiveStatus(""); setSelectedStartDate(null); setSelectedEndDate(null); }} style={{ width: '100%', color: "#A0A0A0", fontSize: "1.0417vw", fontWeight: 400 }}>Reset Filters</p></a>
           </Grid>
         </Grid>
-        <p style={{ color: '#2C2C2C', fontSize: "1.55vw", fontWeight: '400', paddingTop: "0.2vw" }}>
+        <p style={{ color: '#2C2C2C', fontSize: "1.66vw", fontWeight: '500', paddingTop: "0.2vw" }}>
           Patent Status
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
-        <div style={{ fontSize: "1.18vw", fontWeight: 300, lineHeight: '1.6vw' }}>
+        <div style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.6vw' }}>
           <a href="#">
             <p style={{ color: activeStatus === "Filed" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Filed" ? "" : "Filed")}>
               Filed
@@ -108,7 +108,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         </div>
       </div>
       <div>
-        <p style={{ color: '#2C2C2C', fontSize: "1.55vw", fontWeight: '400', paddingTop: "0.2vw" }}>
+        <p style={{ color: '#2C2C2C', fontSize: "1.66vw", fontWeight: '500', paddingTop: "0.2vw" }}>
           Research Lab
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0', }}></Grid>
         </p>
@@ -123,13 +123,13 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         </div>
       </div>
       <div>
-        <p style={{ color: '#2C2C2C', fontSize: "1.55vw", fontWeight: '400', paddingTop: "1.5vw" }}>
+        <p style={{ color: '#2C2C2C', fontSize: "1.66vw", fontWeight: '500', paddingTop: "1.5vw" }}>
           Search By Date
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
         <Grid container spacing={0}>
           <Grid item xs={12} sm={12} md={12} style={{ padding: "1vw 0 5vw 0" }}>
-            <Typography style={{ color: '#2C2C2C', fontSize: "0.97vw", fontWeight: '400', fontFamily: "Prompt" }}>Start Date</Typography>
+            <Typography style={{ color: '#2C2C2C', fontSize: "1.0417vw", fontWeight: '400', fontFamily: "Prompt" }}>Start Date</Typography>
             <div style={{ position: "relative", width: "100%" }}>
               <label style={{ position: "relative", width: "100%" }}>
                 <DatePicker
@@ -144,7 +144,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <Typography style={{ color: '#2C2C2C', fontSize: "0.97vw", fontWeight: '400', fontFamily: "Prompt" }}>End Date</Typography>
+            <Typography style={{ color: '#2C2C2C', fontSize: "1.0417vw", fontWeight: '400', fontFamily: "Prompt" }}>End Date</Typography>
             <div style={{ position: "relative", width: "100%" }}>
               <label style={{ position: "relative", width: "100%" }}>
                 <DatePicker
@@ -247,18 +247,18 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
       <div>
         {currentPatents.map(result => (
           <Grid item xs={10} sm={10} md={10} style={{ paddingBottom: '2.6vw' }} key={result.id}>
-            <p style={{ fontWeight: '300', fontSize: '1.1vw' }}>
+            <p style={{ fontWeight: '400', fontSize: '1.0417' }}>
               {result.Status} |{' '}
               <span style={{ color: '#2C2C2C' }}>{result.Center_Name}</span> |{' '}
               {isNaN(result.Published_Year) ? null : (
                 <span style={{ color: '#2C2C2C' }}>{new Date(result.Published_Year).getFullYear()}</span>
               )}
             </p>
-            <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.33vw' }}>{result.Title}</p>
-            <p style={{ fontWeight: '300', color: '#525252', fontSize: '1.12vw' }}>
+            <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.66vw' }}>{result.Title}</p>
+            <p style={{ fontWeight: '400', color: '#525252', fontSize: '1.0417vw' }}>
               Application/Patent No - {result.Patent_Number}, Application - {result.Application_Number}
             </p>
-            <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '0.92vw' }}>
+            <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '1.0417vw' }}>
               {result.Faculty.map(result2 => (
                 <p>{result2}</p>
               ))}
@@ -328,7 +328,7 @@ function Patent() {
   return (
       <>
       <Chatbot />
-          <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "8vw 3vw 0"}}>
+          <p style={{ fontFamily: "Montserrat", fontSize: "1.0417", margin: "8vw 3vw 0"}}>
             <a href="/"
               style={{ textDecoration: 'none', color: '#9D9D9D'}} 
               onMouseEnter={(e) => {
@@ -347,7 +347,7 @@ function Patent() {
           <Container style={{ maxWidth: "78%", margin:'auto', fontFamily: 'Prompt', padding: "1vw 0 0", letterSpacing:"0em"}}>
 
               <div style={{display: "flex"}}>
-              <div style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Patents</div>
+              <div style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Patents</div>
               <div className='dropdown' style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
               <label htmlFor="sort" style={{ color: "#343434",fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
               <select value={sortOption} onChange={handleOptionClick} style={{ flex: '1', maxWidth: '300px', color: "#1369CB", border: "none", outline: 0 }}>

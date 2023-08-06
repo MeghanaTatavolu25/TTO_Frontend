@@ -28,7 +28,7 @@ const Technologylicensing = () => {
             <Container style={{ maxWidth: "80%", fontFamily: 'Prompt', paddingTop: "1.2vw"}}>
               <Grid container spacing={0} >
                     <Grid item xs={6} sm={6} md={6}>
-                        <p style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0" }}>Product Labs</p>
+                        <p style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0" }}>Product Labs</p>
                     </Grid>
                     <Grid>
                       <div style={{ fontWeight: 400, fontFamily: 'Prompt', color: "#434343", fontSize: "0.92vw"}}>

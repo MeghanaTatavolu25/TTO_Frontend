@@ -15,7 +15,7 @@ const Industry = () => {
   const [contact, setContact] = useState('');
   const [query, setQuery] = useState('');
   const [confirmation, setConfirmation] = useState(false);
-
+  const authToken = localStorage.getItem('authToken');
   const handleSubmit = async (e) => {
     try{
     e.preventDefault();
@@ -28,7 +28,13 @@ const Industry = () => {
         Query:query   
 
       };
-      await axios.post('http://localhost:3002/admin/api/resources/Industry/actions/new', newIndustry)
+      await axios.post('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/admin/api/resources/Industry/actions/new', newIndustry,
+      {     
+        headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+      withCredentials: true, 
+     })
       .then(function (res) {
           window.location = "/Industry"
       });
@@ -60,7 +66,7 @@ const Industry = () => {
     <Container style={{ maxWidth: "76%", fontFamily: 'Prompt', paddingTop: "1.2vw", letterSpacing:"0em"}}>
         <Grid container spacing={0} >
             <Grid item xs={6} sm={6} md={6}>
-                <p style={{color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
+                <p style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em" }}>Contact us</p>
             </Grid>
             <div className="form-container">
                 <div style={{ background: "#343434", height:"0.15vw"}}></div>

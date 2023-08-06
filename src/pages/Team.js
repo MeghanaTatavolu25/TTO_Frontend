@@ -16,7 +16,7 @@ const Team = () => {
   const profilesPerPage = 12;
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/teams')
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/teams')
       .then(response => response.json())
       .then(data => setTeams(data));
   }, []);
@@ -53,7 +53,7 @@ const Team = () => {
       </p>
       <Container style={{ maxWidth: "80%", fontFamily: 'Poppins', paddingTop: "1.5vw", letterSpacing: "0em" }}> 
         <h2 item xs={6} sm={6} md={6}>
-          <p style={{ color: "#343434", fontSize: "2.87vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Meet our team</p>
+          <p style={{ color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em" }}>Meet our team</p>
         </h2>
         <div style={{ background: "#343434", height:"0.4vh"}}></div>
 

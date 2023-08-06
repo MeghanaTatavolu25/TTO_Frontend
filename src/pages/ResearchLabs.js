@@ -15,7 +15,7 @@ const ResearchLabs = () => {
   const totalPages = Math.ceil(researchLabs.length / itemsPerPage);
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/researchlabs')
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
       .then(response => response.json())
       .then(data => {
         setResearchLabs(data);
@@ -63,7 +63,7 @@ const ResearchLabs = () => {
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing: "0em" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ color: "#343434", fontSize: "2.4017vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "80%" }}>Technology Catalogue</div>
+          <div style={{ color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing: "-0.04em", width: "80%" }}>Technology Catalogue</div>
           <div style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0 0 0.5vw", letterSpacing: "-0.04em", width: "20%" }}>
             <Paper
               elevation={0}
@@ -112,9 +112,9 @@ const ResearchLabs = () => {
                     <div style={{ width: '20%', height: '4vw', margin:'0.8vw 0 0' }}>
                     <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${research_lab.ResearchLogo.key}`} alt="/" style={{ width: '80%', height: '80%' }} />
                     </div>
-                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.15vw", fontWeight: 400, margin: '1.3vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "gray", fontSize: "1.4vw", fontWeight: 600, margin: '1.3vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
                   </div>
-                    <p style={{ lineHeight: '1.2vw', fontWeight: 300, marginLeft: '1.1vw', color: "#757575", fontSize: "0.93vw", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Description}</p>
+                    <p style={{ lineHeight: '1.2vw', fontWeight: 400, marginLeft: '1.1vw', color: "#757575", fontSize: "1.0417vw", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Description}</p>
                 </div>
                 </a>
               </Col>
