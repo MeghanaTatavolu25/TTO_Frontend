@@ -26,16 +26,16 @@ const Technologylicensing = () => {
                 <span style={{ color: '#1F669F', fontWeight: 500 }}> Technology Licensing
                 </span>
             </p>
-            <Container style={{ maxWidth: "80%", fontFamily: 'Prompt', paddingTop: "1.2vw", letterSpacing:"0em"}}>
+            <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', paddingTop: "1.5vw 0 0", letterSpacing:"0em"}}>
               <Grid container spacing={0} >
                     <Grid item xs={6} sm={6} md={6}>
-                        <p style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em" }}>Technology Licensing</p>
+                        <p style={{color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Technology Licensing</p>
                     </Grid>
                     <Grid>
                       <div style={{ fontWeight: 400, fontFamily: 'Prompt', color: "#434343", fontSize: "0.98vw"}}>
-                        <div style={{ background: "#343434", height:"0.2vw"}}></div>
+                        <div style={{background: "#343434", height: "0.156249vw", marginTop:'0.5vw' }}></div>
                         <h2 style={{ fontSize: "1.66vw", fontWeight: 400, margin:"1.2vw 0 0", color: "#2C2C2C"}}>Summary</h2>
-                        <p style={{ lineHeight:"1.1vw",margin:"0.2vw"}}>
+                        <p style={{ lineHeight:"1.1vw",margin:"0.2vw",}}>
                           IIIT-H emphasizes the importance of innovations and assists in transiting them into products, processes and services for both commercial benefits and the widest public good. Technology transfer and outreach at IIIT-H is facilitated by the Technology Transfer Office (TTO).TTO manages the transfer process of Intellectual Property (IP) produced in IIIT-H to appropriate bodies including industry, entrepreneurs, etc. and makes all attempts to commercialize the IP. It provides a platform where IP meets potential users and financiers. This in a way contributes towards IIIT-H's primary responsibility of fostering, stimulating and encouraging create activities in science and technology in the widest sense.TTO also manages Product Labs that develops market relevant product prototypes from research output of the Labs at our Institute. Product labs work with industry partners to develop relevant prototypes
                         </p>
                         <p style={{margin:"1vw 0.2vw 0"}}>IIIT-H technology can be leveraged through the following licensing models:</p>

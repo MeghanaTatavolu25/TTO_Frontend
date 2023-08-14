@@ -51,11 +51,11 @@ const Team = () => {
         <span style={{ color: '#1F669F', fontWeight: 500 }}> The Team
         </span>
       </p>
-      <Container style={{ maxWidth: "80%", fontFamily: 'Poppins', paddingTop: "1.5vw", letterSpacing: "0em" }}> 
+      <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing: "0em" }}> 
         <h2 item xs={6} sm={6} md={6}>
-          <p style={{ color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em" }}>Meet our team</p>
+          <p style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Meet our team</p>
         </h2>
-        <div style={{ background: "#343434", height:"0.4vh"}}></div>
+        <div style={{ background: "#343434",height: "0.156249vw", marginTop:'0.5vw'}}></div>
 
         <div className="profile-container">
           {currentProfiles.map((profile) => (

@@ -3,25 +3,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../styles/Pagination.css"
 import Container from 'react-bootstrap/Container'
 import { Button, Row, Col } from 'react-bootstrap';
-import Select from 'react-select';
 import Chatbot from "../chatbot/Chatbot"
+import LoadingSpinner from '../Img/loading.gif'; 
 import icon from '../Img/icon.png'; // Import the default icon image
 
 const Startups = () => {
   const [startups, setStartups] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortOption, setSortOption] = useState("newest");
+  const [sortOption, setSortOption] = useState("none");
   const itemsPerPage = 6;
   const totalPages = Math.ceil(startups.length / itemsPerPage);
+  const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/startups')
       .then(response => response.json())
       .then(data => {
         setStartups(data);
+        setIsLoading(false); // Set loading to false once data is fetched
       })
       .catch(error => {
         console.error('Error:', error);
+        setIsLoading(false); // Set loading to false on error as well
       });
   }, []);
 
@@ -41,8 +45,8 @@ const Startups = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleSortChange = (selectedOption) => {
-    setSortOption(selectedOption.value);
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
     setCurrentPage(1);
   };
 
@@ -64,51 +68,13 @@ const Startups = () => {
       default:
         break;
     }
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return sortedItems.slice(startIndex, endIndex);
-  };
-
-  const sortOptions = [
-    {value:"none", label:"None"},
-    { value: "newest", label: "Newest" },
-    { value: "oldest", label: "Oldest" },
-    { value: "az", label: "A-Z" },
-    { value: "za", label: "Z-A" },
-  ];
-
-
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      width:'100%',
-      borderRadius: '8px',
-      border: '0',
-      focus:'none',
-      outline: '0',
-      color: "#1369CB",
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      background:
-        'linear-gradient(0deg, #E8FCFD 0%, #E8FCFD 100%), #FFFBFE',
-      color: state.isSelected ? '#1C1B1F' : 'var(--m-3-sys-light-on-surface, #1C1B1F)',
-      fontSize: '16px',
-      fontFamily: 'Prompt',
-      fontStyle: 'normal',
-      fontWeight: '400',
-      letterSpacing: '0.5px',
-      cursor: 'pointer',
-      '&:hover': {
-        
-        color: '#919192',
-      },
-    }),
-    dropdownIndicator: (provided) => ({
-      ...provided,
-      color: '#1369CB',
-    }),
+  
+    // Create an array of 6 items, even if there are fewer startups
+    const pageItems = Array.from({ length: itemsPerPage }, (_, index) => sortedItems[startIndex + index] || null);
+  
+    return pageItems;
   };
 
   return (
@@ -130,48 +96,59 @@ const Startups = () => {
         </a>
         <span style={{ color: '#1F669F', fontWeight: 500 }}> Startup</span>
       </p>
-        <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing:"0em"}}>
+        <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing:"0em"}}>
           <div style={{display: "flex"}}>
-            <div style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Startups</div>
-            <div className='dropdown' style={{ display:'flex',fontSize: "1.4vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width:'23%'}}>
-              <label htmlFor="sort" style={{ color: "#343434",fontSize: "1.4vw", flexBasis:'50%', textAlign:'right' }}>Sort By :&nbsp;</label>
-              <Select
-                id="sort"
-                options={sortOptions}
-                value={sortOptions.find(option => option.value === sortOption)}
-                onChange={handleSortChange}
-                styles={customStyles}
-                isSearchable={false}
-                classNamePrefix="react-select"
-              />
+            <div style={{color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"100%"}}>All Startups</div>
+            <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "1vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
+            <label htmlFor="sort-select" style={{ color: "#343434", fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
+              <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{fontWeight: '400',letterSpacing: '0.02em',color: "#1369CB", border: "none", outline: 0, justifyContent:'right' }}>
+              <option >None</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="az">A-Z</option>
+              <option value="za">Z-A</option>
+            </select>
             </div>
           </div>
-          <div style={{ background: "#343434", height:"0.2vw"}}></div>
+          <div style={{ background: "#343434", height: "0.156249vw", marginTop:'0.5vw' }}></div>
         </Container>
 
-        <Container style={{ maxWidth: "82%", marginBottom:'1vw' }}>
+        <Container style={{ maxWidth: "82%", marginBottom:'2.5vw' }}>
         <Row>
-        {getPageItems().map(startup => (
-          <Col key={startup._id} lg={4}>
-            <a href={startup.Website} style={{ textDecoration: 'none' }} target="_blank">
-                <div style={{letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.1vw 1.5vw 2.2vw'}}>
-                  <div className="content-container" style={{display: "flex", alignItems: "flex-start", margin:'0', width:'100%'}}>
-                    <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw'}}>
-                      <img src={getStartupImageURL(startup)} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>
-                    <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.4vw", fontWeight: 600, margin:'0.5vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
+        {isLoading ? ( // Display loading symbol if isLoading is true
+            <div style={{height:'25vw'}}>
+              <img src={LoadingSpinner} alt="Loading" style={{width:'5vw', height:'5vw',margin:'12vw 36vw 0'}} />
+            </div>
+          ) : (
+            // Render startups when data is available
+          getPageItems().map((startup, index) => (
+          <div key={index} style={{ width: '25vw', margin: '0 1vw 0' }}>
+            {startup ? (
+              <a href={startup.Website} style={{ textDecoration: 'none', width:'80%'}} target="_blank">
+                  <div style={{letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 0 1.5vw', width:'90%'}}>
+                    <div className="content-container" style={{display: "flex", alignItems: "flex-start", margin:'0', width:'100%'}}>
+                      <div style={{width:'20%',height:'2.5vw', textAlign:'left', justifyContent:'left',marginLeft:'1.2vw'}}>
+                        <img src={getStartupImageURL(startup)} alt="/" style={{width:'3.5vw',height:'100%'}} /></div>
+                      <h2 className="underline-on-hover" style={{ width:'80%',color: "#353535", fontSize: "1.145826vw", fontWeight: 400, margin:'0.5vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis"}}>{startup.StartUp_Name}</h2>
+                    </div>
+                    <p style={{lineHeight: '1.2vw',marginTop:'0.3vw', marginBottom:'0.2vw', marginLeft:'1.1vw',color: "#757575", fontSize: "1vw", fontWeight: 400,display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{startup.Idea_Description}</p>
+                    <div style={{marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.8vw", fontWeight: 300,textDecoration: 'none' }}>
+                      <div style={{margin:'0 0 0.1vw'}}>Founder - {startup.Founder_Name}</div>
+                      <div style={{ margin:'0 0 0.4vw', lineHeight:'0.8vw' }}>Professor - {startup.Professor_Name}</div>
+                      <a href={`/ResearchLab/${startup.Centre_Name}/${startup.Centre_Code}`} style={{textDecoration:'none'}} >
+                      <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{startup.Centre_Name}</span></p>
+                      </a>
+                    </div>
                   </div>
-                  <p style={{lineHeight: '1.2vw', marginLeft:'1.1vw',color: "#757575", fontSize: "1.0417vw", fontWeight: 400,display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{startup.Idea_Description}</p>
-                  <div style={{ marginTop:'20px',marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight:'0.6vw',textDecoration: 'none' }}>
-                    <p>Founder - {startup.Founder_Name}</p>
-                    <p>Professor - {startup.Professor_Name}</p>
-                    <a href={`/ResearchLab/${startup.Centre_Name}/${startup.Centre_Code}`} >
-                    <p style={{lineHeight:'1vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span>{startup.Centre_Name}</span></p>
-                    </a>
-                  </div>
-                </div>
-              </a>
-          </Col>
-        ))}
+                </a>
+            ) : (
+              // Render empty space placeholder
+              <div style={{ width: '100%', height: '12.39vw' }} />
+            )}
+          </div>
+      ))
+      )}
+
         </Row>
       </Container>
   

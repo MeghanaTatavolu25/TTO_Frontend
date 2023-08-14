@@ -19,6 +19,15 @@ body {
   margin: 0;
 }
 
+/* Hide the vertical scrollbar, but keep the scrolling functionality */
+body::-webkit-scrollbar {
+  width: 0.5em; /* Adjust as needed */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hide the thumb */
+}
+
 .blue-cell {
   background-color: blue;
 }

@@ -28,7 +28,7 @@ const Industry = () => {
         Query:query   
 
       };
-      await axios.post('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/admin/api/resources/Industry/actions/new', newIndustry,
+      await axios.post('http:localhost:3002/admin/api/resources/Industry/actions/new', newIndustry,
       {     
         headers: {
         Authorization: `Bearer ${authToken}`,

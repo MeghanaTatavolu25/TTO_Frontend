@@ -16,11 +16,13 @@ const ResearchLab = () => {
 
   useEffect(() => {
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/technologies')
+    // fetch('http://localhost:3002/api/technologies')
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.log(error));
 
       fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
+      // fetch('http://localhost:3002/api/researchlabs')
       .then(response => response.json())
       .then(data => {
         const matchingLab = data.find(lab => lab.Research_Lab === LabName);
@@ -129,7 +131,7 @@ const ResearchLab = () => {
                         className={`product ${selectedProduct === product ? 'active' : ''}`}
                         onClick={() => handleProductClick(product)}
                     >
-                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}>{product.NameOfTechnology}</h3>
+                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.245vw", lineHeight: "1.3vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}>{product.NameOfTechnology}</h3>
                     </div>
                   </div>
             ))}
@@ -138,13 +140,13 @@ const ResearchLab = () => {
             <div className="content">
             {showDescription && (
               <>
-                <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>Description</h2>
+                <h2 style={{fontWeight: 500, fontSize: "1.56vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>Description</h2>
                 <p className="lab-description">{labDescription}</p>
               </>
             )}
               {!showDescription && selectedProduct && (
                 <>
-              <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfTechnology}</h2>
+              <h2 style={{fontWeight: 500, fontSize: "1.56vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfTechnology}</h2>
                   <div className="video">
                   {selectedProduct.ProductVideo?.key ? (
                     <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>

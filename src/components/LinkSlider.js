@@ -10,9 +10,9 @@ import t5 from '../Img/Icon1.png';
 import t6 from '../Img/icon2.png';
 
 const links = [
-  { id: 1, title: "Entrepreneur", content: "Want to build your startup? Need assistance? Contact us", image: t4, path: "/Entrepreneur" },
-  { id: 2, title: "Industry", content: "For technology licensing, contact us", image: t2, path: "/Industry" },
-  { id: 3, title: "Job Seeker", content: "Find your next job at Product Labs. Contact us", image: t3, path: "/JobSeeker" }
+  { id: 1, title: "Entrepreneur", content: "To get IIITH research support for your startup. Contact us.", image: t4, path: "/Entrepreneur" },
+  { id: 2, title: "Industry", content: "To license Technology from IIITH. Contact us.", image: t2, path: "/Industry" },
+  { id: 3, title: "Job Seeker", content: "To work at Product labs. contact us.", image: t3, path: "/JobSeeker" }
 ];
 
 export default function ImageSlider() {
@@ -56,7 +56,7 @@ export default function ImageSlider() {
                     </div>
                     <div style={{ flex: 3 }}>
                       <p style={{ fontSize: "1.6vw", color: "#434343", fontWeight: 600, margin:'1.5vw 0 0' }}>{link.title} </p>
-                      <p style={{ fontSize: "1.0417vw", fontWeight: 400, color: "#434343", lineHeight:'1.5vw' }}>{link.content}</p>
+                      <p style={{ fontSize: "1.0417vw", fontWeight: 400, color: "#434343", lineHeight:'1.5vw', width:'90%', margin:'left' }}>{link.content}</p>
                     </div>
                   </div>
                 </Paper>

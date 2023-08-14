@@ -15,12 +15,12 @@
 }
 .sidebar-heading{
     font-weight: 400;
-    font-size: 1.7vw;
-    line-height :2.2vw; 
+    font-size: 1.66vw;
+    line-height :2vw; 
 }
 .description-heading{
 color: #2C2C2C;
-font-size: 1.4vw;
+font-size: 1.245vw;
 margin:0.5vw 0.2vw 0;
 font-family: Prompt;
 font-style: normal;
@@ -38,7 +38,7 @@ cursor: pointer;
 .projects-heading{
 color: #A6A6A6;
 margin:1.4vw 0.2vw 0;
-font-size: 1.2vw;
+font-size: 1.146vw;
 font-family: Prompt;
 font-style: normal;
 font-weight: 400;
@@ -90,7 +90,7 @@ letter-spacing: -0.88px;
 
 .lab-description{
   font-weight: 300;
-  font-size: 1vw;
+  font-size: 1.0417vw;
   line-height:1.5vw;
   letter-spacing: -0.03em;
   color: #2C2C2C;
@@ -98,7 +98,7 @@ letter-spacing: -0.88px;
 .faculty-name,
 .keywords {
     font-weight: 300;
-    font-size: 1.1vw;
+    font-size: 1.0417vw;
     line-height :0.2vw;
     margin:1.7vw 0 1.7vw;
     color: #1A1A1A;
@@ -135,14 +135,14 @@ letter-spacing: -0.88px;
 
 .section h3 {
     font-weight: 400;
-    font-size: 1.4vw;
+    font-size: 1.0417vw;
     line-height: 2vw;
     letter-spacing: -0.02em;
     color: #1A1A1A;
 }
 .section p{
     font-weight: 300;
-    font-size: 1vw;
+    font-size: 1.0417vw;
     line-height:1.5vw;
     letter-spacing: -0.03em;
     color: #2C2C2C;

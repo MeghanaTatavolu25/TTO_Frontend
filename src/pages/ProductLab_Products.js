@@ -5,23 +5,28 @@ import Container from 'react-bootstrap/Container'
 import { Button, Row, Col } from 'react-bootstrap';
 import icon from '../Img/icon.png'
 import Chatbot from '../chatbot/Chatbot';
+import LoadingSpinner from '../Img/loading.gif'; 
 
 const ProductLab_Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortOption, setSortOption] = useState("newest");
+  const [sortOption, setSortOption] = useState("none");
   const itemsPerPage = 6;
   const filteredProducts = products.filter(product => product.CentreName === 'Product Lab');
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
-      .then(response => response.json())
+    // fetch('http://localhost:3002/api/productlab')
+    .then(response => response.json())
       .then(data => {
         setProducts(data);
+        setIsLoading(false);
       })
       .catch(error => {
         console.error('Error:', error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -45,7 +50,8 @@ const ProductLab_Products = () => {
   };
 
   const getPageItems = () => {
-    const sortedItems = filteredProducts.slice();     switch (sortOption) {
+    const sortedItems = filteredProducts.slice();     
+    switch (sortOption) {
       case "newest":
         sortedItems.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         break;
@@ -53,17 +59,21 @@ const ProductLab_Products = () => {
         sortedItems.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
         break;      
       case "az":
-        sortedItems.sort((a, b) => a.NameOfProduct.localeCompare(b.NameOfCompany));
+        sortedItems.sort((a, b) => a.NameOfProduct.localeCompare(b.NameOfProduct));
         break;
       case "za":
-        sortedItems.sort((a, b) => b.NameOfProduct.localeCompare(a.NameOfCompany));
+        sortedItems.sort((a, b) => b.NameOfProduct.localeCompare(a.NameOfProduct));
         break;
       default:
         break;
     }
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return sortedItems.slice(startIndex, endIndex);
+  
+    // Create an array of 6 items, even if there are fewer startups
+    const pageItems = Array.from({ length: itemsPerPage }, (_, index) => sortedItems[startIndex + index] || null);
+  
+    return pageItems;
   };
   
 
@@ -86,12 +96,12 @@ const ProductLab_Products = () => {
         <span style={{ color: '#1F669F', fontWeight: 500 }}> All Products
         </span>
       </p>
-      <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.7vw 0 0", letterSpacing: "0em" }}>
-        <div style={{ display: "flex" }}>
-          <div style={{ color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
-          <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
+      <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing: "0em" }}>
+        <div style={{ display: "flex", width:'100%' }}>
+          <div style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "100%" }}>All Products</div>
+          <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "1vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
             <label htmlFor="sort-select" style={{ color: "#343434", fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
-            <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{ color: "#1369CB", border: "none", outline: 0 }}>
+            <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{fontWeight: '400',letterSpacing: '0.02em',color: "#1369CB", border: "none", outline: 0, justifyContent:'right' }}>
               <option >None</option>
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
@@ -100,29 +110,43 @@ const ProductLab_Products = () => {
             </select>
           </div>
         </div>
-        <div style={{ background: "#343434", height: "0.2vw" }}></div>
+        <div style={{ background: "#343434", height: "0.156249vw", marginTop:'0.5vw' }}></div>
       </Container>
-      <Container style={{ maxWidth: "82%", marginBottom: '1vw' }}>
+      <Container style={{ maxWidth: "82%", marginBottom: '2.5vw' }}>
         <Row>
-          {getPageItems().map(product => (
-            <Col key={product._id} lg={4}>
-              <a href={`/Products/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none' }}>
-                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.1vw 1.5vw 2.2vw' }}>
+        {isLoading ? ( // Display loading symbol if isLoading is true
+            <div style={{height:'25vw'}}>
+              <img src={LoadingSpinner} alt="Loading" style={{width:'5vw', height:'5vw',margin:'12vw 36vw 0'}} />
+            </div>
+          ) : (
+            // Render startups when data is available
+          getPageItems().map((product, index) => (
+        <Col key={index} lg={4}>
+          {product ? (
+              <a href={`/Products/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none', width:'80%' }}>
+                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 0 2.5vw', width:'90%' }}>
                   <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0', width: '100%' }}>
-                    <div style={{ width: '20%', height: '4vw' }}>
-                    <img src={getProductImageURL(product)} alt="/" style={{ width: '100%', height: '100%' }} />
+                    <div style={{ width: '20%', height: '2.5vw' }}>
+                    <img src={getProductImageURL(product)} alt="/" style={{ width: '3.5vw', height: '100%' }} />
                     </div>
-                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.4vw", fontWeight: 600, margin: '1.1vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.145826vw", fontWeight: 400, margin: '0.5vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
                   </div>
-                  <p style={{ lineHeight: '1.2vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1.0417vw", fontWeight: 400, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
-                  <div style={{ marginTop: '20px', marginLeft: '1.1vw', color: "#A7A6A6", fontSize: "0.94vw", fontWeight: 300, lineHeight: '0.6vw' }}>
-                    <p>Professor - {product.Faculty_Name}</p>
-                    <p>Center - {product.CentreName}</p>
+                  <p style={{ lineHeight: '1.2vw',marginTop:'0.3vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1vw", fontWeight: 400, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
+                  <div style={{ marginLeft: '1.1vw', color: "#A7A6A6", fontSize: "0.8vw", fontWeight: 300 }}>
+                    <p style={{ lineHeight:'0.2vw'}}>Professor - {product.Faculty_Name}</p>
+                    <a href={`/ResearchLab/${product.Centre_Name}/${product.Centre_Code}`} style={{textDecoration:'none'}} >
+                    <p style={{lineHeight:'1vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{product.Centre_Name}</span></p>
+                    </a>
                   </div>
                 </div>
               </a>
-            </Col>
-          ))}
+           ) : (
+            // Render empty space placeholder
+            <div style={{ width: '100%', height: '12vw' }} />
+          )}
+        </Col>
+       ))
+       )}
         </Row>
       </Container>
 

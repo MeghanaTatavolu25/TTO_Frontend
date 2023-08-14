@@ -62,6 +62,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
 
   useEffect(() => {
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
+    // fetch('http://localhost:3002/api/patents')
       .then(response => response.json())
       .then(data => {
         const uniqueNames = Array.from(new Set(data.map(patent => patent.Center_Name)));
@@ -89,7 +90,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
           Patent Status
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
-        <div style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.6vw' }}>
+        <div style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.2vw' }}>
           <a href="#">
             <p style={{ color: activeStatus === "Filed" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Filed" ? "" : "Filed")}>
               Filed
@@ -115,7 +116,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         <div className="center-name" >
           {patents.map(patent => (
             <a href="#" key={patent.Center_Name}>
-              <p style={{ color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C", lineHeight: '1.6vw' }} onClick={() => setactiveLab(activeLab === patent.Center_Name ? "" : patent.Center_Name)}>
+              <p style={{ color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C", lineHeight: '1.2vw' }} onClick={() => setactiveLab(activeLab === patent.Center_Name ? "" : patent.Center_Name)}>
                 {patent.Center_Name}
               </p>
             </a>

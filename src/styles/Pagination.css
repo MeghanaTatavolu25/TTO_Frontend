@@ -1,3 +1,5 @@
+
+
 .pagination {
     display: flex;
     align-items: center;
@@ -57,5 +59,10 @@
     text-decoration: underline;
   }
   
-
-  
+.s-center:hover{
+  text-decoration: underline;
+  font-weight: 400;
+}
+.hidden-empty {
+  display: none;
+}

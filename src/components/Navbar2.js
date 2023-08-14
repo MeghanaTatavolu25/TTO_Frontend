@@ -21,7 +21,7 @@ const ResponsiveNavbar = () => {
         </NavLink>
         <NavLink to="/patents" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
           <span style={activeNavLinkUnderlineStyle}></span>
-          Patent
+          Patents
         </NavLink>
         <NavLink to="/ProductLab_Products" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
           <span style={activeNavLinkUnderlineStyle}></span>
@@ -47,7 +47,7 @@ const ResponsiveNavbar = () => {
 
 const navbarStyle = {
   background: 'linear-gradient(90deg, #21328F 0%, #3085BF 73.54%, #7D4ABC 100%)',
-  height: '2.5vw',
+  height: '2.8vw',
   position: 'fixed',
   marginTop: '4.3%',
   right: '0',
@@ -74,7 +74,7 @@ const activeNavLinkUnderlineStyle = {
   bottom: '-2px', // Adjust this value to control the distance between the text and the underline
   left: 0,
   width: '100%',
-  height: '3px',
+  height: '1.5px',
   borderRadius: '4px',
   background: '#D9D9D9',
 };

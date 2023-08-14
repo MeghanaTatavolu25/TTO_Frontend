@@ -28,8 +28,9 @@ const Footbar = () => {
 
         </Grid>
         <Grid item xs={6} sm={6} md={6} style={{ paddingTop: "4.5vw" }}>
-          <p style={{ color: "#FFFFFF", fontWeight: 500, fontSize: "2vw", paddingBottom: "0vw" }}>About the company</p>
-          <p style={{ color: "#FFFFFF", fontWeight: 300, fontSize: "1.0417vw" }} >The Product Labs will identify potential products based on market and strategy analysis, identify suitable research as available and then build the prototypes of these products along with associated businesses and market plans. The products will then be either licensed to larger enterprises or hover off as startups leveraging Entrepreneur in Residence (EIR)s. </p>
+          <p style={{ color: "#FFFFFF", fontWeight: 500, fontSize: "2vw", paddingBottom: "0vw" }}>About us</p>
+          <p style={{ color: "#FFFFFF", fontWeight: 300, fontSize: "1.0417vw" }} >We manages the transfer process of Intellectual Property (IP) produced in IIIT-H to appropriate bodies including industry, entrepreneurs, etc. and makes all attempts to commercialize the IP. We provides a platform where IP meets potential users and financiers. This in a way contributes towards IIIT-H's primary responsibility of fostering, stimulating and encouraging create activities in science and technology in the widest sense.
+ </p>
 
         </Grid>
       </Grid>

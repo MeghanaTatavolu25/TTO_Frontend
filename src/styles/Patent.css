@@ -61,7 +61,7 @@ padding-top:0.2vw
 }
 
 .center-name::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 .center-name::-webkit-scrollbar-track {
