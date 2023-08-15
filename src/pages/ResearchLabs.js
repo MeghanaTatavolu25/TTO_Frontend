@@ -53,7 +53,7 @@ const ResearchLabs = () => {
   return (
     <>
     <Chatbot />
-      <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: " 8vw 3vw 0" }}>
+      <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding: " 8vw 3vw 0" }}>
         <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
           onMouseEnter={(e) => {
             e.target.style.color = '#1369CB';
@@ -71,45 +71,42 @@ const ResearchLabs = () => {
         <div style={{ display: "flex", height:'4vw' }}>
           <div style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0.5vw 0 0", letterSpacing: "-0.04em", width: "63vw" }}>Technology Catalogue</div>
           <div style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0 0 0", letterSpacing: "-0.04em", width: "16vw" }}>
-          <Paper
-  elevation={0}
-  style={{
-    backgroundColor: '#EEEEEE',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0.3125vw',
-    borderRadius: '0.86vw',
-    maxHeight: '6vw',
-    margin:'0'
-  }}
->
-  <IconButton
-    type="submit"
-    aria-label="search"
-    style={{
-      padding: 10,
-    }}
-  >
-    <SearchIcon style={{ fontSize: "2vw" }} />
-  </IconButton>
-  <InputBase
-    placeholder="Search Labs"
-    style={{
-      fontSize: "1vw",
-      flex: 1,
-    }}
-    value={searchQuery}
-    onChange={handleSearchChange}
-    // Apply inline style to the placeholder
-    inputProps={{
-      style: {
-        '::placeholder': {
-          fontSize: '28px', // Adjust the font size as needed
-        },
-      },
-    }}
-  />
-</Paper>
+          <div className="search-container">
+        <Paper
+          elevation={0}
+          style={{
+            backgroundColor: '#EEEEEE',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0.3125vw',
+            borderRadius: '0.86vw',
+            maxHeight: '6vw',
+            margin:'0'
+          }}
+        >
+          <IconButton
+            type="submit"
+            aria-label="search"
+            style={{
+              padding: 10,
+            }}
+          >
+            <SearchIcon style={{ fontSize: "2vw" }} />
+          </IconButton>
+          <InputBase
+            placeholder="Search Labs"
+            style={{
+              fontSize: "1.245vw",
+              flex: 1,
+            }}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            // Add a class name for targeting the placeholder
+            classes={{ input: 'input-field' }}
+          />
+        </Paper>
+</div>
+
 
           </div>
         </div>

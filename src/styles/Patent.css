@@ -16,7 +16,11 @@
   margin-bottom: 10px;
 }
 
-
+/* styles for search bar placeholder */
+.input-field::placeholder {
+  font-size: 1.245vw;
+  color: #9D9D9D;
+}
 
 @media only screen and (min-width: 768px) {
   /* For screens larger than 768px */

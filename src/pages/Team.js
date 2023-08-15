@@ -9,17 +9,26 @@ import email from '../Img/email.png'
 import iiitfacultylink from '../Img/iiitfacultylink.png'
 import 'typeface-poppins';
 import Chatbot from "../chatbot/Chatbot"
+import LoadingSpinner from '../Img/loading.gif'; 
 
 const Team = () => {
   const [teams, setTeams] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const profilesPerPage = 12;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/teams')
       .then(response => response.json())
-      .then(data => setTeams(data));
-  }, []);
+      .then(data => {
+            setTeams(data);
+            setIsLoading(false); // Set loading to false once data is fetched
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      setIsLoading(false); // Set loading to false on error as well
+    });
+}, []);
 
   const indexOfLastProfile = currentPage * profilesPerPage;
   const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
@@ -34,7 +43,7 @@ const Team = () => {
   return (
     <>
     <Chatbot />
-      <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: "8vw 3vw 0" }}>
+      <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding: "8vw 3vw 0" }}>
         <a  href="/" 
           style={{ textDecoration: 'none', color: '#9D9D9D'}} 
           onMouseEnter={(e) => {
@@ -52,19 +61,28 @@ const Team = () => {
         </span>
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing: "0em" }}> 
-        <h2 item xs={6} sm={6} md={6}>
-          <p style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em" }}>Meet our team</p>
-        </h2>
-        <div style={{ background: "#343434",height: "0.156249vw", marginTop:'0.5vw'}}></div>
-
-        <div className="profile-container">
-          {currentProfiles.map((profile) => (
-            <div className="profile" key={profile._id}>
-              <div className="profile-photo">
-              {profile.ProfilePhoto && profile.ProfilePhoto.key && (
-                <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${profile.ProfilePhoto.key}`} alt="Profile" />
+      <div style={{ width:'100%' }}>
+          <div style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>Meet our team</div>
+        </div>
+        <div style={{ background: "#343434", height: "0.156249vw", marginTop:'0.5vw' }}></div>
+      <div className="profile-container">
+        {isLoading ? ( // Display loading symbol if isLoading is true
+          <div style={{ height: '25vw' }}>
+            <img src={LoadingSpinner} alt="Loading" style={{ width: '5vw', height: '5vw', margin: '12vw 36vw 0' }} />
+          </div>
+        ) : (
+          currentProfiles.map((profile, index) => (
+            <div className="profile" key={index}>
+              {profile ? (
+                <div className="profile-photo">
+                  {profile.ProfilePhoto && profile.ProfilePhoto.key && (
+                    <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${profile.ProfilePhoto.key}`} alt="Profile" />
+                  )}
+                </div>
+              ) : (
+                // Render empty space placeholder
+                <div style={{ width: '100%', height: '12.39vw' }} />
               )}
-              </div>
               <p className="profile-name">{profile.Name}</p>
               <p className="profile-designation">{profile.Designation}, IIIT Hyderabad</p>
               <div className="profile-icons">
@@ -75,15 +93,17 @@ const Team = () => {
                   <img src={email} alt="Email" />
                 </a>
                 {/* Add a conditional check before rendering the faculty URL icon */}
-                {(profile.FacultyUrl && typeof profile.FacultyUrl === 'string' && profile.FacultyUrl.startsWith('https')) && (
+                {profile.FacultyUrl && typeof profile.FacultyUrl === 'string' && profile.FacultyUrl.startsWith('https') && (
                   <a href={profile.FacultyUrl} className="profile-icon" target="_blank" rel="noopener noreferrer">
                     <img src={iiitfacultylink} alt="Faculty Page" />
                   </a>
                 )}
               </div>
             </div>
-          ))}
-        </div>
+          ))
+        )}
+      </div>
+
         {/* team-Pagination */}
         {totalPages > 1 && (
           <div className='team-pagination' style={{ fontFamily: "Inter" }}>

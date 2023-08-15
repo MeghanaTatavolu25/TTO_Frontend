@@ -9,7 +9,7 @@ const Technologylicensing = () => {
   return (
     <>
     <Chatbot />
-    <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding:" 8vw 3vw 0" }}>
+    <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding:" 8vw 3vw 0" }}>
                 <a  href="/" 
                   style={{ textDecoration: 'none', color: '#9D9D9D'}} 
                   onMouseEnter={(e) => {

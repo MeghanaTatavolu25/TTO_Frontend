@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import icon from '../Img/icon.png'
 import Chatbot from "../chatbot/Chatbot"
+import LoadingSpinner from '../Img/loading.gif'; 
 
 const ResearchLab = () => {
   const { LabName, LabCode } = useParams();
@@ -13,13 +14,21 @@ const ResearchLab = () => {
   const [selectedSection, setSelectedSection] = useState('overview');
   const [showDescription, setShowDescription] = useState(true);
   const [labDescription, setLabDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true); // Set loading to true before fetching data
+
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/technologies')
-    // fetch('http://localhost:3002/api/technologies')
       .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.log(error));
+      .then(data => {
+        setProducts(data);
+        setIsLoading(false); // Set loading to false once data is fetched
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setIsLoading(false); // Set loading to false on error as well
+      });
 
       fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
       // fetch('http://localhost:3002/api/researchlabs')
@@ -57,7 +66,7 @@ const ResearchLab = () => {
   return (
     <>
     <Chatbot />
-      <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: "8vw 3vw 0" }}>
+      <p style={{fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding: "8vw 3vw 0" }}>
         <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
           onMouseEnter={(e) => {
             e.target.style.color = '#1369CB';
@@ -124,17 +133,30 @@ const ResearchLab = () => {
           <div className="projects-heading"> Technologies : </div>
           <div className="line"></div>
           <div className="products-list">
-            {products.filter(product => product.CentreName === LabCode).map(product => (
-                <div key={product._id}>
+          {isLoading ? ( // Display loading symbol if isLoading is true
+              <div style={{ height: '25vw' }}>
+                <img src={LoadingSpinner} alt="Loading" style={{ width: '2.5vw', height: '2.5vw', margin: '10vw 10vw 0'  }} />
+              </div>
+            ) : (
+              products
+                .filter(product => product.CentreName === LabCode)
+                .map(product => (
+                  <div key={product._id}>
                     <div
-                        key={product._id}
-                        className={`product ${selectedProduct === product ? 'active' : ''}`}
-                        onClick={() => handleProductClick(product)}
+                      key={product._id}
+                      className={`product ${selectedProduct === product ? 'active' : ''}`}
+                      onClick={() => handleProductClick(product)}
                     >
-                        <h3  className="underline-on-hover" style={{ width: '23vw', fontWeight: 300, fontSize: "1.245vw", lineHeight: "1.3vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}>{product.NameOfTechnology}</h3>
+                      <h3
+                        className="underline-on-hover"
+                        style={{ width: '23vw', fontWeight: 300, fontSize: "1.245vw", lineHeight: "1.3vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}
+                      >
+                        {product.NameOfTechnology}
+                      </h3>
                     </div>
                   </div>
-            ))}
+                ))
+            )}
           </div>
         </div>
             <div className="content">
@@ -148,14 +170,24 @@ const ResearchLab = () => {
                 <>
               <h2 style={{fontWeight: 500, fontSize: "1.56vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfTechnology}</h2>
                   <div className="video">
-                  {selectedProduct.ProductVideo?.key ? (
-                    <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>
-                      <source src={getMediaURL(selectedProduct)} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <img src={getMediaURL(selectedProduct)} alt="Product" style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }} />
-                  )}
+                    {isLoading ? ( // Display loading symbol if isLoading is true
+                      <div style={{ height: '15.4vw', borderRadius: '8px', margin: '0vw 0 0.3vw' }}>
+                        <img src={LoadingSpinner} alt="Loading" style={{width: '3.5w', height: '3.5vw', margin: '10vw 28vw 0' }} />
+                      </div>
+                    ) : (
+                      selectedProduct.ProductVideo?.key ? (
+                        <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>
+                          <source src={getMediaURL(selectedProduct)} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : (
+                        <img
+                          src={getMediaURL(selectedProduct)}
+                          alt="Product"
+                          style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}
+                        />
+                      )
+                    )}
                   </div>
                   <div className="faculty-name">
                   Faculty Name: &nbsp;&nbsp;{selectedProduct.FacultyName}

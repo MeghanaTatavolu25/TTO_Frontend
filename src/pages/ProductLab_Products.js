@@ -80,7 +80,7 @@ const ProductLab_Products = () => {
   return (
     <>
     <Chatbot />
-      <p style={{ fontFamily: "Montserrat", fontSize: "1.1vw", margin: "0", padding: "8vw 3vw 0" }}>
+      <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding: "8vw 3vw 0" }}>
         <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
           onMouseEnter={(e) => {
             e.target.style.color = '#1369CB';
@@ -98,10 +98,10 @@ const ProductLab_Products = () => {
       </p>
       <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing: "0em" }}>
         <div style={{ display: "flex", width:'100%' }}>
-          <div style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "100%" }}>All Products</div>
-          <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "1vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
+          <div style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
+          <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "1vw 0 0", letterSpacing: "-0.04em", width: "23%",textAlign:'right' }}>
             <label htmlFor="sort-select" style={{ color: "#343434", fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
-            <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{fontWeight: '400',letterSpacing: '0.02em',color: "#1369CB", border: "none", outline: 0, justifyContent:'right' }}>
+            <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{fontWeight: '400',letterSpacing: '0.02em',color: "#1369CB", border: "none", outline: 0}}>
               <option >None</option>
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>

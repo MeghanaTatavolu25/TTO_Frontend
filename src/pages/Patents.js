@@ -8,6 +8,7 @@ import calendarIcon from "../Img/calendar.png";
 import 'react-calendar/dist/Calendar.css';
 import SearchIcon from '@material-ui/icons/Search';
 import Chatbot from '../chatbot/Chatbot';
+import LoadingSpinner from '../Img/loading.gif'; 
 
 
 const SearchBar = ({ setSearchQuery }) => {
@@ -36,10 +37,13 @@ const SearchBar = ({ setSearchQuery }) => {
           <InputBase
               placeholder="Search Patents"
               style={{
-                  fontSize: "1vw",
+                  fontSize: "1.245vw",
                   flex: 1,
+
               }}
               onChange={(e) => { setSearchQuery(e.target.value); console.log(e.target.value) }}
+              // Add a class name for targeting the placeholder
+              classes={{ input: 'input-field' }}
           />
       </Paper>
   );
@@ -168,11 +172,20 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
   const [patents, setPatents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const patentsPerPage = 7; // Number of patents to display per page
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:4000/patents/patents')
       .then(response => response.json())
-      .then(data => setPatents(data));
+      .then(data => {
+        setPatents(data);
+        setIsLoading(false); // Set loading to false once data is fetched
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setIsLoading(false); // Set loading to false on error as well
+      });
   }, []);
 
   // Apply filters
@@ -246,7 +259,12 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
   return (
     <div className="headerContainer" style={{ textAlign: 'left' }}>
       <div>
-        {currentPatents.map(result => (
+      {isLoading ? (
+        <div style={{ height: '25vw' }}>
+          <img src={LoadingSpinner} alt="Loading" style={{ width: '5vw', height: '5vw', margin: '12vw 23vw 0' }} />
+        </div>
+      ) : (
+        currentPatents.map(result => (
           <Grid item xs={10} sm={10} md={10} style={{ paddingBottom: '2.6vw' }} key={result.id}>
             <p style={{ fontWeight: '400', fontSize: '1.0417' }}>
               {result.Status} |{' '}
@@ -261,11 +279,12 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
             </p>
             <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '1.0417vw' }}>
               {result.Faculty.map(result2 => (
-                <p>{result2}</p>
+                <p key={result2}>{result2}</p>
               ))}
             </p>
           </Grid>
-        ))}
+        ))
+      )}
       </div>
       {/* Pagination */}
       {totalPages > 1 && (
@@ -329,7 +348,7 @@ function Patent() {
   return (
       <>
       <Chatbot />
-          <p style={{ fontFamily: "Montserrat", fontSize: "1.0417", margin: "8vw 3vw 0"}}>
+          <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "8vw 3vw 0"}}>
             <a href="/"
               style={{ textDecoration: 'none', color: '#9D9D9D'}} 
               onMouseEnter={(e) => {
@@ -345,13 +364,13 @@ function Patent() {
               </a>
               <span style={{ color: '#1F669F', fontWeight: 500 }}> Patent</span>
           </p>
-          <Container style={{ maxWidth: "78%", margin:'auto', fontFamily: 'Prompt', padding: "1vw 0 0", letterSpacing:"0em"}}>
+          <Container style={{ maxWidth: "78%", margin:'auto', fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing:"0em"}}>
 
               <div style={{display: "flex"}}>
-              <div style={{color: "#343434", fontSize: "2.7041vw", fontWeight: 600, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Patents</div>
-              <div className='dropdown' style={{ fontSize: "1.4vw", fontWeight: 300, margin: "0.7vw 0 0", letterSpacing: "-0.04em", width: "23%" }}>
+              <div style={{color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing:"-0.04em", width:"77%"}}>All Patents</div>
+              <div className='dropdown' style={{ fontSize: "1.6vw", fontWeight: 300, margin: "1vw 0 0", letterSpacing: "-0.04em", width: "23%",textAlign:'right'}}>
               <label htmlFor="sort" style={{ color: "#343434",fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
-              <select value={sortOption} onChange={handleOptionClick} style={{ flex: '1', maxWidth: '300px', color: "#1369CB", border: "none", outline: 0 }}>
+              <select value={sortOption} onChange={handleOptionClick} style={{fontWeight: '400',letterSpacing: '0.02em',color: "#1369CB", border: "none", outline: 0}}>
                 <option >None</option>
                 <option value="Newest">Newest</option>
                 <option value="Oldest">Oldest</option>
@@ -360,7 +379,7 @@ function Patent() {
               </select>
               </div>
               </div>
-              <div style={{ background: "#343434", height:"0.2vw"}}></div>
+              <div style={{ background: "#343434", height: "0.156249vw", marginTop:'0.5vw'}}></div>
           </Container>
           <div style={{ marginTop: "1vw", display: "flex", width: "100%" }}>
                   <div

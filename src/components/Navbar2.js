@@ -8,23 +8,18 @@ const ResponsiveNavbar = () => {
     <Navbar style={navbarStyle} className="fixed-top">
       <Nav className="mx-auto d-flex justify-content-center" style={{ gap: '5.5vw' }}>
         <NavLink exact to="/" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
-          <span style={activeNavLinkUnderlineStyle}></span>
           Home
         </NavLink>
         <NavLink to="/Researchlabs" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
-          <span style={activeNavLinkUnderlineStyle}></span>
           Technology Catalogue
         </NavLink>
         <NavLink to="/Startups" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
-          <span style={activeNavLinkUnderlineStyle}></span>
           Startups
         </NavLink>
         <NavLink to="/patents" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
-          <span style={activeNavLinkUnderlineStyle}></span>
           Patents
         </NavLink>
         <NavLink to="/ProductLab_Products" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
-          <span style={activeNavLinkUnderlineStyle}></span>
           Products
         </NavLink>
         <a href="https://canvas.iiithcanvas.com/" style={navLinkStyle} target="_blank">
@@ -37,7 +32,6 @@ const ResponsiveNavbar = () => {
           R&amp;D Showcase
         </a>
         <NavLink to="/Team" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
-          <span style={activeNavLinkUnderlineStyle}></span>
           The Team
         </NavLink>
       </Nav>
@@ -66,17 +60,8 @@ const navLinkStyle = {
 const activeNavLinkStyle = {
   position: 'relative', // Set position to relative for the parent NavLink
   textDecoration: 'none', // Remove default underline
-};
-
-const activeNavLinkUnderlineStyle = {
-  content: '""',
-  position: 'absolute',
-  bottom: '-2px', // Adjust this value to control the distance between the text and the underline
-  left: 0,
-  width: '100%',
-  height: '1.5px',
-  borderRadius: '4px',
-  background: '#D9D9D9',
+  borderBottom: '1px solid white', // Add custom underline
+  paddingBottom: '2px', // Adjust this value to control the distance of the underline from the text
 };
 
 export default ResponsiveNavbar;
