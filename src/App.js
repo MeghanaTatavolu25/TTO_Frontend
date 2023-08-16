@@ -1,16 +1,15 @@
 import "./App.css"
 import AdminJS from "./pages/Admin"
 import Home from "./pages/Home"
-import Products from "./pages/Products"
-import ResearchLab from "./pages/ResearchLab"
+import Products_Technologies from "./pages/Products_Technologies"
+import Lab_Technologies from "./pages/Lab_Technologies"
 import Technologylicensing from "./pages/Technologylicensing"
 import Productize from "./pages/Productize"
 import Startups from "./pages/Startups"
 import Team from "./pages/Team"
-import ResearchLabs from "./pages/ResearchLabs"
-import ProductLab_Products from "./pages/ProductLab_Products"
+import Technology_Catalogues from "./pages/Technology_Catalogues"
+import Products from "./pages/Products"
 import Catalogue from "./pages/Catalogue"
-import Technology from "./pages/Technology"
 import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import SearchBar from './components/Searchbar';
 import Navbar1 from "./components/Navbar"
@@ -25,8 +24,6 @@ import JobSeeker from "./pages/JobSeeker"
 import Entrepreneur from "./pages/Entrepreneur"
 import Industry from "./pages/Industry"
 
-
-
 function App() {
     return (
 
@@ -40,8 +37,6 @@ function App() {
                     <Route path="/" exact component={Home} />
                     <Route path="/catalogue/admin" exact component={AdminCatalogue} />
                     <Route path="/catalogue" exact component={Catalogue} />
-                    <Route path="/technology/:id" exact component={Technology} />
-                    {/* <Link path="/canvas" to="" /> */}
                     <Route path="/patents" exact component={Patent} />
                     <Route path="/publications" exact component={Publications} />
                     <Route path="/patents/admin" exact component={AdminPatent} />
@@ -49,10 +44,10 @@ function App() {
                     <Route path="/Technologylicensing" component={Technologylicensing}/>
                     <Route path="/Productize" component={Productize} />
                     <Route path="/Startups" component={Startups} />
-                    <Route path="/ProductLab_Products" component={ProductLab_Products} />
-                    <Route path="/ResearchLabs" component={ResearchLabs} />
-                    <Route path="/Products/:LabName/:ProductName" component={Products} />
-                    <Route path="/ResearchLab/:LabName/:LabCode" component={ResearchLab} />
+                    <Route path="/Products" component={Products} />
+                    <Route path="/Technology_Catalogues" component={Technology_Catalogues} />
+                    <Route path="/Products_Technologies/:LabName/:ProductName" component={Products_Technologies} />
+                    <Route path="/Lab_Technologies/:LabName" component={Lab_Technologies} />
                     <Route path="/Team" component={Team} />
                     <Route path="/JobSeeker"component={JobSeeker} />
                     <Route path="/Industry"component={Industry} />

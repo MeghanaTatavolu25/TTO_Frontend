@@ -45,7 +45,7 @@ const JobSeeker = () => {
         withCredentials: true,
       });
 
-      // window.location = '/JobSeeker';
+      window.location = '/JobSeeker';
     } catch (e) {
       alert(e);
     }

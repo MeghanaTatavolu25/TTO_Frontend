@@ -54,6 +54,10 @@
     margin-bottom: 20px;
   }
 }
+
+.patent_status a{
+text-decoration: none;
+}
 .center-name{
 font-size:1.0417vw;
 font-weight: 400;
@@ -62,6 +66,9 @@ padding-top:0.2vw
 .center-name {
   height: 23vh;
   overflow-y: auto;
+}
+.center-name a{
+  text-decoration: none;
 }
 
 .center-name::-webkit-scrollbar {

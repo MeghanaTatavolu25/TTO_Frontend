@@ -113,7 +113,7 @@ const Startups = () => {
           <div style={{ background: "#343434", height: "0.156249vw", marginTop:'0.5vw' }}></div>
         </Container>
 
-        <Container style={{ maxWidth: "82%", marginBottom:'2.5vw' }}>
+        <Container style={{ maxWidth: "82%", marginBottom:'4.05vw' }}>
         <Row>
         {isLoading ? ( // Display loading symbol if isLoading is true
             <div style={{height:'25vw'}}>
@@ -135,7 +135,7 @@ const Startups = () => {
                     <div style={{marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.8vw", fontWeight: 300,textDecoration: 'none' }}>
                       <div style={{margin:'0 0 0.1vw'}}>Founder - {startup.Founder_Name}</div>
                       <div style={{ margin:'0 0 0.4vw', lineHeight:'0.8vw' }}>Professor - {startup.Professor_Name}</div>
-                      <a href={`/ResearchLab/${startup.Centre_Name}/${startup.Centre_Code}`} style={{textDecoration:'none'}} >
+                      <a href={`/Lab_Technologies/${startup.Centre_Name}`} style={{textDecoration:'none'}} >
                       <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{startup.Centre_Name}</span></p>
                       </a>
                     </div>

@@ -10,7 +10,7 @@ const ResponsiveNavbar = () => {
         <NavLink exact to="/" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
           Home
         </NavLink>
-        <NavLink to="/Researchlabs" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
+        <NavLink to="/Technology_Catalogues" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
           Technology Catalogue
         </NavLink>
         <NavLink to="/Startups" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
@@ -19,7 +19,7 @@ const ResponsiveNavbar = () => {
         <NavLink to="/patents" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
           Patents
         </NavLink>
-        <NavLink to="/ProductLab_Products" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
+        <NavLink to="/Products" style={navLinkStyle} activeStyle={activeNavLinkStyle}>
           Products
         </NavLink>
         <a href="https://canvas.iiithcanvas.com/" style={navLinkStyle} target="_blank">

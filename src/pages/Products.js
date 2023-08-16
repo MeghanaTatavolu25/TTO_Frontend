@@ -1,270 +1,198 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
-import "../styles/products.css"
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
+import "../styles/Pagination.css"
+import Container from 'react-bootstrap/Container'
+import { Button, Row, Col } from 'react-bootstrap';
 import icon from '../Img/icon.png'
-import Chatbot from "../chatbot/Chatbot"
+import Chatbot from '../chatbot/Chatbot';
 import LoadingSpinner from '../Img/loading.gif'; 
 
-const Products = () => {
-    const { LabName, ProductName } = useParams();
-    const [products, setProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState([]);
-    const [selectedSection, setSelectedSection] = useState('overview');
-    const [showDescription, setShowDescription] = useState(false); // State variable for toggling description
-    const [labDescription, setLabDescription] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+const ProductLab_Products = () => {
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortOption, setSortOption] = useState("none");
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
-          .then(response => response.json())
-          .then(data => {
-            const lab = data.find(researchLab => researchLab.Research_Lab === LabName);
-            if (lab) {
-              setLabDescription(lab.Description);
-            }
-          })
-          .catch(error => console.log(error));
-      }, [LabName]);
+  useEffect(() => {
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
+    // fetch('http://localhost:3002/api/productlab')
+    .then(response => response.json())
+      .then(data => {
+        setProducts(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setIsLoading(false);
+      });
+  }, []);
 
-    useEffect(() => {
-      fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
-        .then(response => response.json())
-        .then(data => {
-          setProducts(data);
-          setIsLoading(false); // Set loading to false once data is fetched
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setIsLoading(false); // Set loading to false on error as well
-        });
-    }, []);
-  
-    useEffect(() => {
-      const defaultProduct = products.find(product => product.NameOfProduct === ProductName);
-      if (defaultProduct) {
-        setSelectedProduct(defaultProduct);
-      }
-    }, [products, ProductName]);
-  
-
-    const getMediaURL = (product) => {
-      if (product.ProductVideo?.key) {
-        return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductVideo.key}`;
-      } else if (product.ProductImage?.key) {
-        return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductImage.key}`;
-      } else {
-        return icon; // Return the default icon if both video and image are not available
-      }
-    };
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
-    setSelectedSection('overview');
-    setShowDescription(false);
+  const getProductImageURL = (product) => {
+    if (product.ProductImage && product.ProductImage.key) {
+      const baseS3URL = 'https://tto-asset.s3.ap-south-1.amazonaws.com/'; // Replace with your S3 base URL
+      const imageURL = `${baseS3URL}${product.ProductImage.key}`;
+      return imageURL;
+    }
+    return icon; // Return default icon if no image available
   };
-  const handleDescriptionClick = () => {
-    setSelectedProduct([]); // Set selectedProduct to null when clicking on the description
-    setShowDescription(!showDescription);
+
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+    setCurrentPage(1);
+  };
+
+  const getPageItems = () => {
+    const sortedItems = products.slice();     
+    switch (sortOption) {
+      case "newest":
+        sortedItems.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        break;
+      case "oldest":
+        sortedItems.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+        break;      
+      case "az":
+        sortedItems.sort((a, b) => a.NameOfProduct.localeCompare(b.NameOfProduct));
+        break;
+      case "za":
+        sortedItems.sort((a, b) => b.NameOfProduct.localeCompare(a.NameOfProduct));
+        break;
+      default:
+        break;
+    }
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+  
+    // Create an array of 6 items, even if there are fewer products
+    const pageItems = Array.from({ length: itemsPerPage }, (_, index) => sortedItems[startIndex + index] || null);
+  
+    return pageItems;
   };
   
-    const handleNavLinkClick = (section) => {
-      setSelectedSection(section);
-    };
 
   return (
     <>
     <Chatbot />
-    <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding:"8vw 3vw 0" }}>
-                <a  href="/" 
-                style={{ textDecoration: 'none', color: '#9D9D9D'}} 
-                onMouseEnter={(e) => {
-                  e.target.style.color = '#1369CB';
-                  e.target.style.fontWeight = 600;
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.color = '#9D9D9D';
-                  e.target.style.fontWeight = 500;
-                }}
-                >
-                    <span>Home </span>/
-                </a>
-                 <a  href="/ProductLab_Products" 
-                style={{ textDecoration: 'none', color: '#9D9D9D'}} 
-                onMouseEnter={(e) => {
-                  e.target.style.color = '#1369CB';
-                  e.target.style.fontWeight = 600;
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.color = '#9D9D9D';
-                  e.target.style.fontWeight = 500;
-                }}
-                >
-                <span> All Products </span>/
-                </a>
-                <a  href="#" 
-                style={{ textDecoration: 'none', color: '#9D9D9D'}} 
-                onMouseEnter={(e) => {
-                  e.target.style.color = '#1369CB';
-                  e.target.style.fontWeight = 600;
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.color = '#9D9D9D';
-                  e.target.style.fontWeight = 500;
-                }}
-                >
-                <span> {LabName} </span>/
-                </a>
-                <span style={{ color: '#1F669F', fontWeight: 500 }}> {selectedProduct.NameOfProduct}  </span>
-                <script>
-                  function log() {
-                    console.log("ss",products.NameOfProduct)
-                  }
-                  </script>
-            </p>
-            <Container style={{ maxWidth: "96%", fontFamily: 'Prompt', paddingTop: "1.2vw"}}>
-            <div className="app">
-            <div className="sidebar">
-              <div className="sidebar-heading">{LabName}</div>
-              <div
-                className={`description-heading ${showDescription ? 'active' : ''}`}
-                onClick={handleDescriptionClick}
-                >
-                Description
-              </div>
-              <div className="projects-heading"> Projects: </div>
-              <div className="line"></div>
-              <div className="products-list">
-               {isLoading ? ( // Display loading symbol if isLoading is true
-                  <div style={{ height: '25vw' }}>
-                    <img src={LoadingSpinner} alt="Loading" style={{ width: '2.5vw', height: '2.5vw', margin: '10vw 10vw 0' }} />
-                  </div>
-                ) : (
-                  products
-                    .filter(product => product.CentreName === LabName)
-                    .map(product => (
-                      <div key={product._id}>
-                        <div
-                          key={product._id}
-                          className={`product ${selectedProduct === product ? 'active' : ''}`}
-                          onClick={() => handleProductClick(product)}
-                        >
-                          <h3
-                            className="underline-on-hover"
-                            style={{ width: '23vw', fontWeight: 300, fontSize: "1.2vw", lineHeight: "1.7vw", cursor: "pointer", margin: "0.2vw 0 1.1vw" }}
-                          >
-                            {product.NameOfProduct}
-                          </h3>
-                        </div>
-                      </div>
-                    ))
-                )}
-              </div>
+      <p style={{ fontFamily: "Prompt", fontSize: "1.145vw", margin: "0", padding: "8vw 3vw 0" }}>
+        <a href="/" style={{ textDecoration: 'none', color: '#9D9D9D' }}
+          onMouseEnter={(e) => {
+            e.target.style.color = '#1369CB';
+            e.target.style.fontWeight = 600;
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.color = '#9D9D9D';
+            e.target.style.fontWeight = 500;
+          }}
+        >
+          <span>Home </span>/
+        </a>
+        <span style={{ color: '#1F669F', fontWeight: 500 }}> All Products
+        </span>
+      </p>
+      <Container style={{ maxWidth: "78%", fontFamily: 'Prompt', padding: "1.5vw 0 0", letterSpacing: "0em" }}>
+        <div style={{ display: "flex", width:'100%' }}>
+          <div style={{ color: "#343434", fontSize: "2.49vw", fontWeight: 400, margin: "0", letterSpacing: "-0.04em", width: "77%" }}>All Products</div>
+          <div style={{ fontSize: "1.6vw", fontWeight: 300, margin: "1vw 0 0", letterSpacing: "-0.04em", width: "23%",textAlign:'right' }}>
+            <label htmlFor="sort-select" style={{ color: "#343434", fontSize: "1.4vw" }}>Sort By :&nbsp;</label>
+            <select id="sort-select" value={sortOption} onChange={handleSortChange} style={{fontWeight: '400',letterSpacing: '0.02em',color: "#1369CB", border: "none", outline: 0}}>
+              <option >None</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="az">A-Z</option>
+              <option value="za">Z-A</option>
+            </select>
+          </div>
+        </div>
+        <div style={{ background: "#343434", height: "0.156249vw", marginTop:'0.5vw' }}></div>
+      </Container>
+      <Container style={{ maxWidth: "82%", marginBottom: '4.65vw' }}>
+        <Row>
+        {isLoading ? ( // Display loading symbol if isLoading is true
+            <div style={{height:'25vw'}}>
+              <img src={LoadingSpinner} alt="Loading" style={{width:'5vw', height:'5vw',margin:'12vw 36vw 0'}} />
             </div>
-                <div className="content">
-                {showDescription && (
-              <>
-                <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>Description</h2>
-                <p className="lab-description">{labDescription}</p>
-              </>
-            )}
-              {!showDescription && selectedProduct && (
-                    <>
-                  <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfProduct}</h2>
-                  <div className="video">
-                  {isLoading ? ( // Display loading symbol if isLoading is true
-                    <div style={{ height: '15.4vw', borderRadius: '8px', margin: '0vw 0 0.3vw' }}>
-                      <img src={LoadingSpinner} alt="Loading" style={{ width: '3.5w', height: '3.5vw', margin: '10vw 28vw 0' }} />
+          ) : (
+            // Render products when data is available
+          getPageItems().map((product, index) => (
+        <Col key={index} lg={4}>
+          {product ? (
+              <a href={`/Products_Technologies/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none', width:'80%' }}>
+                <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 0 2.5vw', width:'90%' }}>
+                  <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0', width: '100%' }}>
+                    <div style={{ width: '20%', height: '2.5vw' }}>
+                    <img src={getProductImageURL(product)} alt="/" style={{ width: '3.5vw', height: '100%' }} />
                     </div>
-                  ) : (
-                  selectedProduct.ProductVideo?.key ? (
-                    <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>
-                      <source src={getMediaURL(selectedProduct)} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                 ) : (
-                  <img
-                    src={getMediaURL(selectedProduct)}
-                    alt="Product"
-                    style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}
-                  />
-                )
-              )}
+                    <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.145826vw", fontWeight: 400, margin: '0.5vw 0 0.5vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.NameOfProduct}</h2>
                   </div>
-                      <div className="faculty-name">
-                      Faculty Name: &nbsp;&nbsp;{selectedProduct.FacultyName}
-                      </div>
-                      <div className="keywords">
-                      Keywords: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {selectedProduct.keywords}
-                      </div>
-                      <div className="nav-bar">
-                      <div
-                          className={`nav_link ${selectedSection === 'overview' ? 'active' : ''}`}
-                          onClick={() => handleNavLinkClick('overview')}
-                      >
-                          Overview
-                      </div>
-                      <div
-                          className={`nav_link ${selectedSection === 'technology' ? 'active' : ''}`}
-                          onClick={() => handleNavLinkClick('technology')}
-                          style={{marginLeft:"4.1vw"}}
-                      >
-                          Type of work
-                      </div>
-                      <div
-                          className={`nav_link ${selectedSection === 'market-use-case' ? 'active' : ''}`}
-                          onClick={() => handleNavLinkClick('market-use-case')}
-                          style={{marginLeft:"4.1vw"}}
-                      >
-                          State of work
-                      </div>
-                      <div
-                          className={`nav_link ${selectedSection === 'current-traction' ? 'active' : ''}`}
-                          onClick={() => handleNavLinkClick('current-traction')}
-                          style={{marginLeft:"4.1vw"}}
-                      >
-                          Potential Applications
-                      </div>
-                      <div
-                          className={`nav_link ${selectedSection === 'linked-patent' ? 'active' : ''}`}
-                          onClick={() => handleNavLinkClick('linked-patent')}
-                          style={{marginLeft:"4.1vw"}}
-                      >
-                          Related Publications
-                      </div>
-                      <div
-                          className={`nav_link ${selectedSection === 'demo-link' ? 'active' : ''}`}
-                          onClick={() => handleNavLinkClick('demo-link')}
-                          style={{marginLeft:"4.1vw"}}
-                      >
-                          Demo Link
-                      </div>
-                      </div>
-                      <div className={`section ${selectedSection === 'overview' ? 'active' : ''}`} id="overview">
-                        <p>{selectedProduct.Description}</p>
-                      </div>
-                      <div className={`section ${selectedSection === 'technology' ? 'active' : ''}`} id="technology">
-                        <p>{selectedProduct.TypeOfWork}</p>
-                      </div>
-                      <div className={`section ${selectedSection === 'market-use-case' ? 'active' : ''}`} id="market-use-case">
-                        <p>{selectedProduct.CurrentStateOfWork}</p>
-                      </div>
-                      <div className={`section ${selectedSection === 'current-traction' ? 'active' : ''}`} id="current-traction">
-                        <p>{selectedProduct.PotentialApplication}</p>
-                      </div>
-                      <div className={`section ${selectedSection === 'linked-patent' ? 'active' : ''}`} id="linked-patent">
-                        <p>{selectedProduct.RelatedPublication}</p>
-                      </div>
-                      <div className={`section ${selectedSection === 'demo-link' ? 'active' : ''}`} id="demo-link">
-                        <p><a href={selectedProduct.DemoLink}>{selectedProduct.demoLink}</a></p>
-                      </div>
-                    </>
-                  )}
+                  <p style={{ lineHeight: '1.2vw',marginTop:'0.3vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1vw", fontWeight: 400, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
+                  <div style={{ marginLeft: '1.1vw', color: "#A7A6A6", fontSize: "0.8vw", fontWeight: 300,textDecoration: 'none'  }}>
+                     <div style={{margin:'0 0 0.1vw'}}>Professor - {product.Faculty_Name}</div>
+                      <a href={`/ResearchLab/${product.CentreName}`} style={{textDecoration:'none'}} >
+                      <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{product.CentreName}</span></p>
+                      </a>
+                  </div>
                 </div>
-                </div>
-            </Container>
+              </a>
+           ) : (
+            // Render empty space placeholder
+            <div style={{ width: '100%', height: '12vw' }} />
+          )}
+        </Col>
+       ))
+       )}
+        </Row>
+      </Container>
+
+      {/* pagination  */}
+      {totalPages > 1 && (
+        <div className='pagination' style={{ fontFamily: "Inter" }}>
+          {currentPage > 1 && (
+            <div className="pagination-arrow" onClick={() => handlePageClick(currentPage - 1)}>
+              &lt;
+            </div>
+          )}
+          <div className="pagination-box">
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNumber = index + 1;
+              if (
+                pageNumber === 1 ||
+                pageNumber === totalPages ||
+                (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+              ) {
+                return (
+                  <div
+                    key={pageNumber}
+                    className={`pagination-button ${pageNumber === currentPage ? "current" : ""}`}
+                    onClick={() => handlePageClick(pageNumber)}
+                  >
+                    {pageNumber}
+                  </div>
+                );
+              } else if (
+                (pageNumber === currentPage - 2 && currentPage > 3) ||
+                (pageNumber === currentPage + 2 && currentPage < totalPages - 2)
+              ) {
+                return <span key={pageNumber}>&hellip;</span>;
+              }
+              return null;
+            })}
+          </div>
+          {currentPage < totalPages && (
+            <div className="pagination-arrow" onClick={() => handlePageClick(currentPage + 1)}>
+              &gt;
+            </div>
+          )}
+        </div>
+      )}
+
     </>
   );
 }
 
-export default Products;
+export default ProductLab_Products;

@@ -38,7 +38,6 @@ const Enterpreneur = () => {
       // Make the POST request using Axios
       const response = await axios.post(
         'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new',
-        // 'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new',
         newEntrepreneur,
         {     
           headers: {
@@ -53,7 +52,7 @@ const Enterpreneur = () => {
       console.log(response.data);
 
       // Redirect to the desired page or perform other actions after successful submission
-      // window.location = "/Entrepreneur";
+      window.location = "/Entrepreneur";
     } catch (error) {
       console.error('Error submitting form data:', error);
       // Handle any error cases here

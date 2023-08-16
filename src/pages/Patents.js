@@ -94,19 +94,60 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
           Patent Status
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
-        <div style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.2vw' }}>
+        <div className='patent_status' style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.2vw' }}>
           <a href="#">
-            <p style={{ color: activeStatus === "Filed" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Filed" ? "" : "Filed")}>
+            <p
+              style={{
+                color: activeStatus === "Filed" ? "#1369CB" : "#2C2C2C",
+              }}
+              onClick={() => setactiveStatus(activeStatus === "Filed" ? "" : "Filed")}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#1369CB";
+                e.target.style.textDecoration = "none";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = activeStatus === "Filed" ? "#1369CB" : "#2C2C2C";
+                e.target.style.textDecoration = "none";
+              }}
+            >
               Filed
             </p>
           </a>
           <a href="#">
-            <p style={{ color: activeStatus === "Published" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Published" ? "" : "Published")}>
+            <p
+              style={{
+                color: activeStatus === "Published" ? "#1369CB" : "#2C2C2C",
+                textDecoration: "none",
+              }}
+              onClick={() => setactiveStatus(activeStatus === "Published" ? "" : "Published")}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#1369CB";
+                e.target.style.textDecoration = "none";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = activeStatus === "Published" ? "#1369CB" : "#2C2C2C";
+                e.target.style.textDecoration = "none";
+              }}
+            >
               Published
             </p>
           </a>
           <a href="#">
-            <p style={{ color: activeStatus === "Granted" ? "#1369CB" : "#2C2C2C" }} onClick={() => setactiveStatus(activeStatus === "Granted" ? "" : "Granted")}>
+            <p
+              style={{
+                color: activeStatus === "Granted" ? "#1369CB" : "#2C2C2C",
+                textDecoration: "none",
+              }}
+              onClick={() => setactiveStatus(activeStatus === "Granted" ? "" : "Granted")}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#1369CB";
+                e.target.style.textDecoration = "none";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = activeStatus === "Granted" ? "#1369CB" : "#2C2C2C";
+                e.target.style.textDecoration = "none";
+              }}
+            >
               Granted
             </p>
           </a>
@@ -117,10 +158,24 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
           Research Lab
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0', }}></Grid>
         </p>
-        <div className="center-name" >
+        <div className="center-name">
           {patents.map(patent => (
             <a href="#" key={patent.Center_Name}>
-              <p style={{ color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C", lineHeight: '1.2vw' }} onClick={() => setactiveLab(activeLab === patent.Center_Name ? "" : patent.Center_Name)}>
+              <p
+                style={{
+                  color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C",
+                  lineHeight: '1.2vw',
+                  textDecoration: 'none', // Remove underline
+                  transition: 'color 0.3s ease-in-out', // Add transition
+                }}
+                onClick={() => setactiveLab(activeLab === patent.Center_Name ? "" : patent.Center_Name)}
+                onMouseEnter={(e) => {
+                  e.target.style.color = "#1369CB";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C";
+                }}
+              >
                 {patent.Center_Name}
               </p>
             </a>
@@ -269,13 +324,16 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
             <p style={{ fontWeight: '400', fontSize: '1.0417' }}>
               {result.Status} |{' '}
               <span style={{ color: '#2C2C2C' }}>{result.Center_Name}</span> |{' '}
-              {isNaN(result.Published_Year) ? null : (
-                <span style={{ color: '#2C2C2C' }}>{new Date(result.Published_Year).getFullYear()}</span>
-              )}
+              <span style={{ color: '#2C2C2C' }}>
+                {Number.isNaN(new Date(result.Published_Year).getFullYear()) || result.Published_Year === ""
+                  ? 'Not available'
+                  : new Date(result.Published_Year).getFullYear()}
+              </span>
             </p>
-            <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.66vw' }}>{result.Title}</p>
+            <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.66vw', lineHeight:'1.8vw' }}>{result.Title}</p>
             <p style={{ fontWeight: '400', color: '#525252', fontSize: '1.0417vw' }}>
-              Application/Patent No - {result.Patent_Number}, Application - {result.Application_Number}
+              Patent No - {result.Patent_Number !== "NaN" && result.Patent_Number !== "" ? result.Patent_Number : 'Not available'},
+              Application - {result.Application_Number !== "NaN" && result.Application_Number !== "" ? result.Application_Number : 'Not available'}
             </p>
             <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '1.0417vw' }}>
               {result.Faculty.map(result2 => (

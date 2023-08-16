@@ -189,7 +189,7 @@ function Home() {
 
 
     useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:4000/patents/patents')
+        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
         // fetch('http://localhost:3002/api/patents')
             .then(response => response.json())
             .then(data => {
@@ -379,11 +379,11 @@ function Home() {
                         <Grid item xs={1} sm={1} md={1}></Grid>
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
                             <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.5vw", paddingBottom: "0em" }}>{patent.Title}</p>
-                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw",display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }} >
+                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw" }} >
                                 Research Lab - {patent.Center_Name}
                             </p>
-                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw",display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }} >
-                              Inventors - {patent.Inventor_List}
+                            <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw" }} >
+                              Inventors - {patent.Inventor_List && patent.Inventor_List.length > 0 ? patent.Inventor_List.join(', ') : 'Not available'}
                             </p>
                             <a href="/patents" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                               <Button variant="contained"className="buttons" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.0417vw", color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 3.5vw", height: '3.5vw',margin:'2vw 0 0' }}>
