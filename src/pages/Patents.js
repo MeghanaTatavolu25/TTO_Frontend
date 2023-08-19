@@ -231,7 +231,7 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
 
 
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:4000/patents/patents')
+    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
       .then(response => response.json())
       .then(data => {
         setPatents(data);
@@ -336,9 +336,7 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
               Application - {result.Application_Number !== "NaN" && result.Application_Number !== "" ? result.Application_Number : 'Not available'}
             </p>
             <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '1.0417vw' }}>
-              {result.Faculty.map(result2 => (
-                <p key={result2}>{result2}</p>
-              ))}
+              {result.Faculty_List.join(', ')}
             </p>
           </Grid>
         ))
