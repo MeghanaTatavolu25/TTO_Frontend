@@ -104,9 +104,11 @@ function Home() {
     const [startup,setstartup]=useState([]);
     const [patent,setpatent]=useState([]);
     const [product,setproduct]=useState([]);
+    const [researchLabs, setResearchLabs] = useState([]);
+    const [productCenters, setProductCenters] = useState([]);
 
     useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
+        fetch('https://ttobackend.iiithcanvas.com/api/researchlabs')
         // fetch('http://localhost:3002/api/researchlabs')
             .then(response => response.json())
             .then(data => {
@@ -147,7 +149,7 @@ function Home() {
 
 
     useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/startups')
+        fetch('https://ttobackend.iiithcanvas.com/api/startups')
         // fetch('http://localhost:3002/api/startups')
             .then(response => response.json())
             .then(data => {
@@ -189,12 +191,16 @@ function Home() {
 
 
     useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
-        // fetch('http://localhost:3002/api/patents')
-            .then(response => response.json())
-            .then(data => {
+        Promise.all([
+            fetch('https://ttopatents.iiithcanvas.com/patents/patents'),
+            fetch('https://ttobackend.iiithcanvas.com/api/researchlabs'),
+          ])
+            .then(([patentsResponse, researchLabsResponse]) =>
+              Promise.all([patentsResponse.json(), researchLabsResponse.json()])
+            )
+            .then(([patentsData, researchLabsData]) => {
                 // Filter out centers with valid Est_Year values
-                const validCenters = data.filter(center => center.Published_Date);
+                const validCenters = patentsData.filter(center => center.Published_Date);
 
                 if (validCenters.length > 0) {
                     // Sort the valid centers array based on the Est_Year field in descending order
@@ -222,6 +228,7 @@ function Home() {
                     // Handle the case where there are no valid centers with Est_Year values
                     console.log('No valid centers found.');
                 }
+                setResearchLabs(researchLabsData);
             })
             .catch(error => {
                 // Handle any errors that occurred during the fetch or data processing
@@ -229,15 +236,20 @@ function Home() {
             });
     }, []);
 
-
+    const researchLabNames = researchLabs.reduce((map, lab) => {
+        map[lab._id] = lab.Research_Lab;
+        return map;
+      }, {});
+    
     useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
-        // fetch('http://localhost:3002/api/productlab')
-            .then(response => response.json())
-            .then(data => {
+        Promise.all([
+            fetch('https://ttobackend.iiithcanvas.com/api/productlab'),
+            fetch('https://ttobackend.iiithcanvas.com/api/researchlabs')
+          ])
+        .then(([productsResponse, researchLabsResponse]) => Promise.all([productsResponse.json(), researchLabsResponse.json()]))
+        .then(([productsData, researchLabsData]) => {
                 // Filter out centers with valid Est_Year values
-                const validCenters = data.filter(center => center.created_at);
-
+                const validCenters = productsData.filter(center => center.created_at);
                 if (validCenters.length > 0) {
                     // Sort the valid centers array based on the Est_Year field in descending order
                     const sortedCenters = validCenters.sort((a, b) => b.created_at - a.created_at);
@@ -268,12 +280,18 @@ function Home() {
                     // Handle the case where there are no valid centers with Est_Year values
                     console.log('No valid centers found.');
                 }
+                setProductCenters(researchLabsData);
             })
             .catch(error => {
                 // Handle any errors that occurred during the fetch or data processing
                 console.error('Error:', error);
             });
     }, []);
+
+    const productCenterName = productCenters.reduce((map, lab) => {
+        map[lab._id] = lab.Research_Lab;
+        return map;
+      }, {});
     const calculateMonthsDifference = (startDate, endDate) => {
         const start = new Date(startDate);
         const end = new Date(endDate);
@@ -326,13 +344,13 @@ function Home() {
                         </Grid>
                         <Grid item xs={1} sm={1} md={1}></Grid>
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
-                            <a href={`/ResearchLab/${centers.Research_Lab}/${centers.ResearchLabCode}`} style={{ textDecoration: 'none',color: "#434343" }}>
+                            <a href={`/Lab_Technologies/${centers.Research_Lab}/${centers.ResearchLabCode}`} style={{ textDecoration: 'none',color: "#434343" }}>
                                 <p style={{fontWeight: 400, fontSize: "1.66vw" }}>{centers.Research_Lab}</p>
                                 <p style={{fontWeight: 400, fontSize: "1.0417vw", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }} >
                                 {centers.Description}   
                                 </p>
                             </a>
-                            <a href="./ResearchLabs" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
+                            <a href="./Technology_Catalogues" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                             <Button variant="contained" className="buttons" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.0417vw", color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 3.5vw", height: '3.5vw',margin:'2vw 0 0' }}>
                                 Explore Catalogues
                             </Button>
@@ -380,10 +398,10 @@ function Home() {
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
                             <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.5vw", paddingBottom: "0em" }}>{patent.Title}</p>
                             <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw" }} >
-                                Research Lab - {patent.Center_Name}
+                                Research Lab - {researchLabNames[patent.Center_Name]}
                             </p>
                             <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw" }} >
-                              Inventors - {patent.Inventor_List && patent.Inventor_List.length > 0 ? patent.Inventor_List.join(', ') : 'Not available'}
+                              Inventors - {patent.Inventor_List && patent.Inventor_List.length > 0 ? patent.Inventor_List : 'Not available'}
                             </p>
                             <a href="/patents" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                               <Button variant="contained"className="buttons" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.0417vw", color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 3.5vw", height: '3.5vw',margin:'2vw 0 0' }}>
@@ -398,11 +416,11 @@ function Home() {
                         </Grid>
                         <Grid item xs={12} style={{ borderBottom: '0.27vw solid #535353',  marginTop:'-1vw' }}></Grid>
                         <Grid item xs={7} sm={7} md={7} style={{ paddingTop: "4em" }}>
-                        <a href={`/Products/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none' }}>
+                        <a href={`/Products_Technologies/${productCenterName[product.CentreName]}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none' }}>
                             <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.5vw", paddingBottom: "0em" }}>{product.NameOfProduct}</p>
                             <p style={{ color: "#434343", fontWeight: 400, fontSize: "1.12vw",display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }} >{product.Description}</p>
                         </a>
-                            <a href="./ProductLab_Products" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
+                            <a href="./Products" style={{ textDecoration: 'none',color: '#FFFFFF' }}>
                               <Button variant="contained"className="buttons" style={{ fontWeight: 500, textTransform: 'none', fontSize: "1.0417vw", color: '#FFFFFF', borderRadius: "2.7vw", padding: "0 3.5vw", height: '3.5vw',margin:'2vw 0 0' }}>
                                 Explore products
                               </Button>

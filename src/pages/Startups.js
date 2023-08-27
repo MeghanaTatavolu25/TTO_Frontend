@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container'
 import { Button, Row, Col } from 'react-bootstrap';
 import Chatbot from "../chatbot/Chatbot"
 import LoadingSpinner from '../Img/loading.gif'; 
-import icon from '../Img/icon.png'; // Import the default icon image
+import icon from '../Img/logo.png'; // Import the default icon image
 
 const Startups = () => {
   const [startups, setStartups] = useState([]);
@@ -14,32 +14,40 @@ const Startups = () => {
   const itemsPerPage = 6;
   const totalPages = Math.ceil(startups.length / itemsPerPage);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [researchLabs, setResearchLabs] = useState([]);
 
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/startups')
-      .then(response => response.json())
-      .then(data => {
-        setStartups(data);
-        setIsLoading(false); // Set loading to false once data is fetched
+    Promise.all([
+      fetch('https://ttobackend.iiithcanvas.com/api/startups'),
+      fetch('https://ttobackend.iiithcanvas.com/api/researchlabs')
+    ])
+      .then(([startupsResponse, researchLabsResponse]) => Promise.all([startupsResponse.json(), researchLabsResponse.json()]))
+      .then(([startupsData, researchLabsData]) => {
+        setStartups(startupsData);
+        setResearchLabs(researchLabsData); // Store research labs data
+        setIsLoading(false);
       })
       .catch(error => {
         console.error('Error:', error);
-        setIsLoading(false); // Set loading to false on error as well
+        setIsLoading(false);
       });
   }, []);
 
-  const getStartupImageURL = (startup) => {
-    const baseS3URL = 'https://tto-asset.s3.ap-south-1.amazonaws.com/'; // Replace with your S3 base URL
-    const imageURL = `${baseS3URL}${startup.StartUpLogo?.key}`;
-  
-    if (imageURL.includes('DummyImage/')) {
-      return icon; // Return the default icon if imageURL contains 'DummyImage/'
-    }
-  
-    return imageURL; // Return the imageURL if it doesn't contain 'DummyImage/'
-  };
+  const researchLabNames = researchLabs.reduce((map, lab) => {
+    map[lab._id] = lab.Research_Lab;
+    return map;
+  }, {});
 
+  const getStartupImageURL = (startup) => {
+    if (startup.StartUpLogo.key) {
+    const baseS3URL = 'https://tto-asset.s3.ap-south-1.amazonaws.com/';
+    const imageURL = `${baseS3URL}${startup.StartUpLogo?.key}`; 
+    return imageURL;
+  }
+  else {
+    return icon; 
+  }
+  };
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -135,8 +143,8 @@ const Startups = () => {
                     <div style={{marginLeft:'1.1vw',color: "#A7A6A6", fontSize: "0.8vw", fontWeight: 300,textDecoration: 'none' }}>
                       <div style={{margin:'0 0 0.1vw'}}>Founder - {startup.Founder_Name}</div>
                       <div style={{ margin:'0 0 0.4vw', lineHeight:'0.8vw' }}>Professor - {startup.Professor_Name}</div>
-                      <a href={`/Lab_Technologies/${startup.Centre_Name}`} style={{textDecoration:'none'}} >
-                      <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{startup.Centre_Name}</span></p>
+                      <a href={`/Lab_Technologies/${researchLabNames[startup.Centre_Name]}`} style={{textDecoration:'none'}} >
+                      <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{researchLabNames[startup.Centre_Name]}</span></p>
                       </a>
                     </div>
                   </div>
@@ -148,7 +156,6 @@ const Startups = () => {
           </div>
       ))
       )}
-
         </Row>
       </Container>
   

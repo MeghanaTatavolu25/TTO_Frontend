@@ -10,7 +10,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import Chatbot from '../chatbot/Chatbot';
 import LoadingSpinner from '../Img/loading.gif'; 
 
-
 const SearchBar = ({ setSearchQuery }) => {
   return (
       <Paper
@@ -49,34 +48,57 @@ const SearchBar = ({ setSearchQuery }) => {
   );
 };
 
-
 function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, activeStatus, selectedStartDate, setSelectedStartDate, selectedEndDate, setSelectedEndDate }) {
-  const [showMoreFilters, setShowMoreFilters] = useState(false);
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(5);
-  const [centers, setCenters] = useState([]);
-  const [faculties, setFaculties] = useState([]);
   const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(users.length / usersPerPage);
   const pages = [];
+  const [isLoading, setIsLoading] = useState(true);
   const [patents, setPatents] = useState([]);
+  const [researchLabs, setResearchLabs] = useState([]);
+  const [patentStatuses, setPatentStatuses] = useState([]); 
 
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
-    // fetch('http://localhost:3002/api/patents')
-      .then(response => response.json())
-      .then(data => {
-        const uniqueNames = Array.from(new Set(data.map(patent => patent.Center_Name)));
+    const fetchData = async () => {
+      setIsLoading(true);
+  
+      try {
+        const [patentsResponse, researchLabsResponse, patentStatusesResponse] = await Promise.all([
+          fetch('https://ttopatents.iiithcanvas.com/patents/patents'),
+          fetch('https://ttobackend.iiithcanvas.com/api/researchlabs'),
+          fetch('https://ttobackend.iiithcanvas.com/api/patentStatus')
+        ]);
+  
+        const [patentsData, researchLabsData, patentStatusesData] = await Promise.all([
+          patentsResponse.json(),
+          researchLabsResponse.json(),
+          patentStatusesResponse.json()
+        ]);
+  
+        const uniqueNames = Array.from(new Set(patentsData.map(patent => patent.Center_Name)));
         const uniquePatents = uniqueNames.map(name => {
-          return data.find(patent => patent.Center_Name === name);
+          return patentsData.find(patent => patent.Center_Name === name);
         });
         setPatents(uniquePatents);
-      });
+        setResearchLabs(researchLabsData);
+        setPatentStatuses(patentStatusesData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+        setIsLoading(false);
+      }
+    };
+  
+    fetchData();
   }, []);
-
+  
+  const researchLabNames = researchLabs.reduce((map, lab) => {
+    map[lab._id] = lab.Research_Lab;
+    return map;
+  }, {});
+  
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
@@ -95,62 +117,26 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
         <div className='patent_status' style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.2vw' }}>
-          <a href="#">
-            <p
-              style={{
-                color: activeStatus === "Filed" ? "#1369CB" : "#2C2C2C",
-              }}
-              onClick={() => setactiveStatus(activeStatus === "Filed" ? "" : "Filed")}
-              onMouseEnter={(e) => {
-                e.target.style.color = "#1369CB";
-                e.target.style.textDecoration = "none";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = activeStatus === "Filed" ? "#1369CB" : "#2C2C2C";
-                e.target.style.textDecoration = "none";
-              }}
-            >
-              Filed
-            </p>
-          </a>
-          <a href="#">
-            <p
-              style={{
-                color: activeStatus === "Published" ? "#1369CB" : "#2C2C2C",
-                textDecoration: "none",
-              }}
-              onClick={() => setactiveStatus(activeStatus === "Published" ? "" : "Published")}
-              onMouseEnter={(e) => {
-                e.target.style.color = "#1369CB";
-                e.target.style.textDecoration = "none";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = activeStatus === "Published" ? "#1369CB" : "#2C2C2C";
-                e.target.style.textDecoration = "none";
-              }}
-            >
-              Published
-            </p>
-          </a>
-          <a href="#">
-            <p
-              style={{
-                color: activeStatus === "Granted" ? "#1369CB" : "#2C2C2C",
-                textDecoration: "none",
-              }}
-              onClick={() => setactiveStatus(activeStatus === "Granted" ? "" : "Granted")}
-              onMouseEnter={(e) => {
-                e.target.style.color = "#1369CB";
-                e.target.style.textDecoration = "none";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = activeStatus === "Granted" ? "#1369CB" : "#2C2C2C";
-                e.target.style.textDecoration = "none";
-              }}
-            >
-              Granted
-            </p>
-          </a>
+          {patentStatuses.map(status => (
+            <a href="#" key={status._id}>
+              <p
+                style={{
+                  color: activeStatus === status.name ? "#1369CB" : "#2C2C2C",
+                }}
+                onClick={() => setactiveStatus(activeStatus === status.name ? "" : status.name)}
+                onMouseEnter={(e) => {
+                  e.target.style.color = "#1369CB";
+                  e.target.style.textDecoration = "none";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = activeStatus === status.name ? "#1369CB" : "#2C2C2C";
+                  e.target.style.textDecoration = "none";
+                }}
+              >
+                {status.name}
+              </p>
+            </a>
+          ))}
         </div>
       </div>
       <div>
@@ -160,23 +146,23 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
         </p>
         <div className="center-name">
           {patents.map(patent => (
-            <a href="#" key={patent.Center_Name}>
+            <a href="#" key={patent._id}>
               <p
                 style={{
-                  color: activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C",
+                  color: activeLab === researchLabNames[patent.Center_Name] ? "#1369CB" : "#2C2C2C",
                   lineHeight: '1.2vw',
                   textDecoration: 'none', // Remove underline
                   transition: 'color 0.3s ease-in-out', // Add transition
                 }}
-                onClick={() => setactiveLab(activeLab === patent.Center_Name ? "" : patent.Center_Name)}
+                onClick={() => setactiveLab(activeLab === researchLabNames[patent.Center_Name] ? "" : researchLabNames[patent.Center_Name])}
                 onMouseEnter={(e) => {
                   e.target.style.color = "#1369CB";
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.color = activeLab === patent.Center_Name ? "#1369CB" : "#2C2C2C";
+                  e.target.style.color = activeLab === researchLabNames[patent.Center_Name] ? "#1369CB" : "#2C2C2C";
                 }}
               >
-                {patent.Center_Name}
+                {researchLabNames[patent.Center_Name]}
               </p>
             </a>
           ))}
@@ -228,41 +214,58 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
   const [currentPage, setCurrentPage] = useState(1);
   const patentsPerPage = 7; // Number of patents to display per page
   const [isLoading, setIsLoading] = useState(true);
-
+  const [researchLabs, setResearchLabs] = useState([]);
+  const [patentStatuses, setPatentStatuses] = useState([]);
 
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/patents')
-      .then(response => response.json())
-      .then(data => {
-        setPatents(data);
-        setIsLoading(false); // Set loading to false once data is fetched
+    Promise.all([
+      fetch('https://ttopatents.iiithcanvas.com/patents/patents'),
+      fetch('https://ttobackend.iiithcanvas.com/api/researchlabs'),
+      fetch('https://ttobackend.iiithcanvas.com/api/patentStatus')
+    ])
+      .then(([patentsResponse, researchLabsResponse, patentStatusesResponse]) =>
+        Promise.all([patentsResponse.json(), researchLabsResponse.json(), patentStatusesResponse.json()])
+      )
+      .then(([patentsData, researchLabsData, patentStatusesData]) => {
+        setPatents(patentsData);
+        setResearchLabs(researchLabsData);
+        setPatentStatuses(patentStatusesData);
+        setIsLoading(false);
       })
       .catch(error => {
         console.error('Error:', error);
-        setIsLoading(false); // Set loading to false on error as well
+        setIsLoading(false);
       });
   }, []);
+  // Map research lab names
+  const researchLabNames = researchLabs.reduce((map, lab) => {
+    map[lab._id] = lab.Research_Lab;
+    return map;
+  }, {});
 
+  // Map patent status names
+  const patentStatus = patentStatuses.reduce((map, status) => {
+    map[status._id] = status.name; 
+    return map;
+  }, {});
   // Apply filters
   let filterPatents = patents;
-
   if (searchQuery) {
     filterPatents = filterPatents.filter(patent =>
       patent.Title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
-
   // Apply sorting
   if (sortOption === "Newest") {
     filterPatents = filterPatents.sort((a, b) => {
-      const yearA = a.Published_Year ? parseInt(a.Published_Year.substring(0, 4), 10) : 0;
-      const yearB = b.Published_Year ? parseInt(b.Published_Year.substring(0, 4), 10) : 0;
+      const yearA = a.Published_Date ? parseInt(a.Published_Date.substring(0, 4), 10) : 0;
+      const yearB = b.Published_Date ? parseInt(b.Published_Date.substring(0, 4), 10) : 0;
       return yearB - yearA;
     });
   } else if (sortOption === "Oldest") {
     filterPatents = filterPatents.sort((a, b) => {
-      const yearA = a.Published_Year ? parseInt(a.Published_Year.substring(0, 4), 10) : 0;
-      const yearB = b.Published_Year ? parseInt(b.Published_Year.substring(0, 4), 10) : 0;
+      const yearA = a.Published_Date ? parseInt(a.Published_Date.substring(0, 4), 10) : 0;
+      const yearB = b.Published_Date ? parseInt(b.Published_Date.substring(0, 4), 10) : 0;
       return yearA - yearB;
     });
   } else if (sortOption === "A-Z") {
@@ -270,20 +273,17 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
   } else if (sortOption === "Z-A") {
     filterPatents = filterPatents.sort((a, b) => b.Title.localeCompare(a.Title));
   }
-
   if (activeLab) {
-    filterPatents = filterPatents.filter(patent => patent.Center_Name === activeLab);
+    filterPatents = filterPatents.filter(patent => researchLabNames[patent.Center_Name] === activeLab);
   }
-
   if (activeStatus) {
     filterPatents = filterPatents.filter(
-      patent => patent.Status === activeStatus
+      patent => patentStatus[patent.Status] === activeStatus
     );
   }
-
   if (selectedStartDate && selectedEndDate) {
     filterPatents = filterPatents.filter(patent => {
-      const publishedYear = new Date(patent.Published_Year).getFullYear();
+      const publishedYear = new Date(patent.Published_Date).getFullYear();
       return (
         publishedYear >= selectedStartDate.getFullYear() &&
         publishedYear <= selectedEndDate.getFullYear()
@@ -291,12 +291,12 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
     });
   } else if (selectedStartDate) {
     filterPatents = filterPatents.filter(patent => {
-      const publishedYear = new Date(patent.Published_Year).getFullYear();
+      const publishedYear = new Date(patent.Published_Date).getFullYear();
       return publishedYear >= selectedStartDate.getFullYear();
     });
   } else if (selectedEndDate) {
     filterPatents = filterPatents.filter(patent => {
-      const publishedYear = new Date(patent.Published_Year).getFullYear();
+      const publishedYear = new Date(patent.Published_Date).getFullYear();
       return publishedYear <= selectedEndDate.getFullYear();
     });
   }
@@ -321,13 +321,13 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
       ) : (
         currentPatents.map(result => (
           <Grid item xs={10} sm={10} md={10} style={{ paddingBottom: '2.6vw' }} key={result.id}>
-            <p style={{ fontWeight: '400', fontSize: '1.0417' }}>
-              {result.Status} |{' '}
-              <span style={{ color: '#2C2C2C' }}>{result.Center_Name}</span> |{' '}
+            <p style={{ fontWeight: '400', fontSize: '1.0417vw' }}>
+            {patentStatus[result.Status]} |{' '}
+              <span style={{ color: '#2C2C2C' }}>{researchLabNames[result.Center_Name]}</span> |{' '}
               <span style={{ color: '#2C2C2C' }}>
-                {Number.isNaN(new Date(result.Published_Year).getFullYear()) || result.Published_Year === ""
+                {Number.isNaN(new Date(result.Published_Date).getFullYear()) || result.Published_Date === ""
                   ? 'Not available'
-                  : new Date(result.Published_Year).getFullYear()}
+                  : new Date(result.Published_Date).getFullYear()}
               </span>
             </p>
             <p style={{ fontWeight: '500', color: '#2C2C2C', fontSize: '1.66vw', lineHeight:'1.8vw' }}>{result.Title}</p>
@@ -336,7 +336,7 @@ function Component2({ searchQuery, sortOption, activeLab, activeStatus, selected
               Application - {result.Application_Number !== "NaN" && result.Application_Number !== "" ? result.Application_Number : 'Not available'}
             </p>
             <p style={{ fontWeight: '400', color: '#A7A6A6', fontSize: '1.0417vw' }}>
-              {result.Faculty_List.join(', ')}
+             Faculty - {result.Faculty_List && result.Faculty_List.length > 0 ? result.Faculty_List : 'Not available'}
             </p>
           </Grid>
         ))

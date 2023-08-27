@@ -34,30 +34,21 @@ const Enterpreneur = () => {
         WhatHelpYouNeedFromiiit: helpNeed,
       };
       console.log(newEntrepreneur);
-
-      // Make the POST request using Axios
-      const response = await axios.post(
-        'http://localhost:3002/admin/api/resources/Entrepreneur/actions/new',
-        newEntrepreneur,
-        {     
-          headers: {
+      await axios.post('https://ttobackend.iiithcanvas.com/admin/api/resources/Entrepreneur/actions/new', newEntrepreneur, {
+        headers: {
           Authorization: `Bearer ${authToken}`,
         },
-        withCredentials: true, 
-       }
-      );
-
-      // Optionally, you can handle the response data
-      console.log('Form data submitted successfully!');
-      console.log(response.data);
-
-      // Redirect to the desired page or perform other actions after successful submission
-      window.location = "/Entrepreneur";
-    } catch (error) {
-      console.error('Error submitting form data:', error);
-      // Handle any error cases here
+        withCredentials: true,
+      })
+      .then(function (res) {
+          window.location = "/Entrepreneur"
+      });
     }
-  };
+    catch(e){
+      alert(e);
+    }
+  }
+
   return (
     <>
     <Chatbot />

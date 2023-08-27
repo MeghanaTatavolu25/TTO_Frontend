@@ -38,18 +38,20 @@ const JobSeeker = () => {
         };
       }
       // Make the POST request using Axios
-      await axios.post('http://localhost:3002/admin/api/resources/Job_Seeker/actions/new', newJobSeeker, {
+      await axios.post('https://ttobackend.iiithcanvas.com/admin/api/resources/Job_Seeker/actions/new', newJobSeeker, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
         withCredentials: true,
+      })
+      .then(function (res) {
+          window.location = "/JobSeeker"
       });
-
-      window.location = '/JobSeeker';
-    } catch (e) {
+    }
+    catch(e){
       alert(e);
     }
-  };
+  }
   
 
   return (

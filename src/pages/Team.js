@@ -16,20 +16,21 @@ const Team = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const profilesPerPage = 12;
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/teams')
+    fetch('https://ttobackend.iiithcanvas.com/api/teams')
       .then(response => response.json())
       .then(data => {
-            setTeams(data);
-            setIsLoading(false); // Set loading to false once data is fetched
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      setIsLoading(false); // Set loading to false on error as well
-    });
-}, []);
-
+        // Sort the teams based on the 'Sequence' field
+        const sortedTeams = data.sort((a, b) => a.Sequence - b.Sequence);
+        setTeams(sortedTeams);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setIsLoading(false);
+      });
+  }, []);
   const indexOfLastProfile = currentPage * profilesPerPage;
   const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
   const currentProfiles = teams.slice(indexOfFirstProfile, indexOfLastProfile);

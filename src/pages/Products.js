@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../styles/Pagination.css"
 import Container from 'react-bootstrap/Container'
 import { Button, Row, Col } from 'react-bootstrap';
-import icon from '../Img/icon.png'
+import icon from '../Img/logo.png'
 import Chatbot from '../chatbot/Chatbot';
 import LoadingSpinner from '../Img/loading.gif'; 
 
@@ -14,13 +14,17 @@ const ProductLab_Products = () => {
   const itemsPerPage = 6;
   const totalPages = Math.ceil(products.length / itemsPerPage);
   const [isLoading, setIsLoading] = useState(true);
+  const [researchLabs, setResearchLabs] = useState([]); // State to store research labs data
 
   useEffect(() => {
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
-    // fetch('http://localhost:3002/api/productlab')
-    .then(response => response.json())
-      .then(data => {
-        setProducts(data);
+    Promise.all([
+      fetch('https://ttobackend.iiithcanvas.com/api/productlab'),
+      fetch('https://ttobackend.iiithcanvas.com/api/researchlabs')
+    ])
+      .then(([productsResponse, researchLabsResponse]) => Promise.all([productsResponse.json(), researchLabsResponse.json()]))
+      .then(([productsData, researchLabsData]) => {
+        setProducts(productsData);
+        setResearchLabs(researchLabsData);
         setIsLoading(false);
       })
       .catch(error => {
@@ -30,14 +34,20 @@ const ProductLab_Products = () => {
   }, []);
 
   const getProductImageURL = (product) => {
-    if (product.ProductImage && product.ProductImage.key) {
+    if (product.ProductLabImage.key) {
       const baseS3URL = 'https://tto-asset.s3.ap-south-1.amazonaws.com/'; // Replace with your S3 base URL
-      const imageURL = `${baseS3URL}${product.ProductImage.key}`;
+      const imageURL = `${baseS3URL}${product.ProductLabImage.key}`;
       return imageURL;
     }
-    return icon; // Return default icon if no image available
+    else {
+      return icon; 
+    }
   };
 
+  const researchLabNamesMap = researchLabs.reduce((map, lab) => {
+    map[lab._id] = lab.Research_Lab;
+    return map;
+  }, {});
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -122,9 +132,9 @@ const ProductLab_Products = () => {
           getPageItems().map((product, index) => (
         <Col key={index} lg={4}>
           {product ? (
-              <a href={`/Products_Technologies/${product.CentreName}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none', width:'80%' }}>
+              <a href={`/Products_Technologies/${researchLabNamesMap[product.CentreName]}/${encodeURIComponent(product.NameOfProduct)}`} style={{ textDecoration: 'none', width:'80%' }}>
                 <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '1.5vw 0 2.5vw', width:'90%' }}>
-                  <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0', width: '100%' }}>
+                  <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0', width: '100%',marginLeft:'1.2vw' }}>
                     <div style={{ width: '20%', height: '2.5vw' }}>
                     <img src={getProductImageURL(product)} alt="/" style={{ width: '3.5vw', height: '100%' }} />
                     </div>
@@ -133,8 +143,8 @@ const ProductLab_Products = () => {
                   <p style={{ lineHeight: '1.2vw',marginTop:'0.3vw', marginLeft: '1.1vw', color: "#757575", fontSize: "1vw", fontWeight: 400, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{product.Description}</p>
                   <div style={{ marginLeft: '1.1vw', color: "#A7A6A6", fontSize: "0.8vw", fontWeight: 300,textDecoration: 'none'  }}>
                      <div style={{margin:'0 0 0.1vw'}}>Professor - {product.Faculty_Name}</div>
-                      <a href={`/ResearchLab/${product.CentreName}`} style={{textDecoration:'none'}} >
-                      <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{product.CentreName}</span></p>
+                      <a href={`/Lab_Technologies/${researchLabNamesMap[product.CentreName]}`} style={{textDecoration:'none'}} >
+                      <p style={{lineHeight:'0.8vw',color: "#A7A6A6", textDecoration:'none'}}>Center - <span className='s-center'>{researchLabNamesMap[product.CentreName]}</span></p>
                       </a>
                   </div>
                 </div>

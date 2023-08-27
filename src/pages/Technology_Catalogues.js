@@ -4,7 +4,7 @@ import "../styles/Pagination.css"
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import { Paper, IconButton, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import icon from '../Img/icon.png';
+import icon from '../Img/logo.png';
 import Chatbot from "../chatbot/Chatbot"
 import LoadingSpinner from '../Img/loading.gif'; 
 
@@ -18,7 +18,7 @@ const Technology_Catalogues = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
+    fetch('https://ttobackend.iiithcanvas.com/api/researchlabs')
       .then(response => response.json())
       .then(data => {
         setTechnologyCatalogues(data);
@@ -29,7 +29,17 @@ const Technology_Catalogues = () => {
         setIsLoading(false);
       });
   }, []);
-  
+
+  const getResearchImageURL = (research_lab) => {
+    if (research_lab.ResearchLogo.key) {
+    const baseS3URL = 'https://tto-asset.s3.ap-south-1.amazonaws.com/';
+    const imageURL = `${baseS3URL}${research_lab.ResearchLogo?.key}`; 
+    return imageURL;
+  }
+  else {
+    return icon; 
+  }
+  };
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -135,7 +145,7 @@ const Technology_Catalogues = () => {
                       <div style={{ letterSpacing: "-0.04em", lineHeight: "1.5vw", fontFamily: 'Prompt', margin: '0.7vw 0 1.5vw', width:'90%' }}>
                       <div className="content-container" style={{ display: "flex", alignItems: "flex-start", margin: '0 1.2vw', width: '100%' }}>
                         <div style={{ width: '20%', height: '4vw', margin:'0.8vw 0 0' }}>
-                        <img src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${research_lab.ResearchLogo.key}`} alt="/" style={{ width: '80%', height: '80%' }} />
+                        <img src={getResearchImageURL(research_lab)} alt="/" style={{ width: '80%', height: '80%' }} />
                         </div>
                         <h2 className="underline-on-hover" style={{ width: '80%', color: "#353535", fontSize: "1.145826vw", fontWeight: 400, margin: '1vw 0 0vw', display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{research_lab.Research_Lab}</h2>
                       </div>

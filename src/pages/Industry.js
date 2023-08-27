@@ -28,13 +28,12 @@ const Industry = () => {
         Query:query   
 
       };
-      await axios.post('http:localhost:3002/admin/api/resources/Industry/actions/new', newIndustry,
-      {     
+      await axios.post('https://ttobackend.iiithcanvas.com/admin/api/resources/Industry/actions/new', newIndustry, {
         headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-      withCredentials: true, 
-     })
+          Authorization: `Bearer ${authToken}`,
+        },
+        withCredentials: true,
+      })
       .then(function (res) {
           window.location = "/Industry"
       });

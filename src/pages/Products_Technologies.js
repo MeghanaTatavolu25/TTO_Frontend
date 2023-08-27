@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import "../styles/products.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import icon from '../Img/icon.png'
+import icon from '../Img/logo.png'
 import Chatbot from "../chatbot/Chatbot"
 import LoadingSpinner from '../Img/loading.gif'; 
 
@@ -15,31 +15,41 @@ const Products = () => {
     const [showDescription, setShowDescription] = useState(false); // State variable for toggling description
     const [labDescription, setLabDescription] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [researchLabs, setResearchLabs] = useState([]); // Add this line to declare researchLabs state
 
     useEffect(() => {
-        fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/researchlabs')
-          .then(response => response.json())
-          .then(data => {
-            const lab = data.find(researchLab => researchLab.Research_Lab === LabName);
-            if (lab) {
-              setLabDescription(lab.Description);
-            }
-          })
-          .catch(error => console.log(error));
-      }, [LabName]);
-
-    useEffect(() => {
-      fetch('http://ec2-15-207-71-215.ap-south-1.compute.amazonaws.com:3002/api/productlab')
-        .then(response => response.json())
-        .then(data => {
-          setProducts(data);
-          setIsLoading(false); // Set loading to false once data is fetched
-        })
-        .catch(error => {
+      const fetchData = async () => {
+        setIsLoading(true);
+  
+        try {
+          const [researchLabsResponse, productsResponse] = await Promise.all([
+            fetch('https://ttobackend.iiithcanvas.com/api/researchlabs'),
+            fetch('https://ttobackend.iiithcanvas.com/api/productlab')
+          ]);
+  
+          const [researchLabsData, productsData] = await Promise.all([
+            researchLabsResponse.json(),
+            productsResponse.json()
+          ]);
+  
+          setResearchLabs(researchLabsData); // Store research labs data
+          setProducts(productsData);
+          setIsLoading(false);
+        } catch (error) {
           console.error('Error:', error);
-          setIsLoading(false); // Set loading to false on error as well
-        });
+          setIsLoading(false);
+        }
+      };
+  
+      fetchData();
     }, []);
+  
+    useEffect(() => {
+      const lab = researchLabs.find(researchLab => researchLab.Research_Lab === LabName);
+      if (lab) {
+        setLabDescription(lab.Description);
+      }
+    }, [LabName, researchLabs]);
   
     useEffect(() => {
       const defaultProduct = products.find(product => product.NameOfProduct === ProductName);
@@ -48,12 +58,16 @@ const Products = () => {
       }
     }, [products, ProductName]);
   
+    const researchLabNames = researchLabs.reduce((map, lab) => {
+      map[lab._id] = lab.Research_Lab;
+      return map;
+    }, {});
 
     const getMediaURL = (product) => {
-      if (product.ProductVideo?.key) {
-        return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductVideo.key}`;
-      } else if (product.ProductImage?.key) {
-        return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductImage.key}`;
+      if (product.ProductLabVideo?.key) {
+        return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductLabVideo.key}`;
+      } else if (product.ProductLabImage?.key) {
+        return `https://tto-asset.s3.ap-south-1.amazonaws.com/${product.ProductLabImage.key}`;
       } else {
         return icon; // Return the default icon if both video and image are not available
       }
@@ -132,7 +146,7 @@ const Products = () => {
                 >
                 Description
               </div>
-              <div className="projects-heading"> Projects: </div>
+              <div className="projects-heading"> Technologies: </div>
               <div className="line"></div>
               <div className="products-list">
                {isLoading ? ( // Display loading symbol if isLoading is true
@@ -141,7 +155,7 @@ const Products = () => {
                   </div>
                 ) : (
                   products
-                    .filter(product => product.CentreName === LabName)
+                    .filter(product => researchLabNames[product.CentreName] === LabName)
                     .map(product => (
                       <div key={product._id}>
                         <div
@@ -171,26 +185,29 @@ const Products = () => {
               {!showDescription && selectedProduct && (
                     <>
                   <h2 style={{fontWeight: 500, fontSize: "1.4vw",lineHeight:"2vw", letterSpacing: "-0.02em",color: "#2C2C2C"}}>{selectedProduct.NameOfProduct}</h2>
-                  <div className="video">
-                  {isLoading ? ( // Display loading symbol if isLoading is true
-                    <div style={{ height: '15.4vw', borderRadius: '8px', margin: '0vw 0 0.3vw' }}>
-                      <img src={LoadingSpinner} alt="Loading" style={{ width: '3.5w', height: '3.5vw', margin: '10vw 28vw 0' }} />
-                    </div>
-                  ) : (
-                  selectedProduct.ProductVideo?.key ? (
-                    <video controls style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}>
-                      <source src={getMediaURL(selectedProduct)} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                 ) : (
-                  <img
-                    src={getMediaURL(selectedProduct)}
-                    alt="Product"
-                    style={{ width: "63vw", height: "15.4vw", borderRadius: "8px", margin: "0vw 0 0.3vw" }}
-                  />
-                )
-              )}
-                  </div>
+                      <div className="videoORimage">
+                        {isLoading ? ( // Display loading symbol if isLoading is true
+                          <div style={{ height: '15.4vw', borderRadius: '8px', margin: '0vw 0 0.3vw' }}>
+                            <img src={LoadingSpinner} alt="Loading" style={{ width: '3.5vw', height: '3.5vw', margin: '10vw 28vw 0' }} />
+                          </div>
+                        ) : (
+                          <>
+                            {selectedProduct.ProductLabVideo && selectedProduct.ProductLabVideo.key ? ( // Display video if available
+                              <video
+                                controls
+                                src={`https://tto-asset.s3.ap-south-1.amazonaws.com/${selectedProduct.ProductLabVideo.key}`}
+                                style={{ width: '63vw', height: '15.4vw', borderRadius: '8px', margin: '0vw 0 0.3vw' }}
+                              />
+                            ) : (
+                              <img // Display image if video is not available
+                                src={getMediaURL(selectedProduct)}
+                                alt="Product"
+                                style={{ width: '63vw', height: '15.4vw', borderRadius: '8px', margin: '0vw 0 0.3vw' }}
+                              />
+                            )}
+                          </>
+                        )}
+                      </div>
                       <div className="faculty-name">
                       Faculty Name: &nbsp;&nbsp;{selectedProduct.FacultyName}
                       </div>
