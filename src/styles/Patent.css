@@ -54,38 +54,40 @@
     margin-bottom: 20px;
   }
 }
-
+.patent_status{
+  font-size: 1.0417vw;
+  font-weight: 400;
+  line-height: 1.2vw;
+  height: 23vh;
+overflow-y: auto;
+}
 .patent_status a{
 text-decoration: none;
+}
+.patent_status::-webkit-scrollbar {
+  width: 0.3vw;
+}
+.patent_status::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+background: linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
 }
 .center-name{
 font-size:1.0417vw;
 font-weight: 400;
-padding-top:0.2vw
+padding-top:0.2vw;
+height: 23vh;
+overflow-y: auto;
 }
-.center-name {
-  height: 23vh;
-  overflow-y: auto;
-}
+
 .center-name a{
   text-decoration: none;
 }
-
 .center-name::-webkit-scrollbar {
-  width: 4px;
+  width: 0.3vw;
 }
-
-.center-name::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
 .center-name::-webkit-scrollbar-thumb {
-  background-color: #09A5AF;
-  border-radius: 5px;
-}
-
-.center-name::-webkit-scrollbar-thumb:hover {
-  background-color: #09A5AF;
+  border-radius: 30px;
+background: linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
 }
 
 .custom-datepicker {

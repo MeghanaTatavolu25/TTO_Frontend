@@ -57,25 +57,16 @@ letter-spacing: -0.88px;
 }
 
 .products-list {
-  height: 50vh;
+  height: 25vw;
   overflow-y: auto;
 }
 
 .products-list::-webkit-scrollbar {
-  width: 8px;
+  width: 0.4vw;
 }
-
-.products-list::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
 .products-list::-webkit-scrollbar-thumb {
-  background-color: #09A5AF;
-  border-radius: 5px;
-}
-
-.products-list::-webkit-scrollbar-thumb:hover {
-  background-color: #09A5AF;
+  border-radius: 30px;
+background: linear-gradient(90deg, #282D9B 0%, #5F42B1 66.15%, #7B4CBC 100%);
 }
 
 

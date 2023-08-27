@@ -116,7 +116,7 @@ function Component1({ setSearchQuery, setactiveLab, setactiveStatus, activeLab, 
           Patent Status
           <Grid item xs={12} style={{ borderBottom: '0.19vw solid #535353', margin: '0.21vw 0' }}></Grid>
         </p>
-        <div className='patent_status' style={{ fontSize: "1.0417vw", fontWeight: 400, lineHeight: '1.2vw' }}>
+        <div className='patent_status'>
           {patentStatuses.map(status => (
             <a href="#" key={status._id}>
               <p
